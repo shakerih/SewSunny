@@ -18,7 +18,9 @@ $( document ).ready(function(){
     theme: 'fontawesome-stars'
   });
 
-  $('#example').change(function(event) {
+console.log($('select').barrating('set', $('[name = "rateform"]').attr("id")));
+  $('#example').on("change", function(event) {
+      $('select').barrating('readonly', true);
       event.preventDefault();
         // get the form data
         // there are many ways to get this data using jQuery (you can use the class or id also)
@@ -92,7 +94,21 @@ if(isset($_GET["projectCode"])){
 
         if(is_logged_in()){
        echo "<form method='post'> <input type='submit' name='pin'  value='Pin to Pinboard'/><br/></form>";
-       echo '<form name="rateform" method="post"><select id="example">
+
+
+           $resultr = mysqli_query($connection, "SELECT rating FROM ratings WHERE projectID='".$_SESSION['currproject']."'");
+           $avgrating = 0;
+           $numrows = 0;
+           while($r = mysqli_fetch_row($resultr)){ // add rows to the table
+             foreach($r as $i){  //with values separated by column
+               $avgrating += $i;
+               $numrows += 1;
+             }
+           }
+          $avgrating = intdiv( $avgrating ,$numrows);
+        //   echo $avgrating;
+
+       echo '<form name="rateform" id="'.$avgrating.'" method="post"><select id="example">
          <option value="1">1</option>
          <option value="2">2</option>
          <option value="3">3</option>

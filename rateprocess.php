@@ -14,5 +14,4 @@ if(isset($_POST['num'])){
     $result = mysqli_query($connection, "INSERT INTO ratings (userID, projectID, rating) VALUES(".$_SESSION['userID'].", ".$_SESSION['currproject'].", ". $_POST['num'].")");
 
 }
-
 ?>
