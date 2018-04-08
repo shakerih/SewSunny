@@ -1,6 +1,6 @@
 body {
     font-family: arial;
-    font-size: 14px;
+    font-size: 16px;
     margin: 0;
     background: #FFFFFF;
     color: #333847;
@@ -10,7 +10,7 @@ h1 {
     margin: 0;
 }
 h2 {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: bold;
     margin: 1.75em 0 1em;
 }
@@ -48,6 +48,7 @@ a:hover {
 }
 .nav_container a:hover {
     color: #F0F1E9;
+    text-decoration: none;
 }
 .nav_left {
     float: left;
@@ -107,4 +108,62 @@ img {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* --------------------------------------------------------------------------- */
+/* login and signup */
+.center_screen {
+    padding-top: 3%;
+}
+
+.center_screen .form_container {
+    width: 35%;
+    margin: auto;
+    text-align: center;
+}
+.form_container h2 {
+    font-size: 32px;
+    color: #333847;
+}
+.form_container a {
+    color: #333847;
+}
+.form_container strong {
+    color: #F8938A;
+}
+form p {
+    margin-bottom: 0;
+    text-align: left;
+}
+
+input {
+    width: 100%;
+    border: 1px solid lightGray;
+}
+input:focus {
+    outline: 1px solid #F8938A;
+    border: 1px solid #F8938A;
+}
+input[type=text], input[type=password], input[type=submit]  {
+    padding: 12px 20px;
+    margin: 8px 0 15px;
+}
+input[type=submit] {
+    color: #FFFFFF;
+    background: #FFAFA1;
+    border: none;
+    margin-top: 15px;
+    transition: all 0.2s;
+    font-weight: bold;
+}
+input[type=submit]:hover {
+    background-color: #F8938A;
+}
+
+
+/* --------------------------------------------------------------------------- */
+/* error display*/
+.errors {
+    text-align: left;
+    color: red;
 }
