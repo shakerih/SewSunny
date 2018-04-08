@@ -52,6 +52,14 @@
 
 <?php $page_title = 'LOG IN'; ?>
 <?php include('header.php'); ?>
+<!-- Check if visitors is loggin or not -->
+<!-- if yes, redirect page to landing page after login -->
+<?php
+    if(is_logged_in()){
+        header("Location: index.php");
+        die();
+    }
+?>
 
 <div id="content" class="center_screen">
     <div class="form_container">

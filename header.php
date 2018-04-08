@@ -14,7 +14,7 @@
 
 		<?php if(is_logged_in()){
 			echo "<a href='postproject.php'>POST CRAFT</a>";
-			echo "<a href='profile.php'>MY PROFILEe</a>";
+			echo "<a href='profile.php'>MY PROFILE</a>";
 			echo "<a href='login.php'>LOG OUT</a>";
 		} else
 		echo "<a href='login.php'>LOGIN / SIGN UP</a>";
