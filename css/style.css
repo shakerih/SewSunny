@@ -1,0 +1,87 @@
+body {
+    font-family: arial;
+    font-size: 14px;
+    margin: 0;
+    background: #333847;
+    color: #fff6f4;
+}
+
+h1 {
+    margin: 0;
+}
+h2 {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 1.75em 0;
+}
+
+a {
+    text-decoration: none;
+    color: #ffafa1;
+}
+
+.header {
+    display: block;
+    /* background: #ffafa1; */
+    background: #ffafa1;
+    height: 55px;
+    width: 100%;
+    position: fixed;
+    z-index: 500;
+    box-shadow: 5px 5px 25px #242733;
+}
+.nav_container {
+    padding: 0 7em;
+    display: inline-block;
+    line-height: 55px;
+}
+.nav_container a {
+    color: #333847;
+    padding: 1em;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    transition: color 0.5s;
+}
+.nav_container a:hover {
+    color: #F0F1E9;
+}
+.nav_left {
+    float: left;
+    padding: 0 8em;
+}
+.nav_left a {
+    font-family: 'Gugi', cursive;
+    /* color: white; */
+    /* color: #ffafa1; */
+    font-size: 20px;
+    padding: 0;
+}
+.nav_right {
+    float: right;
+}
+
+img {
+    width: 100%;
+}
+
+
+.content_container {
+    padding: 55px 8em;
+}
+
+.project_container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 30px;
+}
+.project_item {
+    float: left;
+}
+
+.project img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}

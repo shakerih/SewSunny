@@ -1,17 +1,25 @@
 <?php require_once('initialize.php');?>
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<div class="header">
+	<div class="nav_container nav_left">
+		<h1><a href="index.php">SewSunny</a></h1>
+	</div>
+	<div class="nav_container nav_right">
+		<a href="index.php">HOME</a>
 
-<div style="color: red">
+		<a href="showmodels.php">ALL CRAFTS</a>
 
-<a href="index.php">Home</a>
+		<?php if(is_logged_in()){
+			echo "<a href='postproject.php'>POST CRAFT</a>";
+			echo "<a href='profile.php'>MY PROFILEe</a>";
+			echo "<a href='login.php'>LOG OUT</a>";
+		} else
+		echo "<a href='login.php'>LOGIN / SIGN UP</a>";
 
-<a href="showmodels.php">View Crafts</a>
+		?>
+	</div>
 
-<?php if(is_logged_in()){
-	echo "<a href='postproject.php'>Post Craft</a>";
-	echo "<a href='profile.php'>My Profile</a>";
-	echo "<a href='login.php'>Logout</a>";
-} else 
-	echo "<a href='login.php'>Login/Sign Up</a>";
-
-?>
 </div>
