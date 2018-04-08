@@ -78,6 +78,9 @@ if(isset($_POST['pin'])){
     $result = mysqli_query($connection, "INSERT INTO favourite_project (userID, projectID) VALUES(".$_SESSION['userID'].", ".$_GET["projectCode"].")");
 
 }
+if(isset($_POST['submit'])){
+    $result = mysqli_query($connection, "INSERT INTO comment (userID, projectID, comment) VALUES(".$_SESSION['userID'].", ".$_GET["projectCode"].", '".$_POST['comment']."')");
+  }
 
 
 if(isset($_GET["projectCode"])){
@@ -149,5 +152,10 @@ if(isset($_GET["projectCode"])){
           echo "</tr>";
         }
         echo "</table>";
+        if(is_logged_in()){
+        echo "<br><h3>Leave a Comment:</h3><br>";
+        echo "<form method='post'><textarea name='comment' rows='8' cols='100'>
+              </textarea><br><input type='submit' name='submit'></input></form>";
+            }
 }
 ?>
