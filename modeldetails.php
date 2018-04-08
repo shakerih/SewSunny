@@ -1,83 +1,74 @@
-<style>table {
-    border-collapse: collapse;
-}
-
-table, th, td {
-    border: 1px solid black;
-}
-</style>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 <script src="http://antenna.io/demo/jquery-bar-rating/jquery.barrating.js"></script>
 <link href="http://antenna.io/demo/jquery-bar-rating/dist/themes/fontawesome-stars.css" rel="stylesheet"/>
 
 <script type="text/javascript">
-$( document ).ready(function(){
-  $('#example').barrating({
-    theme: 'fontawesome-stars'
-  });
-
-console.log($('select').barrating('set', $('[name = "rateform"]').attr("id")));
-  $('#example').on("change", function(event) {
-      $('select').barrating('readonly', true);
-      event.preventDefault();
-        // get the form data
-        // there are many ways to get this data using jQuery (you can use the class or id also)
-        var formData = {
-            'num'              : $('#example').val(),
-
-        };
-
-        // process the form
-        $.ajax({
-            type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-            url         : 'rateprocess.php', // the url where we want to POST
-            data        : formData, // our data object
-            dataType    : 'html', // what type of data do we expect back from the server
-                        encode          : true
-        })
-            // using the done promise callback
-            .done(function(data) {
-
-                // log data to the console so we can see
-                console.log(data);
-
-                // here we will handle errors and validation messages
-            });
-
-        // stop the form from submitting the normal way and refreshing the page
-
-    });
-
-    $('#comform').submit(function(event) {
-      console.log('kkkkk');
-        event.preventDefault();
-          // get the form data
-          // there are many ways to get this data using jQuery (you can use the class or id also)
-          var formData = {
-              'text'              : $('#comment').val(),
-
-          };
-
-          // process the form
-          $.ajax({
-              type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
-              url         : 'comment.php', // the url where we want to POST
-              data        : formData, // our data object
-              dataType    : 'html', // what type of data do we expect back from the server
-                          encode          : true
-          })
-              // using the done promise callback
-              .done(function(data) {
-                console.log(data);
-              });
-
-          // stop the form from submitting the normal way and refreshing the page
-
+    $( document ).ready(function(){
+      $('#example').barrating({
+        theme: 'fontawesome-stars'
       });
-});
-</script>
+
+    console.log($('select').barrating('set', $('[name = "rateform"]').attr("id")));
+      $('#example').on("change", function(event) {
+          $('select').barrating('readonly', true);
+          event.preventDefault();
+            // get the form data
+            // there are many ways to get this data using jQuery (you can use the class or id also)
+            var formData = {
+                'num'              : $('#example').val(),
+
+            };
+
+            // process the form
+            $.ajax({
+                type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                url         : 'rateprocess.php', // the url where we want to POST
+                data        : formData, // our data object
+                dataType    : 'html', // what type of data do we expect back from the server
+                            encode          : true
+            })
+                // using the done promise callback
+                .done(function(data) {
+
+                    // log data to the console so we can see
+                    console.log(data);
+
+                    // here we will handle errors and validation messages
+                });
+
+            // stop the form from submitting the normal way and refreshing the page
+
+        });
+
+        $('#comform').submit(function(event) {
+          console.log('kkkkk');
+            event.preventDefault();
+              // get the form data
+              // there are many ways to get this data using jQuery (you can use the class or id also)
+              var formData = {
+                  'text'              : $('#comment').val(),
+
+              };
+
+              // process the form
+              $.ajax({
+                  type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+                  url         : 'comment.php', // the url where we want to POST
+                  data        : formData, // our data object
+                  dataType    : 'html', // what type of data do we expect back from the server
+                              encode          : true
+              })
+                  // using the done promise callback
+                  .done(function(data) {
+                    console.log(data);
+                  });
+
+              // stop the form from submitting the normal way and refreshing the page
+
+          });
+    });
+    </script>
 
 </script>
 <?php

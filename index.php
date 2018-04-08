@@ -14,8 +14,8 @@
 <div id="content">
     <?php
     if(is_logged_in()){
-        echo "<div class='img_cover'></div>";
-        echo "<div class='project_container'>";
+        echo "<div class='header_space'></div>";
+        echo "<div class='content_container'>";
         echo "<h2>Pinned Projects</h2>";
         $query = "SELECT projects.projectID, projects.projectTitle, projects.description, projects.tag, projects.imgURL, category.categoryName FROM projects INNER JOIN category ON projects.categoryID = category.categoryID INNER JOIN (SELECT projectID FROM favourite_project WHERE userID=".$_SESSION['userID'].") AS fave ON projects.projectID = fave.projectID";
 

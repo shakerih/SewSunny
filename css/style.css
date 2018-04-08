@@ -23,6 +23,14 @@ a:hover {
     text-decoration: underline;
 }
 
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}
+
 .header {
     display: block;
     /* background: #ffafa1; */
@@ -89,7 +97,7 @@ img {
     width: 100%;
     display: grid;
     /* grid-template-columns: auto auto auto; */
-    grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
     grid-gap: 35px;
 }
 .project_item {
