@@ -49,6 +49,33 @@ console.log($('select').barrating('set', $('[name = "rateform"]').attr("id")));
         // stop the form from submitting the normal way and refreshing the page
 
     });
+
+    $('#comform').submit(function(event) {
+      console.log('kkkkk');
+        event.preventDefault();
+          // get the form data
+          // there are many ways to get this data using jQuery (you can use the class or id also)
+          var formData = {
+              'text'              : $('#comment').val(),
+
+          };
+
+          // process the form
+          $.ajax({
+              type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
+              url         : 'comment.php', // the url where we want to POST
+              data        : formData, // our data object
+              dataType    : 'html', // what type of data do we expect back from the server
+                          encode          : true
+          })
+              // using the done promise callback
+              .done(function(data) {
+                console.log(data);
+              });
+
+          // stop the form from submitting the normal way and refreshing the page
+
+      });
 });
 </script>
 
@@ -78,10 +105,6 @@ if(isset($_POST['pin'])){
     $result = mysqli_query($connection, "INSERT INTO favourite_project (userID, projectID) VALUES(".$_SESSION['userID'].", ".$_GET["projectCode"].")");
 
 }
-if(isset($_POST['submit'])){
-    $result = mysqli_query($connection, "INSERT INTO comment (userID, projectID, comment) VALUES(".$_SESSION['userID'].", ".$_GET["projectCode"].", '".$_POST['comment']."')");
-  }
-
 
 if(isset($_GET["projectCode"])){
 	//send query and catch error
@@ -153,8 +176,17 @@ if(isset($_GET["projectCode"])){
         }
         echo "</table>";
         if(is_logged_in()){
+
+        echo "<br><h3>Comments:</h3><br>";
+        $result = mysqli_query($connection, "SELECT comment FROM comment WHERE projectID='".$_GET["projectCode"]."' ");
+    while($row = mysqli_fetch_row($result)){ // add rows to the table
+
+      foreach($row as $i){  //with values separated by column
+        echo "<p >" . $i . "</p><br>";
+      }
+    }
         echo "<br><h3>Leave a Comment:</h3><br>";
-        echo "<form method='post'><textarea name='comment' rows='8' cols='100'>
+        echo "<form method='post' id='comform'><textarea name='comment' id='comment' rows='8' cols='100'>
               </textarea><br><input type='submit' name='submit'></input></form>";
             }
 }
