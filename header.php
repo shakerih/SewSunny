@@ -10,7 +10,7 @@
 	<div class="nav_container nav_right">
 		<a href="index.php">HOME</a>
 
-		<a href="showmodels.php">ALL CRAFTS</a>
+		<a href="showmodels.php">VIEW CRAFTS</a>
 
 		<?php if(is_logged_in()){
 			echo "<a href='postproject.php'>POST CRAFT</a>";

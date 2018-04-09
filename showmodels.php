@@ -21,7 +21,7 @@
 <?php
     echo "<div class='header_space'></div>";
     echo "<div class='content_container'>";
-    echo "<h2>All Projects</h2>";
+    echo "<h2>Recent Projects</h2>";
     echo "<div class='project_container'>";
 	$query = "SELECT projects.projectID, projects.projectTitle, projects.description, projects.tag, projects.imgURL, category.categoryName FROM projects INNER JOIN category ON projects.categoryID = category.categoryID";
     $result = mysqli_query($connection, $query);
