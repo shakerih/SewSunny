@@ -181,10 +181,10 @@ if(isset($_GET["projectCode"])){
         echo "</div>";
 
         //Comment
-        echo "<div class='detail_left'>";
+        if(is_logged_in()){
+            echo "<div class='detail_left'>";
             echo "<hr>";
             echo "<h3>Comments:</h3>";
-            if(is_logged_in()){
                 $result = mysqli_query($connection, "SELECT members.username, comment.time, comment.comment FROM comment INNER JOIN members ON comment.userID = members.userID WHERE projectID='".$_GET["projectCode"]."' ");
                 while($row = mysqli_fetch_row($result)){ // add rows to the table
                     echo "<div class='comment_block'>";
@@ -198,8 +198,8 @@ if(isset($_GET["projectCode"])){
                 echo "<form method='post' id='comform'><textarea name='comment' id='comment' rows='8' cols='100'>
                 </textarea><br><input type='submit' name='submit' value='SUBMIT COMMENT'></input></form>";
                 echo "</div>";
-            }
-        echo "</div>";
+            echo "</div>";
+        }
 
     echo "</div>";
     echo "</div>";
