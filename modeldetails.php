@@ -134,7 +134,7 @@ if(isset($_GET["projectCode"])){
                         $numrows += 1;
                     }
                 }
-                $avgrating = intdiv( $avgrating ,$numrows);
+                if($numrows > 0) $avgrating = intdiv( $avgrating ,$numrows);
                 //   echo $avgrating;
 
                 echo '<form name="rateform" id="'.$avgrating.'" method="post"><select id="example">
