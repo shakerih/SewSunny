@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2018 at 10:32 PM
+-- Generation Time: Apr 09, 2018 at 08:40 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -38,10 +38,10 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`categoryID`, `categoryName`) VALUES
-('CAT_0', 'crochet'),
-('CAT_1', 'cross stitch'),
-('CAT_2', 'sewing'),
-('CAT_3', 'knitting');
+('CAT_0', 'Crochet'),
+('CAT_1', 'Cross Stitch'),
+('CAT_2', 'Sewing'),
+('CAT_3', 'Knitting');
 
 -- --------------------------------------------------------
 
@@ -62,8 +62,8 @@ CREATE TABLE `comment` (
 --
 
 INSERT INTO `comment` (`projectID`, `commentID`, `userID`, `time`, `comment`) VALUES
-(1, 4, 3, '2018-04-08 02:34:04', 'houfp;vb'),
-(1, 6, 3, '2018-04-08 03:05:27', 'bbbbbbbbbb');
+(1, 4, 2, '2018-04-09 03:14:21', 'Turned out great. It was fast and easy.'),
+(1, 6, 1, '2018-04-09 04:05:49', '~o(^_^)o~ love it!');
 
 -- --------------------------------------------------------
 
@@ -81,17 +81,9 @@ CREATE TABLE `favourite_project` (
 --
 
 INSERT INTO `favourite_project` (`userID`, `projectID`) VALUES
-(0, 0),
-(0, 0),
-(1, 0),
-(1, 0),
-(3, 1),
-(3, 2),
-(4, 1),
-(5, 1),
-(5, 29),
 (6, 1),
-(3, 4);
+(7, 1),
+(7, 2);
 
 -- --------------------------------------------------------
 
@@ -112,10 +104,18 @@ CREATE TABLE `materials` (
 --
 
 INSERT INTO `materials` (`materialID`, `materialName`, `quantity`, `unit`, `projectID`) VALUES
-(3, 'wool', 1, 'roll', 1),
+(1, '5.5 mm crochet hook', 1, 'piece', 1),
+(2, 'cotton yarn', 4, 'roll', 1),
 (4, 'yarn', 1, 'rolls', 29),
 (5, 'knitting poles', 2, 'items', 29),
-(6, 'something', 5, 'pcs', 30);
+(6, 'something', 5, 'pcs', 30),
+(7, 'Scissors', 1, 'pcs', 31),
+(8, 'Yarn Needle', 1, 'pcs', 31),
+(9, 'Plastic', 5, 'mm', 31),
+(10, 'Wood Dowel', 64, 'mm', 31),
+(11, 'Pendleton Wool Fabric', 64, 'cm', 31),
+(12, 'Thread', 4, 'pcs', 31),
+(13, 'Yarn', 1, 'rolls', 31);
 
 -- --------------------------------------------------------
 
@@ -168,13 +168,14 @@ CREATE TABLE `projects` (
 --
 
 INSERT INTO `projects` (`projectID`, `projectTitle`, `levelDifficulty`, `userID`, `description`, `imgURL`, `time`, `categoryID`, `tag`) VALUES
-(1, 'Simple Double Crochet Hat', 'Beginner', 0, 'The pattern in this post is for a hat worked in medium weight yarn with a 5.50 mm (I) crochet hook. I do have many other hat options available if you are using different yarn/hook sizes and I have included them below to make it easier for you to find them!', 'https://cdn3.oombawkadesigncrochet.com/wp-content/uploads/2014/02/hdc+hat+pattern+cotton+oombawkadesigncrochet1-300x199.jpg', '00:00:00', 'CAT_0', 'crochet, hat'),
-(2, 'Heart Cross Stitch', 'Beginner', 1, 'It’s that time of year. Time to pull out all the hearts and the pink, right? This year I’m sticking with the black and white theme from Christmas (remember these trees?) and keeping my Valentine’s day decor neutral. If you love geometric and graphic designs, then this simple cross stitched heart art is for you. And if you love pink, you can easily customize to your favorite color.', 'https://helloglow.co/wp-content/uploads/2014/01/cross-stitch-heart-8.jpg', '00:00:00', 'CAT_1', 'cross stitch, heart'),
-(3, 'Summer Skirt Sewing', 'Beginner', 0, 'Have you been noticing the summer trend? I’m sharing sewing tutorials/patterns and ideas every Wed.. and I’m trying to go every other week with ME {women’s} ideas and kids sewing projects. This week I’ve got a super simple summer skirt sewing tutorial for you. If you have a sewing machine collecting dust, this is the perfect project to dust it off and sew something for yourself. The skirt is easy to sew and fully sizable based on measurements…', 'https://lifesewsavory.com/wp-content/uploads/2014/07/summerskirt1-1024x871.jpg', '00:00:00', 'CAT_2', 'sewing, skirt'),
-(4, 'Herringbone Stitch Knitting', 'Advanced', 1, 'This technique is another nice way to tack up a hem. It can be applied to the cuffs, neck or hemline of a sweater. It involves two simple movements that are illustrated below.', 'http://tutorials.knitpicks.com/wp-content/uploads/2009/12/herringbone2.jpg', '00:00:00', 'CAT_3', 'knitting, herringbone, stitching'),
-(5, 'Gradient Dyed Yarn Scarf', 'Advanced', 0, 'Sometimes you don’t want a solid color when you are dyeing yarn. It is possible to achieve gradated color when dyeing at home. In our Gradated Dyeing Tutorial, we demonstrate the technique using a finished scarf knit in our Bare yarn. This method can be used on either yarn or a completed project.', 'http://cag.kp.images.s3.amazonaws.com/NING/PDFimages/109_Dyeing_11.jpg', '00:00:00', 'CAT_3', 'knitting, dyeing, yarn'),
-(29, 'Knit Sweater', '1', 5, 'cable knit sweater perfect for the winter season ', 'https://cdn.lookastic.com/beige-cable-sweater/cable-knit-sweater-original-124755.jpg', '1522725700', 'CAT_3', 'sweater'),
-(30, 'example', '2', 6, 'some description', '', '1522786538', 'CAT_2', 'sewing');
+(1, 'Half Double Crochet Hat', 'Easy', 0, 'The pattern in this post is for a hat worked in medium weight yarn with a 5.50 mm (I) crochet hook. I do have many other hat options available if you are using different yarn/hook sizes and I have included them below to make it easier for you to find them!', 'https://cdn1.oombawkadesigncrochet.com/wp-content/uploads/2014/02/hdc+hat+pattern+cotton+oombawkadesigncrochet1.jpg', '00:00:00', 'CAT_0', 'crochet, hat'),
+(2, 'Heart Cross Stitch', 'Easy', 1, '\0It\'s that time of year. Time to pull out all the hearts and the pink, right? This year I\'m sticking with the black and white theme from Christmas (remember these trees?) and keeping my Valentine\'s day decor neutral. If you love geometric and graphic designs, then this simple cross stitched heart art is for you. And if you love pink, you can easily customize to your favorite color.', 'https://helloglow.co/wp-content/uploads/2014/01/cross-stitch-heart-8.jpg', '00:00:00', 'CAT_1', 'cross stitch, heart'),
+(3, 'Summer Skirt Sewing', 'Easy', 0, 'Have you been noticing the summer trend? I\'m sharing sewing tutorials/patterns and ideas every Wed.. and I\'m trying to go every other week with ME {women\'s} ideas and kids sewing projects. This week I\'ve got a super simple summer skirt sewing tutorial for you. If you have a sewing machine collecting dust, this is the perfect project to dust it off and sew something for yourself. The skirt is easy to sew and fully sizable based on measurements...', 'https://lifesewsavory.com/wp-content/uploads/2014/07/summerskirt1-1024x871.jpg', '00:00:00', 'CAT_2', 'sewing, skirt'),
+(4, 'Herringbone Stitch Knitting', 'Intermediate', 1, 'This technique is another nice way to tack up a hem. It can be applied to the cuffs, neck or hemline of a sweater. It involves two simple movements that are illustrated below.', 'http://tutorials.knitpicks.com/wp-content/uploads/2009/12/herringbone2.jpg', '00:00:00', 'CAT_3', 'knitting, herringbone, stitching'),
+(5, 'Gradient Dyed Yarn Scarf', 'Intermediate', 0, 'Sometimes you don\'t want a solid color when you are dyeing yarn. It is possible to achieve gradated color when dyeing at home. In our Gradated Dyeing Tutorial, we demonstrate the technique using a finished scarf knit in our Bare yarn. This method can be used on either yarn or a completed project.', 'http://cag.kp.images.s3.amazonaws.com/NING/PDFimages/109_Dyeing_11.jpg', '00:00:00', 'CAT_3', 'knitting, dyeing, yarn'),
+(29, 'Knit Sweater', 'Intermediate', 5, 'cable knit sweater perfect for the winter season ', 'https://cdn.lookastic.com/beige-cable-sweater/cable-knit-sweater-original-124755.jpg', '1522725700', 'CAT_3', 'sweater'),
+(30, 'DIY Felt Narwhal', 'Easy', 4, 'Craft the high seas with our adorable-as-all-get-out felt narwhal project! Narwhals are such special sea creatures... they swim so gracefully and their unique sword-like tooth inspires such intrigue. Did you know a group of narwhals is called a blessing? Craft a few of these narwhals for a blessed blessing of your own!', 'https://s3-us-west-2.amazonaws.com/lia-griffith-media/wp-content/uploads/2017/10/Felt_Narwhal_Stuffie.jpg', '1522786538', 'CAT_2', 'sewing, felt, DIY'),
+(31, 'Pendleton Wall Hanging', 'Easy', 7, 'This stylish wall hanging is a great way to bring a sense of personality and warmth to your home. Give any space a creative and cozy feel by turning your favorite Pendleton wool fabric into a wall hanging. With just a few additional materials and a handful of simple steps, youâ€™ll be amazed at how such an easy project can yield such artistic results! A nice accent piece that can be moved from room to room, from one season to the next. This easy-to-make tapestry is both trendy and timeless â€“ have fun creating and we promise youâ€™ll enjoy it for years to come.', 'https://s3-us-west-2.amazonaws.com/lia-griffith-media/wp-content/uploads/2017/06/Blanket_Wall_Art.jpg', '1523255204', 'CAT_2', '');
 
 -- --------------------------------------------------------
 
@@ -195,9 +196,9 @@ CREATE TABLE `ratings` (
 
 INSERT INTO `ratings` (`projectID`, `rateID`, `userID`, `rating`) VALUES
 (1, 18, 3, 4),
-(1, 20, 3, 4),
-(1, 22, 3, 4),
-(1, 25, 3, 3);
+(2, 20, 3, 4),
+(3, 22, 3, 4),
+(4, 25, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -222,7 +223,17 @@ INSERT INTO `steps` (`projectID`, `stepID`, `stepnumber`, `instructions`) VALUES
 (29, 3, 1, 'prepare materials'),
 (29, 4, 2, 'cable knit 50 rows'),
 (30, 5, 1, 'step 1 '),
-(30, 6, 2, 'step 2');
+(30, 6, 2, 'step 2'),
+(31, 7, 1, 'Gather the tools and materials listed above.'),
+(31, 8, 2, 'Hem the left and right sides of the fabric to finish the edges.'),
+(31, 9, 3, 'On the bottom edge, fold over twice by 1/2â€ and pin.'),
+(31, 10, 4, 'Sew across with a straight stitch using matching thread.'),
+(31, 11, 5, 'On the top edge, create an overlock stitch to prevent unraveling by using a zigzag stitch on a regular machine or a serger.'),
+(31, 12, 6, 'Create a pocket at the top by folding over by 3â€ and sewing a straight stitch using a thread color that matches the pattern. We used the h'),
+(31, 13, 7, 'Insert the pole into the pocket.'),
+(31, 14, 8, 'Create 5â€ yarn tassels using the tutorial on our site.'),
+(31, 15, 9, 'We used nine tassels for our 62 1/2â€ wide wall hanging.'),
+(31, 16, 10, 'Use a yarn needle to sew tassels evenly spaced along the bottom edge. Knot and trim the yarn.');
 
 --
 -- Indexes for dumped tables
@@ -292,31 +303,31 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT for table `materials`
 --
 ALTER TABLE `materials`
-  MODIFY `materialID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `materialID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `members`
 --
 ALTER TABLE `members`
-  MODIFY `userID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `userID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `projectID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `projectID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `rateID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `rateID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `steps`
 --
 ALTER TABLE `steps`
-  MODIFY `stepID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `stepID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
