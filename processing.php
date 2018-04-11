@@ -1,7 +1,8 @@
 <html>
 	<body>
 
-	<?php include 'header.php';
+	<?php
+		include 'header.php';
 
 		$dbhost = "localhost";
 		$dbuser = "root";
@@ -43,7 +44,7 @@
 		    $errors[] = "difficulty cannot be blank.";
 		  }
 
-		
+
 
 		}
 		if(empty($errors)){
@@ -57,9 +58,9 @@
 
 		  	$query = "INSERT INTO steps (projectID, stepnumber, instructions) VALUES (".$projectID.", ".$s.", '".$_POST[$s.'inst']."')";
 		  	$result = mysqli_query($connection, $query);
-		  	
+
 		  	$s++	;
-	
+
 		  }
 
 		  	$m = 1;
@@ -69,9 +70,9 @@
 
 		  	$query = "INSERT INTO materials ( materialName, quantity, unit, projectID) VALUES ('".$_POST[$m.'name']."', '".$_POST[$m.'quant']."', '".$_POST[$m.'units']."', ".$projectID.")";
 		  	$result = mysqli_query($connection, $query);
-		  	
+
 		  	$m++	;
-	
+
 		  }
 
 		  echo "SUCCESSFULLY POSTED";

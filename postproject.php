@@ -35,7 +35,6 @@
                 <h3 id="mainstep"> Instructions *</h3>
                 <input type="button" id="stepAdd" value="Add Step" class="bt" />
 
-                <input type="submit" name="submit" value="SUBMIT POST">
             </div>
             <div class="post_right">
                 <h3>Project Image URL *</h3>
@@ -57,6 +56,9 @@
 
                 <h3 id="main">Tools and Materials *</h3>
                 <input type="button" id="btAdd" value="Add Item" class="bt" />
+            </div>
+            <div class="post_left">
+                <input type="submit" name="submit" value="SUBMIT POST">
             </div>
         </div>
     </form>

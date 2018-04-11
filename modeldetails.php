@@ -168,13 +168,19 @@ if(isset($_GET["projectCode"])){
         //Process details
         echo "<div class='detail_left'>";
             echo "<h3>Steps:</h3>";
-            $result = mysqli_query($connection, "SELECT instructions FROM steps WHERE projectID='".$_GET["projectCode"]."' ORDER BY stepnumber");
+            $result = mysqli_query($connection, "SELECT instructions, instruct_photo FROM steps WHERE projectID='".$_GET["projectCode"]."' ORDER BY stepnumber");
             echo "<ol class='process_list'>";
             while($row = mysqli_fetch_row($result)){ // add rows to the table
                 echo "<li>";
-                foreach($row as $i){  //with values separated by column
-                    echo " " . $i . " ";
-                }
+                    echo " " . $row[0] . " ";
+                    if($row[1]){
+
+                        echo "<img src='".$row[1]."'>";
+                    }
+                // foreach($row as $i){  //with values separated by column
+                //     echo " " . $i . " ";
+                //     echo "<img src='".$i."'>";
+                // }
                 echo "</li>";
             }
             echo "</ol>";
