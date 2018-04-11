@@ -121,7 +121,9 @@ if(isset($_GET["projectCode"])){
             $cr = mysqli_query($connection, "SELECT * FROM category WHERE categoryID='".$row[7]."'");
             $cat = mysqli_fetch_row($cr);
             echo "<p><strong>Category: </strong>".$cat[1]."</p>";
-            echo "<p><strong>Difficulty: </strong>".$row[2]."</p> <hr>";
+            $dif = mysqli_query($connection, "SELECT * FROM difficulty WHERE difficultyID ='".$row[2]."'");
+            $ldif = mysqli_fetch_row($dif);
+            echo "<p><strong>Difficulty: </strong>".$ldif[1]."</p> <hr>";
             echo "<p><strong>Tags: </strong>".$row[8]."</p>";
             if(is_logged_in()){
 

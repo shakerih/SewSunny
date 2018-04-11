@@ -274,9 +274,9 @@ option:checked {
     width: 1em;
     margin-left: -1em
 }
-img {
+.process_list li img {
     height: auto;
-    margin: 0.2em;
+    margin: 0.5em 0;
 }
 
 .br-widget {

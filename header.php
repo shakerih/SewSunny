@@ -1,7 +1,7 @@
 <?php require_once('initialize.php');?>
 <head>
 	<link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <div class="header">
 	<div class="nav_container nav_left">
