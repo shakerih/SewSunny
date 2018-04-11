@@ -203,8 +203,7 @@ if(isset($_GET["projectCode"])){
                     echo "</div>";
                 }
                 echo "<br><h3>Leave a Comment:</h3><br>";
-                echo "<form method='post' id='comform'><textarea name='comment' id='comment' rows='8' cols='100'>
-                </textarea><br><input type='submit' name='submit' value='SUBMIT COMMENT'></input></form>";
+                echo "<form method='post' id='comform'><textarea name='comment' id='comment' rows='8' cols='100' placeholder='Enter your comment here...'></textarea><br><input type='submit' name='submit' value='SUBMIT COMMENT'></input></form>";
                 echo "</div>";
             echo "</div>";
         }

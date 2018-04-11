@@ -10,22 +10,110 @@
     }
 ?>
 
+<?php
+
+  $dbhost = "localhost";
+  $dbuser = "root";
+  $dbpass = "";
+  $dbname = "sew_sunny";
+  $connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+
+  $errors = [];
+  $title = '';
+  $shortdes = '';
+  $purl = '';
+  $category = '';
+  $difficulty = '';
+  $materials = [];
+  $steps = [];
+  $tags = '';
+  $imageURL = '';
+
+  if(is_post_request()) {
+
+    $title = $_POST['title'] ?? '';
+    $shortdes = $_POST['shortdes'] ?? '';
+    $category = $_POST['category'] ?? '';
+    $difficulty = $_POST['difficulty'] ?? '';
+    $tags = $_POST['tags'] ?? '';
+    $imageURL = $_POST['purl'] ?? '';
+
+
+    // Validations
+    if(is_blank($title)) {
+      $errors[] = "Title cannot be blank.";
+    }
+    if(is_blank($shortdes)) {
+      $errors[] = "Short Description cannot be blank.";
+    }
+    if(is_blank($category)) {
+      $errors[] = "Category cannot be blank.";
+    }
+    if(is_blank($difficulty)) {
+      $errors[] = "Difficulty cannot be blank.";
+    }
+    if(is_blank($imageURL)) {
+      $imageURL = "image/no_image_available.jpeg";
+    }
+
+
+
+  if(empty($errors)){
+     date_default_timezone_set("Canada/Pacific");
+    $query = "INSERT INTO projects (projectTitle, levelDifficulty, userID, description, imgURL, time, categoryID, tag ) VALUES ('".$title."', ".$difficulty.", ".$_SESSION['userID'].", '".$shortdes."', '".$imageURL."', '".date('Y-m-d H:i')."', '".$category."', '".$tags."')";
+    $result = mysqli_query($connection, $query);
+    $projectID = mysqli_insert_id($connection);
+    $s = 1;
+
+    while(isset($_POST[$s.'inst'])){
+    //  array_push($steps, [ $_POST[$s.'inst'], $_POST[$s.'url'] ?? '']);
+
+      $query = "INSERT INTO steps (projectID, stepnumber, instructions) VALUES (".$projectID.", ".$s.", '".$_POST[$s.'inst']."')";
+      $result = mysqli_query($connection, $query);
+
+      $s++  ;
+
+    }
+
+      $m = 1;
+
+    while(isset($_POST[$m.'quant'])){
+    //  array_push($steps, [ $_POST[$s.'inst'], $_POST[$s.'url'] ?? '']);
+
+      $query = "INSERT INTO materials ( materialName, quantity, unit, projectID) VALUES ('".$_POST[$m.'name']."', '".$_POST[$m.'quant']."', '".$_POST[$m.'units']."', ".$projectID.")";
+      $result = mysqli_query($connection, $query);
+
+      $m++  ;
+
+    }
+
+    // echo $projectID;
+    // redirect to new posted project if posted project successfully
+    header("Location: modeldetails.php?projectCode=".$projectID);
+  }
+
+
+}
+?>
+
 <div class="header_space"></div>
 <div class="content_container">
-    <form id="all" name="all" action="processing.php" method="post">
+    <form id="all" name="all" action="postproject.php" method="post">
 
         <h2>The Basics</h2> <p>*indicates required fields</p>
+        <?php echo display_errors($errors); ?>
         <div class="post_wrapper">
             <!-- display error -->
-            <?php if (isset($_GET['errors'])) { //read error from URL?>
+            <?php if (isset($_GET['error'])) { //read error from URL?>
                 <span style="color:red">
-                    <?php echo str_replace(",","<br>",$_GET['errors'])."<br>"; ?>
+                    <?php echo str_replace(",","<br>",$_GET['error'])."<br>"; ?>
                 </span>
-            <?php } ?>
+
+            <?php echo $_GET['error']; } ?>
 
             <div class="post_left">
                 <h3>Project Title *</h3>
-                <input type="text" name="title" autofocus>
+                <input type="text" name="title" autofocus value="<?php echo htmlspecialchars($title); ?>">
 
                 <h3>Short Description *</h3>
                 <textarea name="shortdes" rows="5" id="shortdes" form="all" placeholder="Enter description here..." ></textarea>
@@ -37,7 +125,7 @@
                 <input type="button" id="stepAdd" value="Add Step" class="bt" />
             </div>
             <div class="post_right">
-                <h3>Project Image URL *</h3>
+                <h3>Project Image URL</h3>
                 <input type="text" name="purl" >
                 <h3>Category *</h3>
                 <select name="category" size="0" >
@@ -49,13 +137,14 @@
                 </select>
                 <h3>Difficulty *</h3>
                 <select name="difficulty" size="0" >
-                    <option value="0" selected>Easy</option>
+                    <option value="" selected>-- Select One --</option>
+                    <option value="0">Easy</option>
                     <option value="1">Intermediate</option>
                     <option value="2">Difficult</option>
                 </select>
 
                 <h3 id="main">Tools and Materials *</h3>
-                <input type="button" id="btAdd" value="Add Item" class="bt" />
+                <input type="button" id="btAdd" name="materials" value="Add Item" class="bt" />
             </div>
             <div class="post_left">
                 <input type="submit" name="submit" value="SUBMIT POST">

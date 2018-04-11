@@ -6,6 +6,13 @@
   if(!is_logged_in()){
 	  header("Location: index.php");
   }
+  ?>
+
+  <div class="header_space"></div>
+  <div class="content_container">
+	  <h2>
+
+  <?php
 
     $dbhost = "localhost";
     $dbuser = "root";
@@ -16,6 +23,7 @@
     $errors = [];
     $title = '';
     $shortdes = '';
+	$purl = '';
     $category = '';
     $difficulty = '';
     $materials = [];
@@ -27,6 +35,7 @@
 
       $title = $_POST['title'] ?? '';
       $shortdes = $_POST['shortdes'] ?? '';
+	  $purl = $_POST['purl'] ?? '';
       $category = $_POST['category'] ?? '';
       $difficulty = $_POST['difficulty'] ?? '';
       $tags = $_POST['tags'] ?? '';
@@ -35,16 +44,19 @@
 
       // Validations
       if(is_blank($title)) {
-        $errors[] = "title cannot be blank.";
+        $errors[] = "Title cannot be blank.";
       }
       if(is_blank($shortdes)) {
         $errors[] = "Short Description cannot be blank.";
+      }
+	  if(is_blank($purl)) {
+        $errors[] = "Project Image (URL) cannot be blank.";
       }
       if(is_blank($category)) {
         $errors[] = "Category cannot be blank.";
       }
       if(is_blank($difficulty)) {
-        $errors[] = "difficulty cannot be blank.";
+        $errors[] = "Difficulty cannot be blank.";
       }
 
 
@@ -81,8 +93,14 @@
       echo "SUCCESSFULLY POSTED";
 
 
-    } else echo $errors[0];
-  ?>
+  } else {
+	  // header("Location: {$_SERVER['HTTP_REFERER']}");
+	  // exit;
+	  echo $errors[0];
 
+  }
+  ?>
+</h2>
+</div>
   </body>
 </html>
