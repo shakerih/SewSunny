@@ -17,7 +17,7 @@
         echo "<div class='header_space'></div>";
         echo "<div class='content_container'>";
         echo "<h2>Pinned Projects</h2>";
-        $query = "SELECT projects.projectID, projects.projectTitle, projects.description, projects.tag, projects.imgURL, category.categoryName FROM projects INNER JOIN category ON projects.categoryID = category.categoryID INNER JOIN (SELECT projectID FROM favourite_project WHERE userID=".$_SESSION['userID'].") AS fave ON projects.projectID = fave.projectID";
+        $query = "SELECT projects.projectID, projects.projectTitle, projects.description, projects.tag, projects.imgURL, category.categoryName FROM projects INNER JOIN category ON projects.categoryID = category.categoryID INNER JOIN (SELECT projectID FROM favourite_project WHERE userID=".$_SESSION['userID'].") AS fave ON projects.projectID = fave.projectID ORDER BY projects.projectID";
 
         echo "<div class='project_container'>";
         $result = mysqli_query($connection, $query);
