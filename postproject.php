@@ -90,7 +90,7 @@ if(empty($errors)){
 
     // echo $projectID;
     // redirect to new posted project if posted project successfully
-    header("Location: modeldetails.php?projectCode=".$projectID);
+    header("Location: projectdetails.php?projectCode=".$projectID);
   }
 
 

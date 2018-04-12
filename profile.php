@@ -36,6 +36,27 @@
             // if the current profile user name matchs current session username, display register information and allow edit/update
             if($currentProfile == $_SESSION['username']){
                 echo "<h2>".$currentProfile."</h2>";
+
+                echo "<hr>";
+                echo "<div class='project_container'>";
+                    echo "<div class='detail_left'>";
+                    echo "<h3>Profile: <input type='button' name='editProfile' value='EDIT'></h3>";
+                        $memInfo = mysqli_query($connection, "SELECT username, name, email, password FROM members WHERE username='".$currentProfile."'");
+                        while($row = mysqli_fetch_row($memInfo)){ // add rows to the table
+                            echo "<form>";
+                                echo "<p>Name:</p>";
+                                echo "<input type='text' name='name' value='".$row[1]."' disabled>";
+                                echo "<p>Username:</p>";
+                                echo "<input type='text' name='username' value='".$row[0]."' disabled>";
+                                echo "<p>Email:</p>";
+                                echo "<input type='text' name='email' value='".$row[2]."' disabled>";
+                                echo "<p>Password:</p>";
+                                echo "<input type='text' name='password' value='".$row[3]."' disabled>";
+                            echo "</form>";
+                        }
+                        // echo "<input type='button' name='editProfile' value='EDIT'>";
+                    echo "</div>";
+                echo "</div>";
             }else {
                 echo "<h2>".$currentProfile."&#39;s Activity</h2>";
             };
@@ -74,24 +95,24 @@
                 }
             }
             else {
-                echo "<div class='project_item'>";
+                // echo "<div class='project_item'>";
                     echo "<p>".$currentProfile. " does not have any project.</p>";
-                echo "</div>";
+                // echo "</div>";
             }
-            echo "<div class='detail_left'>";
-            echo "<hr>";
-            echo "<h3>Comments:</h3>";
 
-                $memComment = mysqli_query($connection, "SELECT members.username, comment.time, comment.comment FROM comment INNER JOIN members ON comment.userID = members.userID WHERE members.username='".$currentProfile."'");
+                $memComment = mysqli_query($connection, "SELECT members.username, comment.time, comment.comment, projects.projectTitle, projects.projectID FROM comment INNER JOIN projects ON comment.projectID = projects.projectID INNER JOIN members ON comment.userID = members.userID WHERE members.username='".$currentProfile."'");
                 if(mysqli_num_rows($memComment)){
+                    echo "<div class='detail_left'>";
+                    echo "<hr>";
+                    echo "<h3>Review:</h3>";
                     while($row = mysqli_fetch_row($memComment)){ // add rows to the table
                         echo "<div class='comment_block'>";
-                            echo "<p class='comment_name'>" . $row[0] . "</p>";
-                            echo "<p class='comment_time'>" . $row[1] . "</p>";
+                            echo "<p><span class='comment_name'>" . $row[0] ."</span> commented on <a href='modeldetails.php?projectCode=". $row[4]."'>".$row[3] . "</a><span class='comment_time'> on ".$row[1]."</span></p>";
                             echo "<p class='comment_text'>" . $row[2] . "</p>";
                             echo "<hr>";
                         echo "</div>";
                     }
+                    echo "</div>";
                 } else {
                     echo "<p>".$currentProfile. " did not make any comment.</p>";
                 }

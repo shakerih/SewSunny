@@ -51,7 +51,7 @@
         //  exit();
         //  echo $_SESSION['callback_url'];
         // }else{
-        //  header("location:  http://". $_SERVER['SERVER_NAME'] ."/hshakeri/a4/hshakeri/a4/showmodels.php");
+        //  header("location:  http://". $_SERVER['SERVER_NAME'] ."/hshakeri/a4/hshakeri/a4/showprojects.php");
         //  exit();
         //}
 

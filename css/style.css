@@ -19,6 +19,7 @@ h3, .detail_right p strong {
     margin: 1.2em 0 0.5em;
     color: #333847;
 }
+
 p {
     color: #8F94A3;
 }
@@ -120,6 +121,7 @@ img {
 
 .project_container {
     width: 100%;
+    margin-top: 1em;
     display: grid;
     /* grid-template-columns: auto auto auto; */
     grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
@@ -193,6 +195,9 @@ input {
     width: 100%;
     border: 1px solid lightGray;
 }
+input:disabled {
+    background: #F9EDED;
+}
 input:focus, textarea:focus, select:focus {
     outline: 1px solid #F8938A;
     border: 1px solid #F8938A;
@@ -222,6 +227,14 @@ input[type=submit].pin_button {
 }
 input[type=button] {
     background: lightGray;
+}
+h3 input[type=button] {
+    width: 10%;
+    text-align: center;
+    float: right;
+    line-height: 17px;
+    padding: 2px 0;
+    margin: 0;
 }
 
 select {
@@ -316,14 +329,18 @@ option:checked {
 .comment_block {
     padding-left: 1em;
 }
-p.comment_name {
+span.comment_name {
     color: #F8938A;
     margin-bottom: 0.25em;
 }
-p.comment_time {
+span.comment_time {
     font-size: 13px;
     margin: 0.25em 0;
 }
+.comment_text {
+    font-size: 17px;
+}
+
 textarea {
     width: 100%;
     height: 80px;

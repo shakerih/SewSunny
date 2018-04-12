@@ -154,7 +154,7 @@ if(isset($_GET["projectCode"])){
         echo "<div class='detail_right'>";
             $author = mysqli_query($connection, "SELECT username FROM members WHERE userID='".$row[3]."'");
             $authorID= mysqli_fetch_row($author);
-            echo "<p><strong>Owner: </strong>".$authorID[0]."</p>";
+            echo "<p><strong>Owner: </strong><a href='profile.php?profileCode=".$authorID[0]."'>".$authorID[0]."</a></p>";
             echo "<p><strong>Posted: </strong>".$row[6]."</p> <hr>";
 
             $cr = mysqli_query($connection, "SELECT * FROM category WHERE categoryID='".$row[7]."'");
@@ -184,7 +184,7 @@ if(isset($_GET["projectCode"])){
                 // if($numrows > 0) $avgrating = intdiv( $avgrating ,$numrows);
                 //   echo $avgrating;
 
-                echo '<form name="rateform" id="'.$avgrating.'" method="post" action="modeldetails.php"><select id="example">
+                echo '<form name="rateform" id="'.$avgrating.'" method="post" action="projectdetails.php"><select id="example">
                 <option value=""></option>
                 <option value="1">1</option>
                 <option value="2">2</option>
