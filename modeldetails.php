@@ -92,10 +92,40 @@ if(mysqli_connect_errno()) {
 
 <?php
 
-if(isset($_POST['pin'])){
-    $result = mysqli_query($connection, "INSERT INTO favourite_project (userID, projectID) VALUES(".$_SESSION['userID'].", ".$_GET["projectCode"].")");
+// INSERT INTO favourite_project (userID,projectID)
+// SELECT 7, 3
+//    WHERE NOT EXISTS (SELECT * FROM favourite_project
+//                      WHERE userID=7 AND projectID=3)
 
+// object(mysqli_result)#3 (5) {
+//   ["current_field"]=&gt;
+//   int(0)
+//   ["field_count"]=&gt;
+//   int(2)
+//   ["lengths"]=&gt;
+//   NULL
+//   ["num_rows"]=&gt;
+//   int(1)
+//   ["type"]=&gt;
+//   int(0)
+// }
+
+// check if current project exist in the favourite_project table with same userID and projectID
+$checkPin = mysqli_query($connection, "SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".$_GET['projectCode']);
+// printf(mysqli_num_rows($checkPin));
+// if project exist
+if (mysqli_num_rows($checkPin)){
+    $pinText = "ALREADY PINNED";
+} else {
+    $pinText = "PIN TO PINBOARD";
 }
+
+if(isset($_POST['pin']) & !mysqli_num_rows($checkPin)){
+    $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) VALUES(". $_SESSION['userID']. "," . $_GET['projectCode'].")");
+    // $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) SELECT ".$_SESSION['userID'].",".$_GET['projectCode'] . " WHERE NOT EXISTS (SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".$_GET['projectCode'] .")");
+    $pinText = "ALREADY PINNED";
+}
+
 
 if(isset($_GET["projectCode"])){
     //send query and catch error
@@ -148,7 +178,7 @@ if(isset($_GET["projectCode"])){
                 </select></form>';
 
                 echo "<hr>";
-                echo "<form method='post'> <input class='pin_button' type='submit' name='pin'  value='PIN TO PINBOARD'/></form>";
+                echo "<form method='post'> <input class='pin_button' type='submit' name='pin' value='".$pinText."'/></form>";
             }
         echo "</div>";
 
