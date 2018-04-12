@@ -20,7 +20,7 @@
 	</div>
 	<div class="nav_container nav_right">
 		<?php if(is_logged_in()){
-			echo "<a href='profile.php'> <img src='image/user.png'> &nbsp;".$_SESSION['username']."&nbsp; PROFILE</a>";
+			echo "<a href='profile.php?profileCode=".$_SESSION['username']."'> <img src='image/user.png'> &nbsp;".$_SESSION['username']."&nbsp; PROFILE</a>";
 			echo "<a href='login.php'>LOG OUT</a>";
 		} else
 		echo "<a href='login.php'>LOGIN / SIGN UP</a>";
