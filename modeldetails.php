@@ -33,6 +33,7 @@ $( document ).ready(function(){
 
             // log data to the console so we can see
             console.log(data);
+            location.reload();
 
             // here we will handle errors and validation messages
         });
@@ -42,7 +43,7 @@ $( document ).ready(function(){
     });
 
     $('#comform').submit(function(event) {
-        console.log('kkkkk');
+        // console.log('kkkkk');
         event.preventDefault();
         // get the form data
         // there are many ways to get this data using jQuery (you can use the class or id also)
@@ -62,6 +63,7 @@ $( document ).ready(function(){
         // using the done promise callback
         .done(function(data) {
             console.log(data);
+            location.reload();
         });
 
         // stop the form from submitting the normal way and refreshing the page
@@ -165,7 +167,7 @@ if(isset($_GET["projectCode"])){
             if(is_logged_in()){
 
                 echo "<hr>";
-                
+
                 $resultr = mysqli_query($connection, "SELECT rating FROM ratings WHERE projectID='".$_SESSION['currproject']."'");
                 $avgrating = 0;
                 $numrows = 0;
@@ -182,7 +184,7 @@ if(isset($_GET["projectCode"])){
                 // if($numrows > 0) $avgrating = intdiv( $avgrating ,$numrows);
                 //   echo $avgrating;
 
-                echo '<form name="rateform" id="'.$avgrating.'" method="post"><select id="example">
+                echo '<form name="rateform" id="'.$avgrating.'" method="post" action="modeldetails.php"><select id="example">
                 <option value=""></option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -224,10 +226,6 @@ if(isset($_GET["projectCode"])){
 
                         echo "<img src='".$row[1]."'>";
                     }
-                // foreach($row as $i){  //with values separated by column
-                //     echo " " . $i . " ";
-                //     echo "<img src='".$i."'>";
-                // }
                 echo "</li>";
             }
             echo "</ol>";
