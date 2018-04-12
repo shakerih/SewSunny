@@ -109,21 +109,23 @@ if(mysqli_connect_errno()) {
 //   ["type"]=&gt;
 //   int(0)
 // }
+if(is_logged_in()){
+    // check if current project exist in the favourite_project table with same userID and projectID
+    $checkPin = mysqli_query($connection, "SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".$_GET['projectCode']);
+    // printf(mysqli_num_rows($checkPin));
+    // if project exist
+    if (mysqli_num_rows($checkPin)){
+        $pinText = "ALREADY PINNED";
+    } else {
+        $pinText = "PIN TO PINBOARD";
+    }
 
-// check if current project exist in the favourite_project table with same userID and projectID
-$checkPin = mysqli_query($connection, "SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".$_GET['projectCode']);
-// printf(mysqli_num_rows($checkPin));
-// if project exist
-if (mysqli_num_rows($checkPin)){
-    $pinText = "ALREADY PINNED";
-} else {
-    $pinText = "PIN TO PINBOARD";
-}
 
-if(isset($_POST['pin']) & !mysqli_num_rows($checkPin)){
-    $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) VALUES(". $_SESSION['userID']. "," . $_GET['projectCode'].")");
-    // $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) SELECT ".$_SESSION['userID'].",".$_GET['projectCode'] . " WHERE NOT EXISTS (SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".$_GET['projectCode'] .")");
-    $pinText = "ALREADY PINNED";
+    if(isset($_POST['pin']) & !mysqli_num_rows($checkPin)){
+        $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) VALUES(". $_SESSION['userID']. "," . $_GET['projectCode'].")");
+        // $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) SELECT ".$_SESSION['userID'].",".$_GET['projectCode'] . " WHERE NOT EXISTS (SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".$_GET['projectCode'] .")");
+        $pinText = "ALREADY PINNED";
+    }
 }
 
 
@@ -148,6 +150,11 @@ if(isset($_GET["projectCode"])){
         echo "</div>";
 
         echo "<div class='detail_right'>";
+            $author = mysqli_query($connection, "SELECT username FROM members WHERE userID='".$row[3]."'");
+            $authorID= mysqli_fetch_row($author);
+            echo "<p><strong>Owner: </strong>".$authorID[0]."</p>";
+            echo "<p><strong>Posted: </strong>".$row[6]."</p> <hr>";
+
             $cr = mysqli_query($connection, "SELECT * FROM category WHERE categoryID='".$row[7]."'");
             $cat = mysqli_fetch_row($cr);
             echo "<p><strong>Category: </strong>".$cat[1]."</p>";

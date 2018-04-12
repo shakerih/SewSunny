@@ -128,10 +128,16 @@ img {
     position: relative;
     /* text-align: center; */
 }
-.project_category {
+.project_category,.project_author, .pinfo {
     color: #C1C3C5;
     font-size: 13px;
     text-transform: uppercase;
+}
+.pinfo {
+    text-transform: none;
+}
+.project_author {
+    text-transform: none;
 }
 
 .overlay {
