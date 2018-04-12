@@ -58,8 +58,9 @@
 
 
 
-  if(empty($errors)){
-     date_default_timezone_set("Canada/Pacific");
+if(empty($errors)){
+    // set time to Canada Pacific time
+    date_default_timezone_set("Canada/Pacific");
     $query = "INSERT INTO projects (projectTitle, levelDifficulty, userID, description, imgURL, time, categoryID, tag ) VALUES ('".$title."', ".$difficulty.", ".$_SESSION['userID'].", '".$shortdes."', '".$imageURL."', '".date('Y-m-d H:i')."', '".$category."', '".$tags."')";
     $result = mysqli_query($connection, $query);
     $projectID = mysqli_insert_id($connection);
@@ -169,7 +170,7 @@
                 iCnt = iCnt + 1;
 
                 // ADD TEXTBOX.
-                $(container).append('Material '+iCnt+' <br><input type="number" name="'+iCnt+'quant" value="enter quantity"><select name="'+iCnt+'units" size="0" ><option value="pounds" selected>lbs</option><option value="cm">cm</option><option value="meter">meters</option><option value="pcs">pcs</option> <option value="rolls">rolls</option><option value="kg">kg</option><option value="items">items</option><option value="mm">mm</option></select><input type="text" name="'+iCnt+'name" value="material name"><br>');
+                $(container).append('Material '+iCnt+' <br><input type="number" name="'+iCnt+'quant" value="enter quantity"><select name="'+iCnt+'units" size="0" ><option value="" selected>-- Select One --</option><option value="pounds">lbs</option><option value="cm">cm</option><option value="meter">meters</option><option value="pcs">pcs</option> <option value="rolls">rolls</option><option value="kg">kg</option><option value="items">items</option><option value="mm">mm</option></select><input type="text" name="'+iCnt+'name" value="material name"><br>');
 
 
                 // ADD BOTH THE DIV ELEMENTS TO THE "main" CONTAINER.

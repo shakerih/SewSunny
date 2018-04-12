@@ -55,6 +55,7 @@ hr {
     position: fixed;
     z-index: 500;
     box-shadow: 0px -5px 25px 5px #242733 !important;
+    text-align: center;
 }
 .nav_container {
     padding: 0 7em;
@@ -73,19 +74,28 @@ hr {
     color: #F0F1E9;
     text-decoration: none;
 }
-.nav_left {
+.nav_logo {
     float: left;
-    padding: 0 8em;
+    padding: 0 1em 0 8em;
 }
-.nav_left a {
+.nav_logo a {
     font-family: 'Gugi', cursive;
     /* color: white; */
     /* color: #ffafa1; */
     font-size: 20px;
     padding: 0;
 }
+.nav_left {
+    float: left;
+    padding: 0;
+}
 .nav_right {
     float: right;
+}
+.nav_right a img {
+    width: 25px;
+    height: auto;
+    vertical-align: middle;
 }
 
 img {
@@ -288,6 +298,9 @@ option:checked {
 .br-widget {
     margin: 1.5em 0;
     height: 1em !important;
+}
+.br-theme-fontawesome-stars .br-widget a:after {
+  color: #E5D8D7 !important;
 }
 .br-theme-fontawesome-stars .br-widget a.br-active:after {
   color: #F8938A !important;

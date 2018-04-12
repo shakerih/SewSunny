@@ -160,10 +160,12 @@ if(isset($_GET["projectCode"])){
             echo "<p><strong>Category: </strong>".$cat[1]."</p>";
             $dif = mysqli_query($connection, "SELECT * FROM difficulty WHERE difficultyID ='".$row[2]."'");
             $ldif = mysqli_fetch_row($dif);
-            echo "<p><strong>Difficulty: </strong>".$ldif[1]."</p> <hr>";
+            echo "<p><strong>Difficulty: </strong>".$ldif[1]."</p>";
             echo "<p><strong>Tags: </strong>".$row[8]."</p>";
             if(is_logged_in()){
 
+                echo "<hr>";
+                
                 $resultr = mysqli_query($connection, "SELECT rating FROM ratings WHERE projectID='".$_SESSION['currproject']."'");
                 $avgrating = 0;
                 $numrows = 0;
@@ -173,16 +175,22 @@ if(isset($_GET["projectCode"])){
                         $numrows += 1;
                     }
                 }
-                if($numrows > 0) $avgrating = intdiv( $avgrating ,$numrows);
+                if($numrows > 0) {
+                    $rateDisplay = bcdiv( $avgrating, $numrows, 2);
+                    $avgrating = intdiv( $avgrating, $numrows);
+                }
+                // if($numrows > 0) $avgrating = intdiv( $avgrating ,$numrows);
                 //   echo $avgrating;
 
                 echo '<form name="rateform" id="'.$avgrating.'" method="post"><select id="example">
+                <option value=""></option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
                 </select></form>';
+                echo "<p>".number_format($rateDisplay, 1). " average based on " . $numrows . " reviews. </p>";
 
                 echo "<hr>";
                 echo "<form method='post'> <input class='pin_button' type='submit' name='pin' value='".$pinText."'/></form>";
