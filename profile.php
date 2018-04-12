@@ -27,28 +27,75 @@
 ?>
         <div class="header_space"></div>
         <div class="content_container">
-            <h2><?php echo($currentProfile) ?>&#39;s projects</h2>
-            <div class='project_container'>
-<!-- WHERE userID=".$_SESSION['userID'] $memProjectQ  $memProjectList-->
+            <!-- <h2><?php //echo($currentProfile) ?>&#39;s Activity</h2>
+            <hr>
+            <h3>Projects:</h3>
+            <div class='project_container'> -->
+
             <?php
+            // if the current profile user name matchs current session username, display register information and allow edit/update
+            if($currentProfile == $_SESSION['username']){
+                echo "<h2>".$currentProfile."</h2>";
+            }else {
+                echo "<h2>".$currentProfile."&#39;s Activity</h2>";
+            };
+
+
+            ?>
+
+
+            <!-- <h2><?php //echo($currentProfile) ?>&#39;s Activity</h2>
+            <hr>
+            <h3>Projects:</h3>
+            <div class='project_container'> -->
+
+            <?php
+            echo "<hr>";
+            echo "<h3>Projects:</h3>";
+            echo "<div class='project_container'>";
 
             $memProjectQ = "SELECT projects.projectID, projects.projectTitle, projects.description, projects.tag, projects.imgURL, category.categoryName, members.username FROM projects INNER JOIN category ON projects.categoryID = category.categoryID INNER JOIN members ON projects.userID=members.userID WHERE projects.userID=(SELECT members.userID FROM members WHERE members.username='".$currentProfile."') ORDER BY projects.projectID";
 
             // echo "<div class='project_container'>";
             $memProjectList = mysqli_query($connection, $memProjectQ);
-            // add rows to the table
-            while($row = mysqli_fetch_row($memProjectList)){
-                echo "<div class='project_item'>";
-                    echo "<div class='project'>";
+            if(mysqli_num_rows($memProjectList)){
+                // add rows to the table
+                while($row = mysqli_fetch_row($memProjectList)){
+                    echo "<div class='project_item'>";
+                        echo "<div class='project'>";
                         // echo "<div class='img_overlay'></div>";
                         echo "<a href='modeldetails.php?projectCode=". $row[0]."'>" . "<div class='overlay'></div>" . "<img src='". $row[4] . "'>" . "</a>";
                         // echo "<img src='". $row[4] . "'><br>";
                         echo "<a href='modeldetails.php?projectCode=". $row[0]."'>" . $row[1] ."</a> </br>";
                         echo "<span class='project_category'> ".$row[5]. "</span> <span class='pinfo'> by </span>";
-                        echo "<a class='project_author' href='modeldetails.php?projectCode=". $row[0]."'>".$currentProfile. "</a></br>";
+                        echo "<a class='project_author' href='profile.php?profileCode=". $row[6]."'>".$row[6] . "</a></br>";
+                        echo "</div>";
                     echo "</div>";
+                }
+            }
+            else {
+                echo "<div class='project_item'>";
+                    echo "<p>".$currentProfile. " does not have any project.</p>";
                 echo "</div>";
             }
+            echo "<div class='detail_left'>";
+            echo "<hr>";
+            echo "<h3>Comments:</h3>";
+
+                $memComment = mysqli_query($connection, "SELECT members.username, comment.time, comment.comment FROM comment INNER JOIN members ON comment.userID = members.userID WHERE members.username='".$currentProfile."'");
+                if(mysqli_num_rows($memComment)){
+                    while($row = mysqli_fetch_row($memComment)){ // add rows to the table
+                        echo "<div class='comment_block'>";
+                            echo "<p class='comment_name'>" . $row[0] . "</p>";
+                            echo "<p class='comment_time'>" . $row[1] . "</p>";
+                            echo "<p class='comment_text'>" . $row[2] . "</p>";
+                            echo "<hr>";
+                        echo "</div>";
+                    }
+                } else {
+                    echo "<p>".$currentProfile. " did not make any comment.</p>";
+                }
+            echo "</div>";
             ?>
 
             </div>
