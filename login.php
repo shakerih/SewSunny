@@ -33,7 +33,7 @@
                 if(password_verify($password, $admin['password'])) {
                     // password matches
                     log_in_admin($admin);
-                    header("showmodels.php");
+                    header("showprojects.php");
                 } else {
                     // username found, but password does not match
                     $errors[] = $login_failure_msg;

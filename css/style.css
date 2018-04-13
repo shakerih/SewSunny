@@ -19,6 +19,7 @@ h3, .detail_right p strong {
     margin: 1.2em 0 0.5em;
     color: #333847;
 }
+
 p {
     color: #8F94A3;
 }
@@ -55,6 +56,7 @@ hr {
     position: fixed;
     z-index: 500;
     box-shadow: 0px -5px 25px 5px #242733 !important;
+    text-align: center;
 }
 .nav_container {
     padding: 0 7em;
@@ -73,19 +75,28 @@ hr {
     color: #F0F1E9;
     text-decoration: none;
 }
-.nav_left {
+.nav_logo {
     float: left;
-    padding: 0 8em;
+    padding: 0 1em 0 8em;
 }
-.nav_left a {
+.nav_logo a {
     font-family: 'Gugi', cursive;
     /* color: white; */
     /* color: #ffafa1; */
     font-size: 20px;
     padding: 0;
 }
+.nav_left {
+    float: left;
+    padding: 0;
+}
 .nav_right {
     float: right;
+}
+.nav_right a img {
+    width: 22px;
+    height: auto;
+    vertical-align: middle;
 }
 
 img {
@@ -110,6 +121,7 @@ img {
 
 .project_container {
     width: 100%;
+    margin-top: 1em;
     display: grid;
     /* grid-template-columns: auto auto auto; */
     grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
@@ -128,10 +140,16 @@ img {
     position: relative;
     /* text-align: center; */
 }
-.project_category {
+.project_category,.project_author, .pinfo {
     color: #C1C3C5;
     font-size: 13px;
     text-transform: uppercase;
+}
+.pinfo {
+    text-transform: none;
+}
+.project_author {
+    text-transform: none;
 }
 
 .overlay {
@@ -177,6 +195,9 @@ input {
     width: 100%;
     border: 1px solid lightGray;
 }
+input:disabled {
+    background: #F9EDED;
+}
 input:focus, textarea:focus, select:focus {
     outline: 1px solid #F8938A;
     border: 1px solid #F8938A;
@@ -206,6 +227,14 @@ input[type=submit].pin_button {
 }
 input[type=button] {
     background: lightGray;
+}
+h3 input[type=button] {
+    width: 10%;
+    text-align: center;
+    float: right;
+    line-height: 17px;
+    padding: 2px 0;
+    margin: 0;
 }
 
 select {
@@ -283,6 +312,9 @@ option:checked {
     margin: 1.5em 0;
     height: 1em !important;
 }
+.br-theme-fontawesome-stars .br-widget a:after {
+  color: #E5D8D7 !important;
+}
 .br-theme-fontawesome-stars .br-widget a.br-active:after {
   color: #F8938A !important;
 }
@@ -297,14 +329,18 @@ option:checked {
 .comment_block {
     padding-left: 1em;
 }
-p.comment_name {
+p.comment_name, span.comment_name {
     color: #F8938A;
     margin-bottom: 0.25em;
 }
-p.comment_time {
+p.comment_time, span.comment_time {
     font-size: 13px;
     margin: 0.25em 0;
 }
+.comment_text {
+    font-size: 17px;
+}
+
 textarea {
     width: 100%;
     height: 80px;

@@ -33,6 +33,7 @@ $( document ).ready(function(){
 
             // log data to the console so we can see
             console.log(data);
+            location.reload();
 
             // here we will handle errors and validation messages
         });
@@ -42,7 +43,7 @@ $( document ).ready(function(){
     });
 
     $('#comform').submit(function(event) {
-        console.log('kkkkk');
+        // console.log('kkkkk');
         event.preventDefault();
         // get the form data
         // there are many ways to get this data using jQuery (you can use the class or id also)
@@ -62,6 +63,7 @@ $( document ).ready(function(){
         // using the done promise callback
         .done(function(data) {
             console.log(data);
+            location.reload();
         });
 
         // stop the form from submitting the normal way and refreshing the page
@@ -109,21 +111,23 @@ if(mysqli_connect_errno()) {
 //   ["type"]=&gt;
 //   int(0)
 // }
+if(is_logged_in()){
+    // check if current project exist in the favourite_project table with same userID and projectID
+    $checkPin = mysqli_query($connection, "SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".$_GET['projectCode']);
+    // printf(mysqli_num_rows($checkPin));
+    // if project exist
+    if (mysqli_num_rows($checkPin)){
+        $pinText = "ALREADY PINNED";
+    } else {
+        $pinText = "PIN TO PINBOARD";
+    }
 
-// check if current project exist in the favourite_project table with same userID and projectID
-$checkPin = mysqli_query($connection, "SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".$_GET['projectCode']);
-// printf(mysqli_num_rows($checkPin));
-// if project exist
-if (mysqli_num_rows($checkPin)){
-    $pinText = "ALREADY PINNED";
-} else {
-    $pinText = "PIN TO PINBOARD";
-}
 
-if(isset($_POST['pin']) & !mysqli_num_rows($checkPin)){
-    $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) VALUES(". $_SESSION['userID']. "," . $_GET['projectCode'].")");
-    // $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) SELECT ".$_SESSION['userID'].",".$_GET['projectCode'] . " WHERE NOT EXISTS (SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".$_GET['projectCode'] .")");
-    $pinText = "ALREADY PINNED";
+    if(isset($_POST['pin']) & !mysqli_num_rows($checkPin)){
+        $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) VALUES(". $_SESSION['userID']. "," . $_GET['projectCode'].")");
+        // $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) SELECT ".$_SESSION['userID'].",".$_GET['projectCode'] . " WHERE NOT EXISTS (SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".$_GET['projectCode'] .")");
+        $pinText = "ALREADY PINNED";
+    }
 }
 
 
@@ -148,14 +152,21 @@ if(isset($_GET["projectCode"])){
         echo "</div>";
 
         echo "<div class='detail_right'>";
+            $author = mysqli_query($connection, "SELECT username FROM members WHERE userID='".$row[3]."'");
+            $authorID= mysqli_fetch_row($author);
+            echo "<p><strong>Owner: </strong><a href='profile.php?profileCode=".$authorID[0]."'>".$authorID[0]."</a></p>";
+            echo "<p><strong>Posted: </strong>".$row[6]."</p> <hr>";
+
             $cr = mysqli_query($connection, "SELECT * FROM category WHERE categoryID='".$row[7]."'");
             $cat = mysqli_fetch_row($cr);
             echo "<p><strong>Category: </strong>".$cat[1]."</p>";
             $dif = mysqli_query($connection, "SELECT * FROM difficulty WHERE difficultyID ='".$row[2]."'");
             $ldif = mysqli_fetch_row($dif);
-            echo "<p><strong>Difficulty: </strong>".$ldif[1]."</p> <hr>";
+            echo "<p><strong>Difficulty: </strong>".$ldif[1]."</p>";
             echo "<p><strong>Tags: </strong>".$row[8]."</p>";
             if(is_logged_in()){
+
+                echo "<hr>";
 
                 $resultr = mysqli_query($connection, "SELECT rating FROM ratings WHERE projectID='".$_SESSION['currproject']."'");
                 $avgrating = 0;
@@ -166,16 +177,22 @@ if(isset($_GET["projectCode"])){
                         $numrows += 1;
                     }
                 }
-                if($numrows > 0) $avgrating = intdiv( $avgrating ,$numrows);
+                if($numrows > 0) {
+                    $rateDisplay = bcdiv( $avgrating, $numrows, 2);
+                    $avgrating = intdiv( $avgrating, $numrows);
+                }
+                // if($numrows > 0) $avgrating = intdiv( $avgrating ,$numrows);
                 //   echo $avgrating;
 
-                echo '<form name="rateform" id="'.$avgrating.'" method="post"><select id="example">
+                echo '<form name="rateform" id="'.$avgrating.'" method="post" action="projectdetails.php"><select id="example">
+                <option value=""></option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
                 </select></form>';
+                echo "<p>".number_format($rateDisplay, 1). " average based on " . $numrows . " reviews. </p>";
 
                 echo "<hr>";
                 echo "<form method='post'> <input class='pin_button' type='submit' name='pin' value='".$pinText."'/></form>";
@@ -209,10 +226,6 @@ if(isset($_GET["projectCode"])){
 
                         echo "<img src='".$row[1]."'>";
                     }
-                // foreach($row as $i){  //with values separated by column
-                //     echo " " . $i . " ";
-                //     echo "<img src='".$i."'>";
-                // }
                 echo "</li>";
             }
             echo "</ol>";
