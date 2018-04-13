@@ -169,7 +169,7 @@ if(isset($_GET["projectCode"])){
                 echo "<hr>";
 
                 $resultr = mysqli_query($connection, "SELECT rating FROM ratings WHERE projectID='".$_SESSION['currproject']."'");
-                $avgrating = 0;
+                $avgrating = $rateDisplay = 0;
                 $numrows = 0;
                 while($r = mysqli_fetch_row($resultr)){ // add rows to the table
                     foreach($r as $i){  //with values separated by column
