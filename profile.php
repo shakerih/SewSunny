@@ -1,3 +1,12 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+<?php
+    include('header.php');
+    if(!is_logged_in()){
+      header("Location: index.php");
+    }
+?>
+
 <?php
     // Create a database connection
     $dbhost = "localhost";
@@ -6,6 +15,8 @@
     $dbname = "sew_sunny";
     $connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 
+    // $name = $username = $password = $confirmpassword = '';
+
     //catch connection error
     if(mysqli_connect_errno()) {
         die("Database connection failed: " .
@@ -13,13 +24,20 @@
         " (" . mysqli_connect_errno() . ")"
         );
     }
+
+    // if(is_post_request()) {
+    //     // $name = $_GET['name'];
+    //     // $username = $_GET['username'];
+    //     // $password = $_GET['password'];
+    //     // $confirmpassword = $_GET['confirmPassword'] ?? '';
+    //     //
+    //     // echo $name;
+    //
+    //     $updateProfile = "UPDATE members SET name='".$name."', username='".$username."', password='".password_hash($password, PASSWORD_BCRYPT)."' WHERE username='".$_SESSION['username']."'";
+    //     mysqli_query($connection, $updateProfile);
+    // }
 ?>
-<?php
-    include('header.php');
-    if(!is_logged_in()){
-      header("Location: index.php");
-    }
-?>
+
 
 <?php
     if(isset($_SESSION['userID'])){
@@ -40,9 +58,12 @@
                 echo "<hr>";
                 echo "<div class='project_container'>";
                     echo "<div class='detail_left'>";
-                    echo "<h3>Profile: <input type='button' name='editProfile' value='EDIT'></h3>";
+                    echo "<h3>Profile: <form id='updateForm'><input type='button' id='editFile' name='editProfile' value='EDIT'></form></h3>";
                         $memInfo = mysqli_query($connection, "SELECT username, name, email, password FROM members WHERE username='".$currentProfile."'");
                         while($row = mysqli_fetch_row($memInfo)){ // add rows to the table
+                            $name = $row[1];
+                            $username = $row[0];
+                            $password = $row[3];
                             echo "<form>";
                                 echo "<p>Name:</p>";
                                 echo "<input type='text' name='name' value='".$row[1]."' disabled>";
@@ -52,9 +73,19 @@
                                 echo "<input type='text' name='email' value='".$row[2]."' disabled>";
                                 echo "<p>Password:</p>";
                                 echo "<input type='text' name='password' value='".$row[3]."' disabled>";
+                                echo "<div id='passConfirm' style='display:none'>";
+                                    echo "<p>Confirm Password:</p>";
+                                    echo "<input type='text' name='compassword' value=''>";
+                                echo "</div>";
                             echo "</form>";
                         }
                         // echo "<input type='button' name='editProfile' value='EDIT'>";
+                        if(is_post_request()) {
+                            echo "name: ".$name;
+
+                            // $updateProfile = "UPDATE members SET name='".$row[1]."', username='".$row[0]."', password='".password_hash($row[3], PASSWORD_BCRYPT)."' WHERE username='".$_SESSION['username']."'";
+                            // mysqli_query($connection, $updateProfile);
+                        }
                     echo "</div>";
                 echo "</div>";
             }else {
@@ -123,11 +154,42 @@
         </div>
 
 
-<?php
-// echo $currentProfile;
-    }
-    if(is_logged_in()) {
-        // <div>
+<?php } ?>
 
-    }
-?>
+
+<script>
+    $(document).ready(function(){
+        $('#editFile').click(function() {
+            var editButtonValue = $('#editFile').val();
+            // alert(editButtonValue);
+            if(editButtonValue == "EDIT") {
+                $('#editFile').val("SAVE AND UPDATE");
+                $('#editFile').css({
+                    'width' : '25%',
+                    'background' : '#FFAFA1',
+                    'color' : '#FFFFFF',
+                    'border' : 'none'
+                });
+                $('#updateForm').attr('method', 'post');
+                $('input[name="name"]').removeAttr('disabled');
+                $('input[name="username"]').removeAttr('disabled');
+                $('input[name="password"]').removeAttr('disabled');
+                $('#passConfirm').css({'display' : 'block'});
+            } else {
+                $('#editFile').val("EDIT");
+                $('#editFile').css({
+                    'width' : '10%',
+                    'background' : 'lightGray',
+                    'color' : '#333847'
+                });
+                // $('#updateForm').removeAttr('method');
+                $('input[name="name"]').attr('disabled', 'disabled');
+                $('input[name="username"]').attr('disabled', 'disabled');
+                $('input[name="password"]').attr('disabled', 'disabled');
+                $('#passConfirm').css({'display' : 'none'});
+
+
+            }
+        });
+    });
+</script>

@@ -329,11 +329,11 @@ option:checked {
 .comment_block {
     padding-left: 1em;
 }
-span.comment_name {
+p.comment_name, span.comment_name {
     color: #F8938A;
     margin-bottom: 0.25em;
 }
-span.comment_time {
+p.comment_time, span.comment_time {
     font-size: 13px;
     margin: 0.25em 0;
 }
