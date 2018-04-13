@@ -29,10 +29,6 @@
   $tags = '';
   $imageURL = '';
 
-  $target_dir = "uploads/";
-  $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-  $uploadOk = 1;
-  $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
   if(is_post_request()) {
 
@@ -66,9 +62,7 @@
 if(empty($errors)){
     // set time to Canada Pacific time
     date_default_timezone_set("Canada/Pacific");
-    $query = "INSERT INTO projects (projectTitle, levelDifficulty, userID, description, imgURL, time, categoryID, tag ) VALUES ('".$title."', ".$difficulty.", ".$_SESSION['userID'].", '".$shortdes."', '".$imageURL."', '".date('Y-m-d H:i')."', '".$category."', '".$tags."')";
-    $result = mysqli_query($connection, $query);
-    $projectID = mysqli_insert_id($connection);
+
     $s = 1;
 
     while(isset($_POST[$s.'inst'])){
@@ -93,8 +87,10 @@ if(empty($errors)){
 
     }
     if(isset($_POST["submit"])) {
+      echo "ssssssss";
     $target_dir = "uploads/";
     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
     // Check if image file is a actual image or fake image
@@ -106,7 +102,7 @@ if(empty($errors)){
             echo "File is not an image.";
             $uploadOk = 0;
         }
-    }
+
     // Check if file already exists
     if (file_exists($target_file)) {
         echo "Sorry, file already exists.";
@@ -135,20 +131,23 @@ if(empty($errors)){
         }
     }
 
+    $query = "INSERT INTO projects (projectTitle, levelDifficulty, userID, description, imgURL, time, categoryID, tag ) VALUES ('".$title."', ".$difficulty.", ".$_SESSION['userID'].", '".$shortdes."', '".$target_file."', '".date('Y-m-d H:i')."', '".$category."', '".$tags."')";
+    $result = mysqli_query($connection, $query);
+    $projectID = mysqli_insert_id($connection);
+
 
     // echo $projectID;
     // redirect to new posted project if posted project successfully
     header("Location: projectdetails.php?projectCode=".$projectID);
   }
-
-
+}
 }
 ?>
 
 
 <div class="header_space"></div>
 <div class="content_container">
-    <form id="all" name="all" action="postproject.php" method="post">
+    <form id="all" name="all" action="postproject.php" method="post" enctype= "multipart/form-data">
 
         <h2>The Basics</h2> <p>*indicates required fields</p>
         <?php echo display_errors($errors); ?>
