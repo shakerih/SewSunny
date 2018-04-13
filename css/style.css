@@ -246,6 +246,14 @@ option:checked {
     color: #F8938A;
 }
 
+#searchForm input[type=radio], #searchForm input[type=checkbox] {
+    width: auto;
+}
+
+#searchFilter {
+    /* display: none; */
+}
+
 /* --------------------------------------------------------------------------- */
 /* error display*/
 .errors {
