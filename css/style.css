@@ -14,7 +14,7 @@ h2 {
     font-weight: bold;
     margin: 1.75em 0 1em;
 }
-h3, .detail_right p strong {
+h3, .detail_right p strong, p strong {
     font-size: 16px;
     margin: 1.2em 0 0.5em;
     color: #333847;
@@ -183,7 +183,7 @@ img {
 .form_container a {
     color: #333847;
 }
-.form_container strong {
+.form_container strong, .txtInput {
     color: #F8938A;
 }
 form p {
@@ -391,7 +391,30 @@ textarea#shortdes {
     grid-column: auto / span 2;
 }
 
-
+.search_wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto 31.1%;
+    /* grid-template-columns: repeat(auto-fill, minmax(30%, 1fr)); */
+    /* grid-column-gap: 35px; */
+    grid-row-gap: 0;
+}
+.search_wrapper .post_right input#search {
+    margin-top: 8px;
+    border: 1px solid #FFAFA1;
+}
+.search_wrapper .post_left {
+    width: 100%;
+}
+.filterTable, .filterTable tr, .filterTable th {
+    border: none;
+    text-align: left;
+    padding-right: 2em;
+    margin: 0 0;
+}
+.filterTable th {
+    padding: 0.5em 2em 0 0;
+}
 
 
 /* --------------------------------------------------------------------------- */
