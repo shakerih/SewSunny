@@ -134,7 +134,7 @@ function display_session_message() {
         document.getElementById("catKnitChk").checked = false;
 
         // document.getElementById('searchForm').method('post');
-        document.getElementById("searchForm").submit();
+        // document.getElementById("searchForm").submit();
     }
     function checkCStitch() {
         if(document.getElementById("catCStitchChk").checked){

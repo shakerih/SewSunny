@@ -472,6 +472,8 @@
         //     $("#searchForm").submit();
         // });
         $('#catCroChk').click(function() {
+            $("#searchForm").submit();
+            // alert("hi");
             var crotch = {
                 "text" : $('#catCroChk').val(),
             };
@@ -480,7 +482,7 @@
                 url: "search.php",
                 data: crotch,
                 dataType : "html"
-            });
+            })
             .done(function(data) {
                 console.log(data);
                 location.reload();
