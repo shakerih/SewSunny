@@ -118,11 +118,6 @@
                         $conditionA = "WHERE category.categoryName='".$catTxt."' AND projects.tag LIKE '%".$searchTxt."%' ";
                         $rltTxt = "Project tag : ".$catTxt."";
                     }
-                    ?>
-                        <script>
-                            location.reload();
-                        </script>
-                    <?php
                 }
 
                 // if text in input is empty && checkbox for all, username, title, tag not checked
@@ -474,20 +469,46 @@
         $('#catCroChk').click(function() {
             $("#searchForm").submit();
             // alert("hi");
-            var crotch = {
-                "text" : $('#catCroChk').val(),
-            };
-            $.ajax({
-                type: "POST",
-                url: "search.php",
-                data: crotch,
-                dataType : "html"
-            })
-            .done(function(data) {
-                console.log(data);
-                location.reload();
-            });
+            // var crotch = {
+            //     "text" : $('#catCroChk').val(),
+            // };
+            // console.log(crotch);
+            // $.ajax({
+            //     type: "POST",
+            //     url: "search.php",
+            //     data: crotch,
+            //     dataType : "html"
+            // })
+            // .done(function(data) {
+            //     console.log(data);
+            //     location.reload();
+            // });
 
+        });
+
+        $('#catCStitchChk').click(function() {
+            $("#searchForm").submit();
+        });
+
+        $('#catSewChk').click(function() {
+            $("#searchForm").submit();
+        });
+
+        $('#catKnitChk').click(function() {
+            $("#searchForm").submit();
+        });
+
+
+        $('#difEasyChk').click(function() {
+            $("#searchForm").submit();
+        });
+
+        $('#difInterChk').click(function() {
+            $("#searchForm").submit();
+        });
+
+        $('#difDifChk').click(function() {
+            $("#searchForm").submit();
         });
     });
 </script>
