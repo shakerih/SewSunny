@@ -74,3 +74,125 @@ function display_session_message() {
 }
 
 ?>
+
+
+
+
+
+
+<script>
+    function checkA() {
+        if(document.getElementById("allChk").checked){
+            document.getElementById("allChk").checked = true;
+        }else {
+            document.getElementById("allChk").checked = false;
+        }
+        document.getElementById("userChk").checked = false;
+        document.getElementById("titleChk").checked = false;
+        document.getElementById("tagChk").checked = false;
+    }
+    function checkU() {
+        if(document.getElementById("userChk").checked){
+            document.getElementById("userChk").checked = true;
+        }else {
+            document.getElementById("userChk").checked = false;
+        }
+        document.getElementById("allChk").checked = false;
+        document.getElementById("titleChk").checked = false;
+        document.getElementById("tagChk").checked = false;
+    }
+    function checkT() {
+        if(document.getElementById("titleChk").checked){
+            document.getElementById("titleChk").checked = true;
+        }else {
+            document.getElementById("titleChk").checked = false;
+        }
+        document.getElementById("allChk").checked = false;
+        document.getElementById("userChk").checked = false;
+        document.getElementById("tagChk").checked = false;
+    }
+    function checkTag() {
+        if(document.getElementById("tagChk").checked){
+            document.getElementById("tagChk").checked = true;
+        }else {
+            document.getElementById("tagChk").checked = false;
+        }
+        document.getElementById("allChk").checked = false;
+        document.getElementById("userChk").checked = false;
+        document.getElementById("titleChk").checked = false;
+    }
+
+    // category check ----------------------------------------------------------------
+    function checkC() {
+        if(document.getElementById("catCroChk").checked){
+            document.getElementById("catCroChk").checked = true;
+        }else {
+            document.getElementById("catCroChk").checked = false;
+        }
+        document.getElementById("catCStitchChk").checked = false;
+        document.getElementById("catSewChk").checked = false;
+        document.getElementById("catKnitChk").checked = false;
+
+        // document.getElementById('searchForm').method('post');
+        // document.getElementById("searchForm").submit();
+    }
+    function checkCStitch() {
+        if(document.getElementById("catCStitchChk").checked){
+            document.getElementById("catCStitchChk").checked = true;
+        }else {
+            document.getElementById("catCStitchChk").checked = false;
+        }
+        document.getElementById("catCroChk").checked = false;
+        document.getElementById("catSewChk").checked = false;
+        document.getElementById("catKnitChk").checked = false;
+    }
+    function checkSew() {
+        if(document.getElementById("catSewChk").checked){
+            document.getElementById("catSewChk").checked = true;
+        }else {
+            document.getElementById("catSewChk").checked = false;
+        }
+        document.getElementById("catCroChk").checked = false;
+        document.getElementById("catCStitchChk").checked = false;
+        document.getElementById("catKnitChk").checked = false;
+    }
+    function checkKnit() {
+        if(document.getElementById("catKnitChk").checked){
+            document.getElementById("catKnitChk").checked = true;
+        }else {
+            document.getElementById("catKnitChk").checked = false;
+        }
+        document.getElementById("catCroChk").checked = false;
+        document.getElementById("catCStitchChk").checked = false;
+        document.getElementById("catSewChk").checked = false;
+    }
+
+    // difficulty checks -----------------------------------------------------------
+    function checkDifE() {
+        if(document.getElementById("difEasyChk").checked){
+            document.getElementById("difEasyChk").checked = true;
+        }else {
+            document.getElementById("difEasyChk").checked = false;
+        }
+        document.getElementById("difInterChk").checked = false;
+        document.getElementById("difDifChk").checked = false;
+    }
+    function checkDifI() {
+        if(document.getElementById("difInterChk").checked){
+            document.getElementById("difInterChk").checked = true;
+        }else {
+            document.getElementById("difInterChk").checked = false;
+        }
+        document.getElementById("difEasyChk").checked = false;
+        document.getElementById("difDifChk").checked = false;
+    }
+    function checkDifD() {
+        if(document.getElementById("difDifChk").checked){
+            document.getElementById("difDifChk").checked = true;
+        }else {
+            document.getElementById("difDifChk").checked = false;
+        }
+        document.getElementById("difEasyChk").checked = false;
+        document.getElementById("difInterChk").checked = false;
+    }
+</script>
