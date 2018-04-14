@@ -79,7 +79,7 @@
 
 
     <div id="searchFilter">
-        <input type="checkbox" name="allRlt" id="allChk" onclick="checkA()"  <?php echo isset($_POST["allRlt"]) ? "checked" : ""; ?> checked> All </br>
+        <input type="checkbox" name="allRlt" id="allChk" onclick="checkA()"  <?php echo isset($_POST["allRlt"]) ? "checked" : ""; ?>> All </br>
         <!-- <input type="radio" name="allRlt" value="Username"> Username </br>
         <input type="radio" name="allRlt" value="Project title"> Project Title  </br>
         <input type="radio" name="allRlt" value="Category"> Category -->

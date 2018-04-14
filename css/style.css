@@ -254,6 +254,24 @@ option:checked {
     /* display: none; */
 }
 
+input[type="file"] {
+    margin: 8px 0 15px;
+    height: 43px;
+}
+input[type="file"]::-webkit-file-upload-button {
+    background: lightGray;
+    border: none;
+    height: 41px;
+    cursor: pointer;
+    width: 30%;
+}
+
+input[type="file" i] {
+    /* color: red; */
+    cursor: pointer;
+    height: 43px;
+    /* width: 70%; */
+}
 /* --------------------------------------------------------------------------- */
 /* error display*/
 .errors {
