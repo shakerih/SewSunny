@@ -249,9 +249,28 @@ option:checked {
 #searchForm input[type=radio], #searchForm input[type=checkbox] {
     width: auto;
 }
-
-#searchFilter {
-    /* display: none; */
+input[type="radio"] {
+    display:none;
+}
+input[type="radio"] + label span {
+    display:inline-block;
+    width: 14px;
+    height: 14px;
+    margin:-2px 10px 0 0;
+    vertical-align: middle;
+    background: #C1C3C5;
+    border-radius: 7px;
+    cursor:pointer;
+}
+input[type="radio"]:checked + label span {
+    display:inline-block;
+    width: 14px;
+    height: 14px;
+    margin:-2px 10px 0 0;
+    vertical-align: middle;
+    background: #FFAFA1;
+    border-radius: 7px;
+    cursor:pointer;
 }
 
 input[type="file"] {

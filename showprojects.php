@@ -30,14 +30,17 @@
 <?php
     $searchTxt = "";
     $conditionA = $conditionU = $conditionT = $conditionC = "";
-    $allRlt = $userRlt = $titleRlt = $tagRlt = $catCroRlt = "";
-    $rltTxt = "";
+    $allRlt = $userRlt = $titleRlt = $tagRlt = "";
+    $catCroRlt = $catCSRlt = $catSewRlt = $catKnitRlt = "";
+    $difEasyRlt = $difInterRlt = $difDifRlt = "";
+    $rltTxt = $catTxt = $diffTxt = "";
 ?>
 
 <?php
     if(is_post_request()) {
         if(isset($_POST["searchTxt"])) {
             $searchTxt = $_POST['searchTxt'];
+            $searchTxt = str_replace(" ", "%", $searchTxt);
             // echo "search result: ".$searchTxt;
             // $condition = "";
             if(isset($_POST["allRlt"])) {
@@ -60,27 +63,64 @@
                 $conditionA = "WHERE projects.tag LIKE '%".$searchTxt."%' ";
                 $rltTxt = "Project tag";
             }
+
+            // check category set
             if(isset($_POST["catCroRlt"])) {
                 $catCroRlt = $_POST["catCroRlt"];
+                $catTxt = "Crochet";
+            }
+            if(isset($_POST["catCSRlt"])) {
+                $catCSRlt = $_POST["catCSRlt"];
+                $catTxt = "Cross Stitch";
+            }
+            if(isset($_POST["catSewRlt"])) {
+                $catSewRlt = $_POST["catSewRlt"];
+                $catTxt = "Sewing";
+            }
+            if(isset($_POST["catKnitRlt"])) {
+                $catKnitRlt = $_POST["catKnitRlt"];
+                $catTxt = "Knitting";
+            }
+
+            if($catCroRlt || $catCSRlt || $catSewRlt || $catKnitRlt) {
                 // $conditionA = "WHERE category.categoryName='Crochet' AND (projects.projectTitle LIKE '%".$searchTxt."%' OR members.username LIKE '%".$searchTxt."%') ";
                 // if all checkbox and category is checked
-                if($allRlt) {
-                    $conditionA = "WHERE category.categoryName='Crochet' AND (projects.projectTitle LIKE '%".$searchTxt."%' OR members.username LIKE '%".$searchTxt."%' OR projects.tag LIKE '%".$searchTxt."%') ";
-                    $rltTxt = "All projects : Crochet";
-                }
-                // if username and category is checked
-                if($userRlt) {
-                    $conditionA = "WHERE category.categoryName='Crochet' AND members.username LIKE '%".$searchTxt."%' ";
-                    $rltTxt = "Username : Crochet";
-                }
-                // if username and category is checked
-                if($titleRlt) {
-                    $conditionA = "WHERE category.categoryName='Crochet' AND projects.projectTitle LIKE '%".$searchTxt."%' ";
-                    $rltTxt = "Project title : Crochet";
+                if($catTxt != "") {
+                    if($allRlt) {
+                        $conditionA = "WHERE category.categoryName='".$catTxt."' AND (projects.projectTitle LIKE '%".$searchTxt."%' OR members.username LIKE '%".$searchTxt."%' OR projects.tag LIKE '%".$searchTxt."%') ";
+                        $rltTxt = "All projects : ".$catTxt."";
+                    }
+                    // if username and category is checked
+                    if($userRlt) {
+                        $conditionA = "WHERE category.categoryName='".$catTxt."' AND members.username LIKE '%".$searchTxt."%' ";
+                        $rltTxt = "Username : ".$catTxt."";
+                    }
+                    // if username and category is checked
+                    if($titleRlt) {
+                        $conditionA = "WHERE category.categoryName='".$catTxt."' AND projects.projectTitle LIKE '%".$searchTxt."%' ";
+                        $rltTxt = "Project title : ".$catTxt."";
+                    }
+
+                    // if text in input is empty && checkbox for all, username, title, tag not checked
+                    if($searchTxt=="" && !$allRlt && !$userRlt && !$titleRlt && !$tagRlt) {$conditionA = "WHERE category.categoryName='".$catTxt."' ";}
                 }
 
                 // if text in input is empty && checkbox for all, username, title, tag not checked
-                if($searchTxt=="" && !$allRlt && !$userRlt && !$titleRlt && !$tagRlt) {$conditionA = "WHERE category.categoryName='Crochet' ";}
+                if($searchTxt=="" && !$allRlt && !$userRlt && !$titleRlt && !$tagRlt) {
+                    if (!$diffTxt && $catTxt) {
+                        $conditionA = "WHERE category.categoryName='".$catTxt."' ";
+                        $rltTxt = $catTxt;
+                    }
+                    if($diffTxt && !$catTxt) {
+                        $conditionA = "WHERE projects.levelDifficulty='".$diffTxt."' ";
+
+                        $rltTxt = $diffTxt;
+                    }
+                    if($diffTxt && $catTxt) {
+                        $conditionA = "WHERE (category.categoryName='".$catTxt."' AND projects.levelDifficulty='".$diffTxt."') ";
+                        $rltTxt = $catTxt." : " .$diffTxt;
+                    }
+                }
             }
 
 
@@ -107,30 +147,66 @@
 
 
         <div class="post_left">
-            <input type="text" name="searchTxt" id="searchInput" value="<?php echo $searchTxt; ?>">
+            <input type="text" name="searchTxt" id="searchInput" value="<?php echo str_replace("%", " ", $searchTxt); ?>">
 
             <table class="filterTable">
                 <tr>
                     <th>
                         <!-- <input type="checkbox" name="allRlt" id="allChk" onclick="checkA()"  <?php //echo isset($_POST["allRlt"]) ? "checked" : ""; ?>> All -->
-                        <input type="checkbox" name="allRlt"  id="allChk" onclick="checkA()"  <?php echo isset($_POST["allRlt"]) ? "checked" : ""; ?>> All
+                        <input type="radio" name="allRlt"  id="allChk" onclick="checkA()"  <?php echo isset($_POST["allRlt"]) ? "checked" : ""; ?>>
+                        <label for="allChk"><span></span>All</label>
                     </th>
                     <th>
-                        <input type="checkbox" name="userRlt"  id="userChk" onclick="checkU()"  <?php echo isset($_POST["userRlt"]) ? "checked" : ""; ?>> Username
+                        <input type="radio" name="userRlt"  id="userChk" onclick="checkU()"  <?php echo isset($_POST["userRlt"]) ? "checked" : ""; ?>>
+                        <label for="userChk"><span></span>Username</label>
                     </th>
                     <th>
-                        <input type="checkbox" name="titleRlt" id="titleChk" onclick="checkT()"  <?php echo isset($_POST["titleRlt"]) ? "checked" : ""; ?>> Project Title
+                        <input type="radio" name="titleRlt" id="titleChk" onclick="checkT()"  <?php echo isset($_POST["titleRlt"]) ? "checked" : ""; ?>>
+                        <label for="titleChk"><span></span>Project Title</label>
                     </th>
                     <th>
-                        <input type="checkbox" name="tagRlt" id="tagChk" onclick="checkTag()"  <?php echo isset($_POST["tagRlt"]) ? "checked" : ""; ?>> Project Tag
+                        <input type="radio" name="tagRlt" id="tagChk" onclick="checkTag()"  <?php echo isset($_POST["tagRlt"]) ? "checked" : ""; ?>>
+                        <label for="tagChk"><span></span>Project Tag</label>
                     </th>
                 </tr>
+                <!--- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --->
                 <tr>
                     <th>
                         Category:
                     </th>
                     <th>
-                        <input type="checkbox" name="catCroRlt" id="catChk" onclick="checkC()"  <?php echo isset($_POST["catCroRlt"]) ? "checked" : ""; ?>> Crochet
+                        <input type="checkbox" name="catCroRlt" id="catCroChk" onclick="checkC()" <?php echo isset($_POST["catCroRlt"]) ? "checked" : ""; ?>>
+                        <label for="catCroChk"><span></span>Crochet</label>
+                    </th>
+                    <th>
+                        <input type="checkbox" name="catCSRlt" id="catCStitchChk" onclick="checkCStitch()" <?php echo isset($_POST["catCSRlt"]) ? "checked" : ""; ?>>
+                        <label for="catCStitchChk"><span></span>Cross Stitch</label>
+                    </th>
+                    <th>
+                        <input type="checkbox" name="catSewRlt" id="catSewChk" onclick="checkSew()"  <?php echo isset($_POST["catSewRlt"]) ? "checked" : ""; ?>>
+                        <label for="catSewChk"><span></span>Sewing</label>
+                    </th>
+                    <th>
+                        <input type="checkbox" name="catKnitRlt" id="catKnitChk" onclick="checkKnit()"  <?php echo isset($_POST["catKnitRlt"]) ? "checked" : ""; ?>>
+                        <label for="catKnitChk"><span></span>Knitting</label>
+                    </th>
+                </tr>
+                <!--- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - --->
+                <tr>
+                    <th>
+                        Difficulty:
+                    </th>
+                    <th>
+                        <input type="checkbox" name="difEasyRlt" id="difEasyChk" onclick="checkDifE()" <?php echo isset($_POST["difEasyRlt"]) ? "checked" : ""; ?>>
+                        <label for="difEasyChk"><span></span>Easy</label>
+                    </th>
+                    <th>
+                        <input type="checkbox" name="difInterRlt" id="difInterChk" onclick="checkDifI()" <?php echo isset($_POST["difInterRlt"]) ? "checked" : ""; ?>>
+                        <label for="difInterChk"><span></span>Intermediate</label>
+                    </th>
+                    <th>
+                        <input type="checkbox" name="difDifRlt" id="difDifChk" onclick="checkDifD()"  <?php echo isset($_POST["difDifRlt"]) ? "checked" : ""; ?>>
+                        <label for="difDifChk"><span></span>Difficult</label>
                     </th>
                 </tr>
             </table>
@@ -145,13 +221,33 @@
 
 <?php
     echo "<hr>";
-    if($allRlt || $userRlt || $titleRlt || $tagRlt)
-    // if entry box is empty and category is checked
-    if($catCroRlt && $searchTxt==""){
-        echo "<p>result for <strong>".$rltTxt." </strong></p>";
+    if($searchTxt=="") {
+        // echo $rltTxt;
+        if(!$allRlt && !$userRlt && !$titleRlt && !$tagRlt) {
+            if(!$diffTxt && $catTxt) {
+                echo "<p>result for 1 <strong>".$rltTxt." </strong></p>";
+            }
+            if($diffTxt != "") {
+                echo "<p>result for 2 <strong>".$rltTxt." </strong></p>";
+                // echo $diffTxt;
+            }
+        }
+
+        // if(($allRlt || $userRlt || $titleRlt || $tagRlt) ||
+        //     ($catCroRlt || $catCSRlt || $catSewRlt || $catKnitRlt)) {
+        //     echo "<p>result for 3 <strong>".$rltTxt." </strong></p>";
+        // }
     }
-    if(($catCroRlt && $searchTxt!="") || $allRlt || $userRlt || $titleRlt || $tagRlt) {
-        echo '<p>result for <strong> '.$rltTxt.' :</strong> <span class="txtInput"> "'.$searchTxt.'" </span></p>';
+
+    // if($allRlt || $userRlt || $titleRlt || $tagRlt)
+    // if entry box is empty and category is checked
+    if(($catCroRlt || $catCSRlt || $catSewRlt || $catKnitRlt) && $searchTxt==""){
+        // echo "<p>result for <strong>".$rltTxt." </strong></p>";
+    }
+    if((($catCroRlt || $catCSRlt || $catSewRlt || $catKnitRlt) && $searchTxt!="") && ($allRlt || $userRlt || $titleRlt || $tagRlt)) {
+        if ($catCroRlt || $catCSRlt || $catSewRlt || $catKnitRlt){
+            echo '<p>result for <strong> '.$rltTxt.' :</strong> <span class="txtInput"> "'.str_replace("%", " ", $searchTxt).'" </span></p>';
+        }
     }
 
     $result = mysqli_query($connection, $searchQuery);
@@ -184,13 +280,6 @@
 
 
 <script>
-    // $(document).ready(function() {
-    //     $('form input:checkbox').click(function() {
-    //         $('input[name="userRlt"]').attr('checked', 'false');
-    //         $('input[name="titleRlt"]').attr('checked', 'false');
-    //         $('input[name="catCroRlt"]').attr('checked', 'false');
-    //     });
-    // });
     $(document).ready(function() {
         $('#search').click(function() {
             var txt = $('#searchInput').val();
@@ -208,44 +297,4 @@
         });
 
     });
-
-    // function showCheck() {
-    //     document.getElementById("searchFilter").style.display="none";
-    // }
-
-    function checkA() {
-        document.getElementById("allChk").checked = true;
-        document.getElementById("userChk").checked = false;
-        document.getElementById("titleChk").checked = false;
-        // document.getElementById("catChk").checked = false;
-        document.getElementById("tagChk").checked = false;
-    }
-    function checkU() {
-        document.getElementById("allChk").checked = false;
-        document.getElementById("userChk").checked = true;
-        document.getElementById("titleChk").checked = false;
-        // document.getElementById("catChk").checked = false;
-        document.getElementById("tagChk").checked = false;
-    }
-    function checkT() {
-        document.getElementById("allChk").checked = false;
-        document.getElementById("userChk").checked = false;
-        document.getElementById("titleChk").checked = true;
-        // document.getElementById("catChk").checked = false;
-        document.getElementById("tagChk").checked = false;
-    }
-    // function checkC() {
-    //     document.getElementById("allChk").checked = false;
-    //     document.getElementById("userChk").checked = false;
-    //     document.getElementById("titleChk").checked = false;
-    //     document.getElementById("catChk").checked = true;
-    //     document.getElementById("tagChk").checked = false;
-    // }
-    function checkTag() {
-        document.getElementById("allChk").checked = false;
-        document.getElementById("userChk").checked = false;
-        document.getElementById("titleChk").checked = false;
-        // document.getElementById("catChk").checked = false;
-        document.getElementById("tagChk").checked = true;
-    }
 </script>
