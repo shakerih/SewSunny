@@ -82,10 +82,23 @@
                 $catTxt = "Knitting";
             }
 
+            // check difficulty set
+            if(isset($_POST["difEasyRlt"])) {
+                $difEasyRlt = $_POST["difEasyRlt"];
+                $diffTxt = "1";
+            }
+            if(isset($_POST["difInterRlt"])) {
+                $difInterRlt = $_POST["difInterRlt"];
+                $diffTxt = "2";
+            }
+            if(isset($_POST["difDifRlt"])) {
+                $difDifRlt = $_POST["difDifRlt"];
+                $diffTxt = "3";
+            }
+
             if($catCroRlt || $catCSRlt || $catSewRlt || $catKnitRlt) {
-                // $conditionA = "WHERE category.categoryName='Crochet' AND (projects.projectTitle LIKE '%".$searchTxt."%' OR members.username LIKE '%".$searchTxt."%') ";
                 // if all checkbox and category is checked
-                if($catTxt != "") {
+                if($catTxt != "" && !$diffTxt) {
                     if($allRlt) {
                         $conditionA = "WHERE category.categoryName='".$catTxt."' AND (projects.projectTitle LIKE '%".$searchTxt."%' OR members.username LIKE '%".$searchTxt."%' OR projects.tag LIKE '%".$searchTxt."%') ";
                         $rltTxt = "All projects : ".$catTxt."";
@@ -95,46 +108,192 @@
                         $conditionA = "WHERE category.categoryName='".$catTxt."' AND members.username LIKE '%".$searchTxt."%' ";
                         $rltTxt = "Username : ".$catTxt."";
                     }
-                    // if username and category is checked
+                    // if title and category is checked
                     if($titleRlt) {
                         $conditionA = "WHERE category.categoryName='".$catTxt."' AND projects.projectTitle LIKE '%".$searchTxt."%' ";
                         $rltTxt = "Project title : ".$catTxt."";
                     }
-
-                    // if text in input is empty && checkbox for all, username, title, tag not checked
-                    if($searchTxt=="" && !$allRlt && !$userRlt && !$titleRlt && !$tagRlt) {$conditionA = "WHERE category.categoryName='".$catTxt."' ";}
+                    // if tag and category is checked
+                    if($tagRlt) {
+                        $conditionA = "WHERE category.categoryName='".$catTxt."' AND projects.tag LIKE '%".$searchTxt."%' ";
+                        $rltTxt = "Project tag : ".$catTxt."";
+                    }
                 }
 
                 // if text in input is empty && checkbox for all, username, title, tag not checked
                 if($searchTxt=="" && !$allRlt && !$userRlt && !$titleRlt && !$tagRlt) {
-                    if (!$diffTxt && $catTxt) {
+                    if ($catTxt) {
                         $conditionA = "WHERE category.categoryName='".$catTxt."' ";
                         $rltTxt = $catTxt;
                     }
+                }
+            }
+
+            if($difEasyRlt || $difInterRlt || $difDifRlt) {
+                if($diffTxt != "" && !$catTxt) {
+                    // if all checkbox and difficulty is checked
+                    if($allRlt) {
+                        $conditionA = "WHERE projects.levelDifficulty='".$diffTxt."' AND (projects.projectTitle LIKE '%".$searchTxt."%' OR members.username LIKE '%".$searchTxt."%' OR projects.tag LIKE '%".$searchTxt."%') ";
+                        if($diffTxt=="1") {
+                            $diffTxt = "Easy";
+                        }
+                        elseif ($diffTxt=="2") {
+                            $diffTxt = "Intermediate";
+                        }
+                        elseif ($diffTxt=="3") {
+                            $diffTxt = "Difficult";
+                        }
+                        $rltTxt = "All projects : ".$diffTxt."";
+                    }
+                    // if username and difficulty is checked
+                    if($userRlt) {
+                        $conditionA = "WHERE projects.levelDifficulty='".$diffTxt."' AND members.username LIKE '%".$searchTxt."%' ";
+                        if($diffTxt=="1") {
+                            $diffTxt = "Easy";
+                        }
+                        elseif ($diffTxt=="2") {
+                            $diffTxt = "Intermediate";
+                        }
+                        elseif ($diffTxt=="3") {
+                            $diffTxt = "Difficult";
+                        }
+                        $rltTxt = "Username : ".$diffTxt."";
+                    }
+                    // if username and difficulty is checked
+                    if($titleRlt) {
+                        $conditionA = "WHERE projects.levelDifficulty='".$diffTxt."' AND projects.projectTitle LIKE '%".$searchTxt."%' ";
+                        if($diffTxt=="1") {
+                            $diffTxt = "Easy";
+                        }
+                        elseif ($diffTxt=="2") {
+                            $diffTxt = "Intermediate";
+                        }
+                        elseif ($diffTxt=="3") {
+                            $diffTxt = "Difficult";
+                        }
+                        $rltTxt = "Project title : ".$diffTxt."";
+                    }
+                    // if tag and difficulty is checked
+                    if($tagRlt) {
+                        $conditionA = "WHERE projects.levelDifficulty='".$diffTxt."' AND projects.tag LIKE '%".$searchTxt."%' ";
+                        if($diffTxt=="1") {
+                            $diffTxt = "Easy";
+                        }
+                        elseif ($diffTxt=="2") {
+                            $diffTxt = "Intermediate";
+                        }
+                        elseif ($diffTxt=="3") {
+                            $diffTxt = "Difficult";
+                        }
+                        $rltTxt = "Project tag : ".$diffTxt."";
+                    }
+                }
+
+                // if text in input is empty && checkbox for all, username, title, tag not checked
+                if($searchTxt=="" && !$allRlt && !$userRlt && !$titleRlt && !$tagRlt) {
                     if($diffTxt && !$catTxt) {
                         $conditionA = "WHERE projects.levelDifficulty='".$diffTxt."' ";
-
-                        $rltTxt = $diffTxt;
-                    }
-                    if($diffTxt && $catTxt) {
-                        $conditionA = "WHERE (category.categoryName='".$catTxt."' AND projects.levelDifficulty='".$diffTxt."') ";
-                        $rltTxt = $catTxt." : " .$diffTxt;
+                        if($diffTxt=="1") {
+                            $rltTxt = "Easy";
+                        }
+                        elseif ($diffTxt=="2") {
+                            $rltTxt = "Intermediate";
+                        }
+                        elseif ($diffTxt=="3") {
+                            $rltTxt = "Difficult";
+                        }
                     }
                 }
             }
 
 
-            $searchQuery = "SELECT projects.projectID, projects.projectTitle, projects.description, projects.tag, projects.imgURL, category.categoryName, members.username, projects.userID FROM projects INNER JOIN category ON projects.categoryID = category.categoryID INNER JOIN members ON projects.userID=members.userID ";
+            if(($catCroRlt || $catCSRlt || $catSewRlt || $catKnitRlt) && ($difEasyRlt || $difInterRlt || $difDifRlt)) {
+                if($diffTxt && $catTxt){
+                    // if category and difficulty selected
+                    if($searchTxt=="" && !$allRlt && !$userRlt && !$titleRlt && !$tagRlt) {
+                        $conditionA = "WHERE category.categoryName='".$catTxt."' AND projects.levelDifficulty='".$diffTxt."' ";
+                        if($diffTxt=="1") {
+                            $rltTxt = $catTxt. " : Easy";
+                        }
+                        elseif ($diffTxt=="2") {
+                            $rltTxt = $catTxt. " : Intermediate";
+                        }
+                        elseif ($diffTxt=="3") {
+                            $rltTxt = $catTxt. " : Difficult";
+                        }
+                    }
+
+                    // if all checkbox and difficulty is checked
+                    if($allRlt) {
+                        $conditionA = "WHERE (category.categoryName='".$catTxt."' AND projects.levelDifficulty='".$diffTxt."') AND (projects.projectTitle LIKE '%".$searchTxt."%' OR members.username LIKE '%".$searchTxt."%' OR projects.tag LIKE '%".$searchTxt."%') ";
+                        if($diffTxt=="1") {
+                            $diffTxt = "Easy";
+                        }
+                        elseif ($diffTxt=="2") {
+                            $diffTxt = "Intermediate";
+                        }
+                        elseif ($diffTxt=="3") {
+                            $diffTxt = "Difficult";
+                        }
+                        $rltTxt = "All projects : ".$catTxt. " : ".$diffTxt."";
+                    }
+                    // if username and difficulty is checked
+                    if($userRlt) {
+                        $conditionA = "WHERE category.categoryName='".$catTxt."' AND projects.levelDifficulty='".$diffTxt."' AND members.username LIKE '%".$searchTxt."%' ";
+                        if($diffTxt=="1") {
+                            $diffTxt = "Easy";
+                        }
+                        elseif ($diffTxt=="2") {
+                            $diffTxt = "Intermediate";
+                        }
+                        elseif ($diffTxt=="3") {
+                            $diffTxt = "Difficult";
+                        }
+                        $rltTxt = "Username : ".$catTxt. " : ".$diffTxt."";
+                    }
+                    // if username and difficulty is checked
+                    if($titleRlt) {
+                        $conditionA = "WHERE category.categoryName='".$catTxt."' AND projects.levelDifficulty='".$diffTxt."' AND projects.projectTitle LIKE '%".$searchTxt."%' ";
+                        if($diffTxt=="1") {
+                            $diffTxt = "Easy";
+                        }
+                        elseif ($diffTxt=="2") {
+                            $diffTxt = "Intermediate";
+                        }
+                        elseif ($diffTxt=="3") {
+                            $diffTxt = "Difficult";
+                        }
+                        $rltTxt = "Project title : ".$catTxt. " : ".$diffTxt."";
+                    }
+                    // if tag and difficulty is checked
+                    if($tagRlt) {
+                        $conditionA = "WHERE category.categoryName='".$catTxt."' AND projects.levelDifficulty='".$diffTxt."' AND projects.tag LIKE '%".$searchTxt."%' ";
+                        if($diffTxt=="1") {
+                            $diffTxt = "Easy";
+                        }
+                        elseif ($diffTxt=="2") {
+                            $diffTxt = "Intermediate";
+                        }
+                        elseif ($diffTxt=="3") {
+                            $diffTxt = "Difficult";
+                        }
+                        $rltTxt = "Project tag : ".$catTxt. " : ".$diffTxt."";
+                    }
+                }
+            }
+
+
+            $searchQuery = "SELECT projects.projectID, projects.projectTitle, projects.description, projects.tag, projects.imgURL, category.categoryName, members.username, projects.userID, projects.levelDifficulty FROM projects INNER JOIN category ON projects.categoryID = category.categoryID INNER JOIN members ON projects.userID=members.userID ";
             $searchQuery.= $conditionA;
             $searchQuery.= "ORDER BY projects.projectID ";
             $result = mysqli_query($connection, $searchQuery);
-            echo $searchQuery;
+            // echo $searchQuery;
         }
 
         // if($filter)
     }
     else if (!isset($_POST["search"]) || $searchTxt == "") {
-        $searchQuery = "SELECT projects.projectID, projects.projectTitle, projects.description, projects.tag, projects.imgURL, category.categoryName, members.username, projects.userID FROM projects INNER JOIN category ON projects.categoryID = category.categoryID INNER JOIN members ON projects.userID=members.userID ORDER BY projects.projectID";
+        $searchQuery = "SELECT projects.projectID, projects.projectTitle, projects.description, projects.tag, projects.imgURL, category.categoryName, members.username, projects.userID, projects.levelDifficulty FROM projects INNER JOIN category ON projects.categoryID = category.categoryID INNER JOIN members ON projects.userID=members.userID ORDER BY projects.projectID";
         // $result = mysqli_query($connection, $query);
     }
     // echo "Search: ".$searchTxt;
@@ -152,20 +311,23 @@
             <table class="filterTable">
                 <tr>
                     <th>
+                        Refine by:
+                    </th>
+                    <th>
                         <!-- <input type="checkbox" name="allRlt" id="allChk" onclick="checkA()"  <?php //echo isset($_POST["allRlt"]) ? "checked" : ""; ?>> All -->
-                        <input type="radio" name="allRlt"  id="allChk" onclick="checkA()"  <?php echo isset($_POST["allRlt"]) ? "checked" : ""; ?>>
+                        <input type="checkbox" name="allRlt"  id="allChk" onclick="checkA()"  <?php echo isset($_POST["allRlt"]) ? "checked" : ""; ?>>
                         <label for="allChk"><span></span>All</label>
                     </th>
                     <th>
-                        <input type="radio" name="userRlt"  id="userChk" onclick="checkU()"  <?php echo isset($_POST["userRlt"]) ? "checked" : ""; ?>>
+                        <input type="checkbox" name="userRlt"  id="userChk" onclick="checkU()"  <?php echo isset($_POST["userRlt"]) ? "checked" : ""; ?>>
                         <label for="userChk"><span></span>Username</label>
                     </th>
                     <th>
-                        <input type="radio" name="titleRlt" id="titleChk" onclick="checkT()"  <?php echo isset($_POST["titleRlt"]) ? "checked" : ""; ?>>
+                        <input type="checkbox" name="titleRlt" id="titleChk" onclick="checkT()"  <?php echo isset($_POST["titleRlt"]) ? "checked" : ""; ?>>
                         <label for="titleChk"><span></span>Project Title</label>
                     </th>
                     <th>
-                        <input type="radio" name="tagRlt" id="tagChk" onclick="checkTag()"  <?php echo isset($_POST["tagRlt"]) ? "checked" : ""; ?>>
+                        <input type="checkbox" name="tagRlt" id="tagChk" onclick="checkTag()"  <?php echo isset($_POST["tagRlt"]) ? "checked" : ""; ?>>
                         <label for="tagChk"><span></span>Project Tag</label>
                     </th>
                 </tr>
@@ -222,13 +384,18 @@
 <?php
     echo "<hr>";
     if($searchTxt=="") {
+        if($allRlt || $userRlt || $titleRlt || $tagRlt) {
+            echo "<p>result for <strong>".$rltTxt." </strong></p>";
+        }
         // echo $rltTxt;
         if(!$allRlt && !$userRlt && !$titleRlt && !$tagRlt) {
+            // echo "catTxt: " . $catTxt . " diffTxt: " . $diffTxt;
+            // echo "rltTxt: " . $rltTxt;
             if(!$diffTxt && $catTxt) {
-                echo "<p>result for 1 <strong>".$rltTxt." </strong></p>";
+                echo "<p>result for <strong>".$rltTxt." </strong></p>";
             }
             if($diffTxt != "") {
-                echo "<p>result for 2 <strong>".$rltTxt." </strong></p>";
+                echo "<p>result for <strong>".$rltTxt." </strong></p>";
                 // echo $diffTxt;
             }
         }

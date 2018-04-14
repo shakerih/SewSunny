@@ -82,28 +82,44 @@ function display_session_message() {
 
 <script>
     function checkA() {
-        document.getElementById("allChk").checked = true;
+        if(document.getElementById("allChk").checked){
+            document.getElementById("allChk").checked = true;
+        }else {
+            document.getElementById("allChk").checked = false;
+        }
         document.getElementById("userChk").checked = false;
         document.getElementById("titleChk").checked = false;
         document.getElementById("tagChk").checked = false;
     }
     function checkU() {
+        if(document.getElementById("userChk").checked){
+            document.getElementById("userChk").checked = true;
+        }else {
+            document.getElementById("userChk").checked = false;
+        }
         document.getElementById("allChk").checked = false;
-        document.getElementById("userChk").checked = true;
         document.getElementById("titleChk").checked = false;
         document.getElementById("tagChk").checked = false;
     }
     function checkT() {
+        if(document.getElementById("titleChk").checked){
+            document.getElementById("titleChk").checked = true;
+        }else {
+            document.getElementById("titleChk").checked = false;
+        }
         document.getElementById("allChk").checked = false;
         document.getElementById("userChk").checked = false;
-        document.getElementById("titleChk").checked = true;
         document.getElementById("tagChk").checked = false;
     }
     function checkTag() {
+        if(document.getElementById("tagChk").checked){
+            document.getElementById("tagChk").checked = true;
+        }else {
+            document.getElementById("tagChk").checked = false;
+        }
         document.getElementById("allChk").checked = false;
         document.getElementById("userChk").checked = false;
         document.getElementById("titleChk").checked = false;
-        document.getElementById("tagChk").checked = true;
     }
 
     // category check ----------------------------------------------------------------

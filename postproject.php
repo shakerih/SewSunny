@@ -194,9 +194,9 @@ if(is_post_request()) {
                     <h3>Difficulty *</h3>
                     <select name="difficulty" size="0" >
                         <option value="" selected>-- Select One --</option>
-                        <option value="0">Easy</option>
-                        <option value="1">Intermediate</option>
-                        <option value="2">Difficult</option>
+                        <option value="1">Easy</option>
+                        <option value="2">Intermediate</option>
+                        <option value="3">Difficult</option>
                     </select>
 
                     <h3 id="main">Tools and Materials *</h3>

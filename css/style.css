@@ -249,10 +249,11 @@ option:checked {
 #searchForm input[type=radio], #searchForm input[type=checkbox] {
     width: auto;
 }
-input[type="radio"] {
+input[type="checkbox"] {
     display:none;
+    transition: all 0.2s;
 }
-input[type="radio"] + label span {
+input[type="checkbox"] + label span, input[type="checkbox"]:checked + label span  {
     display:inline-block;
     width: 14px;
     height: 14px;
@@ -261,16 +262,23 @@ input[type="radio"] + label span {
     background: #C1C3C5;
     border-radius: 7px;
     cursor:pointer;
+    transition: all 0.2s;
 }
-input[type="radio"]:checked + label span {
-    display:inline-block;
-    width: 14px;
-    height: 14px;
-    margin:-2px 10px 0 0;
-    vertical-align: middle;
+input[type="checkbox"]:checked + label span {
     background: #FFAFA1;
-    border-radius: 7px;
+    transition: all 0.2s;
+}
+input[type="checkbox"] + label, input[type="checkbox"]:checked + label {
+    /* background: #C1C3C5; */
+    color: #C1C3C5;
+    padding-right: 24px;
     cursor:pointer;
+    transition: all 0.2s;
+}
+input[type="checkbox"]:checked + label {
+    background: #FFAFA1;
+    color: #FFFFFF;
+    transition: all 0.2s;
 }
 
 input[type="file"] {
@@ -432,7 +440,7 @@ textarea#shortdes {
     margin: 0 0;
 }
 .filterTable th {
-    padding: 0.5em 2em 0 0;
+    padding: 0.5em 1.5em 0 0;
 }
 
 
