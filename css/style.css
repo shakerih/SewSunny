@@ -46,6 +46,10 @@ hr {
     border-top: 1px solid #D2D2D2;
     margin: 1.5em 0;
 }
+.dotline {
+    border-top: 4px dotted #D2D2D2;
+    margin: 1em 0;
+}
 
 .header {
     display: block;
@@ -332,7 +336,7 @@ input[type="file" i] {
 }
 .material_list {
     list-style-type: none;
-    padding: 0 1em 0;
+    padding: 0 0 0 0.4em;
 }
 .process_list {
     list-style-type: none;
@@ -348,13 +352,15 @@ input[type="file" i] {
 .material_list li::before {
     content: "\2724";
     color: #F8938A;
+    margin-right: 0.5em;
 }
 .process_list li::before {
     content: counter(li);
     color: #F8938A;
     display: inline-block;
     width: 1em;
-    margin-left: -1em
+    margin-left: -1.5em;
+    margin-right: 0.5em;
 }
 .process_list li img {
     height: auto;

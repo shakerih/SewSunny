@@ -221,14 +221,16 @@ if(isset($_GET["projectCode"])){
             echo "<ol class='process_list'>";
             while($row = mysqli_fetch_row($result)){ // add rows to the table
                 echo "<li>";
-                    echo " " . $row[0] . " ";
+                    echo "" . $row[0] . " ";
                     if($row[1]){
 
                         echo "<img src='".$row[1]."'>";
                     }
                 echo "</li>";
+                echo "<hr class='dotline'>";
             }
             echo "</ol>";
+            echo "<p style='text-align: center;'>THE END</p>";
         echo "</div>";
 
         //Comment

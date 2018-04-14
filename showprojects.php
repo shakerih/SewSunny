@@ -118,6 +118,11 @@
                         $conditionA = "WHERE category.categoryName='".$catTxt."' AND projects.tag LIKE '%".$searchTxt."%' ";
                         $rltTxt = "Project tag : ".$catTxt."";
                     }
+                    ?>
+                        <script>
+                            location.reload();
+                        </script>
+                    <?php
                 }
 
                 // if text in input is empty && checkbox for all, username, title, tag not checked
@@ -463,5 +468,24 @@
             });
         });
 
+        // $('input[type=checkbox]').click(function() {
+        //     $("#searchForm").submit();
+        // });
+        $('#catCroChk').click(function() {
+            var crotch = {
+                "text" : $('#catCroChk').val(),
+            };
+            $.ajax({
+                type: "POST",
+                url: "search.php",
+                data: crotch,
+                dataType : "html"
+            });
+            .done(function(data) {
+                console.log(data);
+                location.reload();
+            });
+
+        });
     });
 </script>

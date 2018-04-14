@@ -127,9 +127,9 @@
                     echo "<div class='project_item'>";
                         echo "<div class='project'>";
                         // echo "<div class='img_overlay'></div>";
-                        echo "<a href='modeldetails.php?projectCode=". $row[0]."'>" . "<div class='overlay'></div>" . "<img src='". $row[4] . "'>" . "</a>";
+                        echo "<a href='projectdetails.php?projectCode=". $row[0]."'>" . "<div class='overlay'></div>" . "<img src='". $row[4] . "'>" . "</a>";
                         // echo "<img src='". $row[4] . "'><br>";
-                        echo "<a href='modeldetails.php?projectCode=". $row[0]."'>" . $row[1] ."</a> </br>";
+                        echo "<a href='projectdetails.php?projectCode=". $row[0]."'>" . $row[1] ."</a> </br>";
                         echo "<span class='project_category'> ".$row[5]. "</span> <span class='pinfo'> by </span>";
                         echo "<a class='project_author' href='profile.php?profileCode=". $row[6]."'>".$row[6] . "</a></br>";
                         echo "</div>";
@@ -149,7 +149,7 @@
                     echo "<h3>Review:</h3>";
                     while($row = mysqli_fetch_row($memComment)){ // add rows to the table
                         echo "<div class='comment_block'>";
-                            echo "<p><span class='comment_name'>" . $row[0] ."</span> commented on <a href='modeldetails.php?projectCode=". $row[4]."'>".$row[3] . "</a><span class='comment_time'> on ".$row[1]."</span></p>";
+                            echo "<p><span class='comment_name'>" . $row[0] ."</span> commented on <a href='projectdetails.php?projectCode=". $row[4]."'>".$row[3] . "</a><span class='comment_time'> on ".$row[1]."</span></p>";
                             echo "<p class='comment_text'>" . $row[2] . "</p>";
                             echo "<hr>";
                         echo "</div>";

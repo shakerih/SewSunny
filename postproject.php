@@ -32,11 +32,11 @@ $imageURL = '';
 
 if(is_post_request()) {
 
-    $title = $_POST['title'] ?? '';
-    $shortdes = $_POST['shortdes'] ?? '';
+    $title = htmlspecialchars($_POST['title'] ?? '');
+    $shortdes = htmlspecialchars($_POST['shortdes'] ?? '');
     $category = $_POST['category'] ?? '';
     $difficulty = $_POST['difficulty'] ?? '';
-    $tags = $_POST['tags'] ?? '';
+    $tags = htmlspecialchars($_POST['tags'] ?? '');
     $imageURL = $_POST['fileToUpload'] ?? '';
 
 
@@ -68,7 +68,7 @@ if(is_post_request()) {
         while(isset($_POST[$s.'inst'])){
             //  array_push($steps, [ $_POST[$s.'inst'], $_POST[$s.'url'] ?? '']);
 
-            $query = "INSERT INTO steps (projectID, stepnumber, instructions) VALUES (".$projectID.", ".$s.", '".$_POST[$s.'inst']."')";
+            $query = "INSERT INTO steps (projectID, stepnumber, instructions) VALUES (".$projectID.", ".$s.", '".htmlspecialchars($_POST[$s.'inst'])."')";
             $result = mysqli_query($connection, $query);
 
             $s++  ;
@@ -80,7 +80,7 @@ if(is_post_request()) {
         while(isset($_POST[$m.'quant'])){
             //  array_push($steps, [ $_POST[$s.'inst'], $_POST[$s.'url'] ?? '']);
 
-            $query = "INSERT INTO materials ( materialName, quantity, unit, projectID) VALUES ('".$_POST[$m.'name']."', '".$_POST[$m.'quant']."', '".$_POST[$m.'units']."', ".$projectID.")";
+            $query = "INSERT INTO materials ( materialName, quantity, unit, projectID) VALUES ('".htmlspecialchars($_POST[$m.'name'])."', '".$_POST[$m.'quant']."', '".$_POST[$m.'units']."', ".$projectID.")";
             $result = mysqli_query($connection, $query);
 
             $m++  ;
