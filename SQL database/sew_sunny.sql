@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2018 at 05:01 AM
+-- Generation Time: Apr 15, 2018 at 08:46 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -177,7 +177,27 @@ INSERT INTO `materials` (`materialID`, `materialName`, `quantity`, `unit`, `proj
 (52, 'sewing Needle', 1, 'pcs', 7),
 (53, 'hot glue gun', 1, ' ', 7),
 (54, 'scissors', 1, 'pair ', 7),
-(55, 'wooden skewer', 1, 'set', 7);
+(55, 'wooden skewer', 1, 'set', 7),
+(56, 'cotton fabric', 1, 'pcs', 23),
+(57, 'felt', 2, 'pcs', 23),
+(58, 'sewing machine', 1, 'pcs', 23),
+(59, 'needle and thread', 1, 'pcs', 23),
+(60, 'pins', 10, 'pcs', 23),
+(61, 'scissors', 1, 'pcs', 23),
+(62, 'embroidery floss', 1, 'pcs', 23),
+(63, 'iron and ironing board', 1, 'pcs', 23),
+(64, 'red felt', 1, 'pcs', 24),
+(65, 'white felt', 1, 'pcs', 24),
+(66, 'embroidery floss', 1, 'rolls', 24),
+(67, 'small chipboard', 1, 'pcs', 24),
+(68, 'black permanent marker', 1, 'pcs', 24),
+(69, 'scissors', 1, 'pcs', 24),
+(70, 'sewing needle', 1, 'pcs', 24),
+(71, 'thin magnet', 1, 'items', 24),
+(72, 'scissors', 1, 'pcs', 25),
+(73, 'cotton fabric', 1, 'pcs', 25),
+(74, 'needle and thread', 1, 'pcs', 25),
+(75, 'pins', 10, 'pcs', 25);
 
 -- --------------------------------------------------------
 
@@ -210,7 +230,8 @@ INSERT INTO `members` (`userID`, `username`, `name`, `email`, `password`, `avgRa
 (9, 'Rachel ', 'Rachel ', 'rachel@craft.com', '$2y$10$lLAhP0CS8OmLkv/UBFjo/.U/b/y3hHz7uJq.x2J0WlWzR3t76vAQu', 0),
 (10, 'Emily', 'em', 'emily@craft.com', '$2y$10$xZ/7JwpBKmosSVwHzppSR.MDckulpiQ/JK57c0zaKLWCBWBo.sDOO', 0),
 (11, 'CraveTheGood', 'Emma', 'CraveTheGood@craft.com', '$2y$10$wPhYFaP88DTsQTxFXnlHmOupbkiRTs2CtJsC4v6u/29mKzmtf/gYC', 0),
-(12, 'CraftersAndMothers', 'mother', ' CraftersAndMothers@craft.com', '$2y$10$RJkBcXeQVmlfSTqJdqJVOOoOI3grRjQfNIDmMYA/H2oCZdnREjcXO', 0);
+(12, 'CraftersAndMothers', 'mother', ' CraftersAndMothers@craft.com', '$2y$10$RJkBcXeQVmlfSTqJdqJVOOoOI3grRjQfNIDmMYA/H2oCZdnREjcXO', 0),
+(13, 'LiaGriffith', 'LiaGriffith', 'LiaGriffith@craft.com', '$2y$10$/QgvoF7//sdvf3r3Gs82cOf6lNZk8kWjN3Orl7BJ/8QGIahbWwR.q', 0);
 
 -- --------------------------------------------------------
 
@@ -241,9 +262,12 @@ INSERT INTO `projects` (`projectID`, `projectTitle`, `levelDifficulty`, `userID`
 (4, 'Herringbone Stitch Knitting (Detailed)', '3', 10, 'Ever wanted to learn how to knit the herringbone stitch? Itâ€™s one of my favorites because of its simple, classic and minimalist look. It can seem really daunting to knit, but trust me you will easily be able to pick it up and be knitting up a gorgeous piece in no time!', 'https://i1.wp.com/thebluemouseknits.com/wp-content/uploads/2017/09/herringbone.tutorial-17.jpg?resize=1170%2C550', '2018-03-07 14:08', 'CAT_3', 'knitting, herringbone'),
 (5, 'How to Dye Gradient (Ombre) Yarn ', '1', 11, 'Itâ€™s a hobby I would recommend to anyone. After a few rows, I find myself completely de-stressed. Itâ€™s like yoga, but for people who don\'t like exercise. ha.', 'https://cdn.instructables.com/FZT/RUAG/IU2TPMLB/FZTRUAGIU2TPMLB.LARGE.jpg?width=400', '2018-03-25 10:55', 'CAT_3', 'knitting, dyeing, yarn, DIY'),
 (6, 'Knitted Puffer Vest from Old Sweater', '2', 12, 'I love winter fashion because itâ€™s the perfect season for layers. And the best way to layer for extra warmth and mobility is a vest.\r\n<br><br>\r\nI loved how this knitted puffer vest turned out, and although I like knitting I prefer the convenience of making it from an old sweater. If we knit the vest it would take a lot longer and it will be way more expensive. Also itâ€™s a great project to make something amazing out of an item that could end up in the landfill. You can find awesome wool or even cashmere sweaters at a thrift store, so this project is very affordable and it’ll take you only one afternoon.', 'https://cdn.instructables.com/FW5/5O3C/JE4KLZ5P/FW55O3CJE4KLZ5P.LARGE.jpg', '2018-04-08 09:54', 'CAT_3', 'sweater, craft, DIY, knitting'),
-(7, 'DIY Felt Narwhal', '1', 4, 'Craft the high seas with our adorable-as-all-get-out felt narwhal project! Narwhals are such special sea creatures... they swim so gracefully and their unique sword-like tooth inspires such intrigue. Did you know a group of narwhals is called a blessing? Craft a few of these narwhals for a blessed blessing of your own!', 'https://s3-us-west-2.amazonaws.com/lia-griffith-media/wp-content/uploads/2017/10/Felt_Narwhal_Stuffie.jpg', '2018-02-29 11:15', 'CAT_2', 'sewing, felt, DIY'),
-(8, 'Pendleton Wall Hanging', '1', 7, 'This stylish wall hanging is a great way to bring a sense of personality and warmth to your home. Give any space a creative and cozy feel by turning your favorite Pendleton wool fabric into a wall hanging. With just a few additional materials and a handful of simple steps, youâ€™ll be amazed at how such an easy project can yield such artistic results! A nice accent piece that can be moved from room to room, from one season to the next. This easy-to-make tapestry is both trendy and timeless â€“ have fun creating and we promise youâ€™ll enjoy it for years to come.', 'https://s3-us-west-2.amazonaws.com/lia-griffith-media/wp-content/uploads/2017/06/Blanket_Wall_Art.jpg', '2018-04-10 12:09', 'CAT_2', 'sewing, wall hanging'),
-(9, 'Quilted Skull Pillow', '2', 8, 'Hi friends,\r\n\r\nI am sharing with you today a project I made wayyyy back in October of 2014 (please forgive any blurry photos). This is a fun quilted pillow project just in time for Halloween - The Quilted Skull Pillow. You can make this as scary or as cute as you like and customize your colors to your Halloween decor. This design can also be used for a custom skull quilt block for a fun Halloween quilt!', 'https://modernhandcraft.com/wp-content/uploads/2014/10/skull25-1170x780.jpg', '2017-09-15 14:11', 'CAT_2', 'sewing, pillow, DIY');
+(7, 'DIY Felt Narwhal', '1', 13, 'Craft the high seas with our adorable-as-all-get-out felt narwhal project! Narwhals are such special sea creatures... they swim so gracefully and their unique sword-like tooth inspires such intrigue. Did you know a group of narwhals is called a blessing? Craft a few of these narwhals for a blessed blessing of your own!', 'https://s3-us-west-2.amazonaws.com/lia-griffith-media/wp-content/uploads/2017/10/Felt_Narwhal_Stuffie.jpg', '2018-02-29 11:15', 'CAT_2', 'sewing, felt, DIY'),
+(8, 'Pendleton Wall Hanging', '1', 13, 'This stylish wall hanging is a great way to bring a sense of personality and warmth to your home. Give any space a creative and cozy feel by turning your favorite Pendleton wool fabric into a wall hanging. With just a few additional materials and a handful of simple steps, youâ€™ll be amazed at how such an easy project can yield such artistic results! A nice accent piece that can be moved from room to room, from one season to the next. This easy-to-make tapestry is both trendy and timeless â€“ have fun creating and we promise youâ€™ll enjoy it for years to come.', 'https://s3-us-west-2.amazonaws.com/lia-griffith-media/wp-content/uploads/2017/06/Blanket_Wall_Art.jpg', '2018-04-10 12:09', 'CAT_2', 'sewing, wall hanging'),
+(9, 'Quilted Skull Pillow', '2', 8, 'Hi friends,\r\n\r\nI am sharing with you today a project I made wayyyy back in October of 2014 (please forgive any blurry photos). This is a fun quilted pillow project just in time for Halloween - The Quilted Skull Pillow. You can make this as scary or as cute as you like and customize your colors to your Halloween decor. This design can also be used for a custom skull quilt block for a fun Halloween quilt!', 'https://modernhandcraft.com/wp-content/uploads/2014/10/skull25-1170x780.jpg', '2017-09-15 14:11', 'CAT_2', 'sewing, pillow, DIY'),
+(23, 'DIY: Spring Chicken Plushies', '1', 9, 'This is a fairly straightforward tutorial that can be done using a sewing machine or sewn completely by hand. I love coming up with ways to use up fabric scraps and this project is perfect for that since the all the pieces are quite small.', 'uploads/chicken-plushies-22b.jpg', '2018-04-14 22:42', 'CAT_2', 'DIY, sewing'),
+(24, 'DIY: Target My Heart Pincushion', '1', 9, 'About 12 years ago I stitched together a utilitarian pillow stuffed with cloth scraps and called it a pincushion. It was my sad companion through many a sewing project, and as much as I wanted to replace it I never made the time.', 'uploads/IMG_4390_hearttargetpincushion.jpg', '2018-04-14 22:49', 'CAT_2', 'DIY, felt, sewing'),
+(25, 'Sew a Shibori Beach Bag', '1', 13, 'This bag is lightweight, over-sized and perfect for all your beach towels, magazines and sun hat!', 'uploads/Beach_Tote_Shibori_TieDye_Indigo_DIY.jpg', '2018-04-14 22:55', 'CAT_2', 'DIY, bag, sewing');
 
 -- --------------------------------------------------------
 
@@ -380,7 +404,36 @@ INSERT INTO `steps` (`projectID`, `stepID`, `stepnumber`, `instructions`, `instr
 (7, 107, 7, 'Sew the button eyes to the gray top piece.', ''),
 (7, 108, 8, 'Blanket stitch the two body pieces together leaving an opening.', ''),
 (7, 109, 9, 'Stuff the narwhal body with polyfill. Use a dowel if needed.', ''),
-(7, 110, 10, 'Draw dots on the fins and the back of the body with a black art marker.', 'https://s3-us-west-2.amazonaws.com/lia-griffith-media/wp-content/uploads/2017/10/FeltNarwhal_Tutorial.jpg');
+(7, 110, 10, 'Draw dots on the fins and the back of the body with a black art marker.', 'https://s3-us-west-2.amazonaws.com/lia-griffith-media/wp-content/uploads/2017/10/FeltNarwhal_Tutorial.jpg'),
+(23, 111, 1, 'Press your fabric and cut out the pattern pieces using fabric scissors. Remember not to mix up your scissors! You donâ€™t want to dull the blade of your fabric only scissors by using them to cut paper.', ''),
+(23, 112, 2, 'Use a cotton fabric of your choice to cut out pattern pieces A + B. Then choose a coordinating cotton fabric to cut out pattern piece C. Use red felt to cut out pattern piece D and yellow felt to cut out E (as shown below).', 'http://adventures-in-making.com/wp-content/uploads/2016/03/chicken-plushies-1.jpg'),
+(23, 113, 3, 'Once you have your pieces cut, lay the first pattern piece A (with right side facing up) onto your work surface. Place the felt pieces D + E on top as shown below. Then place pattern piece B (right side facing down) as shown and secure with a pin.', 'http://adventures-in-making.com/wp-content/uploads/2016/03/chicken-plushies-3.jpg'),
+(23, 114, 4, 'Sew along the edge to secure the felt pieces and pattern piece B into place.', 'http://adventures-in-making.com/wp-content/uploads/2016/03/chicken-plushies-4.jpg'),
+(23, 115, 5, 'Next place the second pattern piece A directly on top (right side facing down). Pin in place and then flip over.', 'http://adventures-in-making.com/wp-content/uploads/2016/03/chicken-plushies-5.jpg'),
+(23, 116, 6, 'lip up the bottom (sewn side) of piece B and pin the un-sewn side into place as shown in the photo below.', 'http://adventures-in-making.com/wp-content/uploads/2016/03/chicken-plushies-6.jpg'),
+(23, 117, 7, 'Sew all the way around the outside leaving about a Â½â€ opening near the top or neck of the bird. Make small cuts in the fabric (making sure not to cut through your stitches) as shown below.', 'http://adventures-in-making.com/wp-content/uploads/2016/03/chicken-plushies-7.jpg'),
+(23, 118, 8, 'Then cut a few notches where indicated on the pattern (this will prevent the fabric from puckering once we turn the fabric right side out).', 'http://adventures-in-making.com/wp-content/uploads/2016/03/chicken-plushies-8.jpg'),
+(23, 119, 9, 'Now youâ€™re ready to turn the fabric right side out and stuff with fiberfill. Use the end of a pencil to turn out completely and stuff.', 'http://adventures-in-making.com/wp-content/uploads/2016/03/chicken-plushies-9.jpg'),
+(23, 120, 10, 'Use a needle and thread to whip stitch the opening closed. Set the bird body aside.\r\n<br><br>\r\nNow itâ€™s time to sew the wings. Place two pattern piece Câ€™s together (right sides face in). Sew around leaving a small opening. Turn right side out and whip stitch the opening closed. Repeat for the second wing.', 'http://adventures-in-making.com/wp-content/uploads/2016/03/chicken-plushies-10.jpg'),
+(23, 121, 11, 'Thread your needle with a matching thread and stitch the wings onto the body of the bird as shown in the photo below.', 'http://adventures-in-making.com/wp-content/uploads/2016/03/chicken-plushies-11.jpg'),
+(23, 122, 12, 'Cut a length of embroidery floss. Divide the strands into 3 plys and thread onto a needle. Poke your needle behind a wing (to hide your knot) and come up near the top where you want to start your first eye. Use a straight stitch to add a U shape eye on one side of the bird. Then poke your needle through to the other side and stitch the second eye. Hide the end of your thread by poking your needle back through the bird and coming out farther down near a seam. Cut off excess thread with scissors.', 'http://adventures-in-making.com/wp-content/uploads/2016/03/chicken-plushies-12.jpg'),
+(23, 123, 13, 'And youâ€™re done! Make a few to decorate your home this spring or gift them to your chicken-loving friends and family this Easter!', 'http://adventures-in-making.com/wp-content/uploads/2016/03/chicken-plushies-24b.jpg'),
+(24, 124, 1, 'Prepare all materials', 'http://adventures-in-making.com/wp-content/uploads/2016/01/IMG_4290_hearttargetpincushion.jpg'),
+(24, 125, 2, 'First use the â€œWrist Guardâ€ template piece to cut a small heart out of chipboard. This will be place inside the pincushion to keep you from pushing pins all the way through. Use your favorite adhesive to attach one magnet to this piece of chipboard.', 'http://adventures-in-making.com/wp-content/uploads/2016/01/IMG_4294_hearttargetpincushion.jpg'),
+(24, 126, 3, 'Next tape a small piece of white felt to the template sheet and use a window to trace the rings of the target shape with your black marker. You may need to go over it a few times to make the rings as dark as possible.\r\n\r\n', 'http://adventures-in-making.com/wp-content/uploads/2016/01/IMG_4304_hearttargetpincushion.jpg'),
+(24, 127, 4, 'Set this piece aside for a moment to dry or you will end up with marker all over your hands. (Which is fun!) While you are waiting, use the â€œHeartâ€ template to cut two red heart pieces, then when the target is dry cut just outside of the first dark ring. Keep all your little fabric scraps for the stuffing steps later. (Waste not, want not and all that.)', 'http://adventures-in-making.com/wp-content/uploads/2016/01/IMG_4314_hearttargetpincushion.jpg'),
+(24, 128, 5, 'Place the target piece in the center of one of the heart pieces and pinch or pin them together. Using black thread or embroidery floss whip the target down to attach it to the pincushion. (I used a blanket appliquÃ© stitch around my target, similar to the one Rachel used in her Alphabet Hoop Art DIY . You can watch a video of how it is done here. If this looks tricky to you, use any old stitch you want!)', 'http://adventures-in-making.com/wp-content/uploads/2016/01/IMG_4315_hearttargetpincushion.jpg'),
+(24, 129, 6, 'When the target is all stitched down make a sandwich with the remaining pieces: target+heart piece, chipboard+magnet piece, plain heart piece.', 'http://adventures-in-making.com/wp-content/uploads/2016/01/IMG_4317_hearttargetpincushion.jpg'),
+(24, 130, 7, 'Then use thread (or floss) to stitch the two red felt heart pieces together, beginning at the top of one side. (For this stitching I used a blanket stitch. You can see a video of a pro doing it here. Any stitch should work to make this little pillow, so play around with it!)\r\n\r\n', 'http://adventures-in-making.com/wp-content/uploads/2016/01/IMG_4326_hearttargetpincushion.jpg'),
+(24, 131, 8, 'When you reach the top of the other side of the heart, stop sewing and collect your scraps to stuff. Any large scraps can be cut into tinier pieces that will fluff up the inside of you cushion.', 'http://adventures-in-making.com/wp-content/uploads/2016/01/IMG_4327_hearttargetpincushion.jpg'),
+(24, 132, 9, 'Start to fill the space between the chipboard wrist guard and the heart+target piece, using a little bit of stuffing at a time. Make sure to press into the point and sides of your heart to make it really puff.', 'http://adventures-in-making.com/wp-content/uploads/2016/01/IMG_4331_hearttargetpincushion.jpg'),
+(24, 133, 10, 'When youâ€™ve got it almost over-full stitch up the remaining open space and tie a firm knot. Tuck your thread-end into the heart or trim it and youâ€™re all done!', 'http://adventures-in-making.com/wp-content/uploads/2016/01/IMG_4380_hearttargetpincushion.jpg'),
+(24, 134, 11, 'So, why did I have you include a magnet? Because magnets are awesome! If youâ€™re prone to losing straight pins like a startled porcupine loses quills youâ€™ll appreciate the pin collecting magic of a strong magnet. Have a magnetic board or fridge in your making space? Smack your pincushion there for safe keeping!', 'http://adventures-in-making.com/wp-content/uploads/2016/01/IMG_4329_hearttargetpincushion.jpg'),
+(24, 135, 12, 'you can make a magnetic wrist band. Cut a piece of elastic a little bit smaller than your wrist, and glue a magnet to one end. Sew the two ends together to form a loop, stitching around the magnet.\r\n\r\n', 'http://adventures-in-making.com/wp-content/uploads/2016/01/IMG_4335_hearttargetpincushion.jpg'),
+(24, 136, 13, 'Then you should be able to attach your pincushion temporarily to your wrist whenever itâ€™s convenient.', 'http://adventures-in-making.com/wp-content/uploads/2016/01/IMG_4376_hearttargetpincushion.jpg'),
+(25, 137, 1, 'My first tip is to do it outdoors and wear old clothes. Itâ€™s a messy process so approach it as you would a painting project and protect the things you love.', ''),
+(25, 138, 2, 'My second tip is to hang your pieces on a clothes line as they come out of the dye so they will have space to oxidize. ', ''),
+(25, 139, 3, 'My third tip is to feel free to re-dip some of your pieces to achieve a darker tone. ', 'https://s3-us-west-2.amazonaws.com/lia-griffith-media/wp-content/uploads/2015/07/IndigoToteBagTutorial.jpg');
 
 --
 -- Indexes for dumped tables
@@ -456,19 +509,19 @@ ALTER TABLE `comment`
 -- AUTO_INCREMENT for table `materials`
 --
 ALTER TABLE `materials`
-  MODIFY `materialID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `materialID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `members`
 --
 ALTER TABLE `members`
-  MODIFY `userID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `userID` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `projectID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `projectID` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `ratings`
@@ -480,7 +533,7 @@ ALTER TABLE `ratings`
 -- AUTO_INCREMENT for table `steps`
 --
 ALTER TABLE `steps`
-  MODIFY `stepID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `stepID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
