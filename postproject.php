@@ -160,7 +160,7 @@ if(is_post_request()) {
               $query = "INSERT INTO projects (projectTitle, levelDifficulty, userID, description, imgURL, time, categoryID, tag ) VALUES ('".$title."', ".$difficulty.", ".$_SESSION['userID'].", '".$shortdes."', '".$target_file."', '".date('Y-m-d H:i')."', '".$category."', '".$tags."')";
 
             $result = mysqli_query($connection, $query);
-
+            $projectID = mysqli_insert_id($connection);
             }
 
              echo $projectID;
