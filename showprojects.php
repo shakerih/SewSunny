@@ -426,8 +426,9 @@
 
         echo "<div class='project_container'>";
         $numprojects = mysqli_num_rows($result);
+        $counter = 0;
         while($row = mysqli_fetch_row($result)){ // add rows to the table
-            echo "<div class='project_item'>";
+            echo "<div class='project_item' id='proj".$counter."'>";
             echo "<div class='project'>";
             // echo "<div class='img_overlay'></div>";
             echo "<a href='projectdetails.php?projectCode=". $row[0]."'>" . "<div class='overlay'></div>" . "<img src='". $row[4] . "'>" . "</a>";
@@ -437,6 +438,7 @@
             echo "<a class='project_author' href='profile.php?profileCode=". $row[6]."'>".$row[6] . "</a></br>";
             echo "</div>";
             echo "</div>";
+            $counter++;
 
         }
     }
@@ -445,21 +447,33 @@
     echo "</div>";
 
     $numpages = ceil($numprojects /10);
-    if( strpos( $url, "#" ) === false ) echo "NO HASH !";
-   else echo "HASH IS: #".explode( "#", $url )[1];
+
 
 ?>
 <div class="pagination">
-  <a href="#">&laquo;</a>
   <?php for($i=1; $i<=$numpages; $i++){
-  echo '<a href="#'.$i.'">'.$i .'</a>';
+  echo '<button class="pagenum" id="'.$i.'">'.$i .'</button>';
 } ?>
-  <a href="#">&raquo;</a>
 </div>
 
 
 <script>
+
+function page(event){
+  console.log(event.target.id);
+  $(".project_item").hide();
+  for(var i = (event.target.id*10)-10; i < event.target.id*10; i++){
+    $("#proj"+i).show();
+  }
+};
     $(document).ready(function() {
+
+      $(".pagenum").click(page);
+      $(".project_item").hide();
+      for(var i = 0; i < 10; i++){
+        $("#proj"+i).show();
+      }
+
         $('#search').click(function() {
             var txt = $('#searchInput').val();
             console.log(txt);
