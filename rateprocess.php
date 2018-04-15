@@ -1,3 +1,4 @@
+<!-- THIS IS AN AJAX FILE -->
 <?php
 $dbhost = "localhost";
 $dbuser = "root";
@@ -10,7 +11,7 @@ if(isset($_POST['num'])){
     echo $_SESSION['currproject'];
     echo $_SESSION['userID'];
     echo $_POST['num'];
-
+    //add new project rating to DB
     $result = mysqli_query($connection, "INSERT INTO ratings (userID, projectID, rating) VALUES(".$_SESSION['userID'].", ".$_SESSION['currproject'].", ". $_POST['num'].")");
 
 }

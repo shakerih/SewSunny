@@ -106,29 +106,24 @@
 
                             });
 
-                            // stop the form from submitting the normal way and refreshing the page
-
                         });</script><?php
                     echo "</div>";
                 echo "</div>";
             }else {
                 echo "<h2>".$currentProfile."&#39;s Activity</h2>";
             };
-
-
             ?>
-
-
             <?php
             echo "<hr>";
             echo "<h3>Projects:</h3>";
             echo "<div class='project_container'>";
 
+            //load this member's posts
             $memProjectQ = "SELECT projects.projectID, projects.projectTitle, projects.description, projects.tag, projects.imgURL, category.categoryName, members.username FROM projects INNER JOIN category ON projects.categoryID = category.categoryID INNER JOIN members ON projects.userID=members.userID WHERE projects.userID=(SELECT members.userID FROM members WHERE members.username='".$currentProfile."') ORDER BY projects.projectID";
 
             $memProjectList = mysqli_query($connection, $memProjectQ);
+            //display posts
             if(mysqli_num_rows($memProjectList)){
-                // add rows to the table
                 while($row = mysqli_fetch_row($memProjectList)){
                     echo "<div class='project_item'>";
                         echo "<div class='project'>";
@@ -143,9 +138,7 @@
                 }
             }
             else {
-                // echo "<div class='project_item'>";
                     echo "<p>".$currentProfile. " does not have any project.</p>";
-                // echo "</div>";
             }
             echo "</div>";
             ?>
@@ -153,6 +146,7 @@
             <h3>Review:</h3>
             <div class='project_container'>
                 <?php
+                //get this member's comments
                 $memComment = mysqli_query($connection, "SELECT members.username, comment.time, comment.comment, projects.projectTitle, projects.projectID FROM comment INNER JOIN projects ON comment.projectID = projects.projectID INNER JOIN members ON comment.userID = members.userID WHERE members.username='".$currentProfile."'");
                 if(mysqli_num_rows($memComment)){
                     echo "<div class='detail_left'>";

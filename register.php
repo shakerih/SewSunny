@@ -1,5 +1,6 @@
 <?php
     require_once('initialize.php');
+    //ensure register uses HTTPS
     if($_SERVER["HTTPS"] != "on")
     {
         header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
@@ -39,7 +40,7 @@
         if(is_blank($password) || is_blank($confirmpassword)) {
             $errors[] = "Password cannot be blank.";
         }
-
+        //add new member to DB
         $addUser = "INSERT INTO members (name, username, email, password, avgRating)
         VALUES ('".$name."', '".$username."', '".$email."', '".password_hash($password, PASSWORD_BCRYPT)."', 0)";
 
@@ -48,16 +49,7 @@
 
 
         $admin = find_admin_by_username($username);
-        log_in_admin($admin);
-
-        // if(isset($_SESSION['username']) && isset($_SESSION['callback_url'])){
-        //  header("location: http://". $_SERVER['SERVER_NAME'] . $_SESSION['callback_url']);
-        //  exit();
-        //  echo $_SESSION['callback_url'];
-        // }else{
-        //  header("location:  http://". $_SERVER['SERVER_NAME'] ."/hshakeri/a4/hshakeri/a4/showprojects.php");
-        //  exit();
-        //}
+        log_in_admin($admin); //log user in
 
     }
 
