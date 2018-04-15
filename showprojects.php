@@ -42,7 +42,7 @@ if(isset($_SERVER["HTTPS"]))
 <?php
     if(is_post_request()) {
         if(isset($_POST["searchTxt"])) {
-            $searchTxt = $_POST['searchTxt'];
+            $searchTxt = htmlspecialchars($_POST['searchTxt']);
             $searchTxt = str_replace(" ", "%", $searchTxt);
             // echo "search result: ".$searchTxt;
             // $condition = "";
@@ -309,7 +309,7 @@ if(isset($_SERVER["HTTPS"]))
 
 
         <div class="post_left">
-            <input type="text" name="searchTxt" id="searchInput" value="<?php echo str_replace("%", " ", $searchTxt); ?>">
+            <input type="text" name="searchTxt" id="searchInput" value="<?php echo str_replace("%", " ", htmlspecialchars($searchTxt)); ?>">
 
             <table class="filterTable">
                 <tr>
