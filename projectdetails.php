@@ -122,6 +122,9 @@ if(is_logged_in()){
         $pinText = "PIN TO PINBOARD";
     }
 
+    if(isset($_POST['updatePost'])){
+      header("Location: postproject.php?update=".$_GET['projectCode']);
+    }
 
     if(isset($_POST['pin']) & !mysqli_num_rows($checkPin)){
         $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) VALUES(". $_SESSION['userID']. "," . $_GET['projectCode'].")");
@@ -145,6 +148,7 @@ if(isset($_GET["projectCode"])){
     echo "<div class='content_container'>";
         echo "<h2>".$row[1]."</h2>";
         echo "<div class='project_detail_wrapper'>";
+
         echo "<div class='detail_left'>";
             echo "<img src='".$row[5]."'>";
             echo "<h3>Description:</h3>";
@@ -152,8 +156,11 @@ if(isset($_GET["projectCode"])){
         echo "</div>";
 
         echo "<div class='detail_right'>";
-            $author = mysqli_query($connection, "SELECT username FROM members WHERE userID='".$row[3]."'");
-            $authorID= mysqli_fetch_row($author);
+        $author = mysqli_query($connection, "SELECT username FROM members WHERE userID='".$row[3]."'");
+        $authorID= mysqli_fetch_row($author);
+        if(is_logged_in() && $authorID[0]==$_SESSION['username'])
+        echo "<form id='update' method='post'><input type='submit' id='updatePost' name='updatePost' value='EDIT POST'></form>";
+
             echo "<p><strong>Owner: </strong><a href='profile.php?profileCode=".$authorID[0]."'>".$authorID[0]."</a></p>";
             echo "<p><strong>Posted: </strong>".$row[6]."</p> <hr>";
 
