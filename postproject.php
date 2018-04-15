@@ -1,10 +1,14 @@
-
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 
-<?php //require './header.php';?>
 <?php
 include('header.php');
+if(isset($_SERVER["HTTPS"]))
+{
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    exit();
+}
+
 if(!is_logged_in()){
     header("Location: index.php");
 }

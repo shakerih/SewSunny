@@ -90,7 +90,15 @@ if(mysqli_connect_errno()) {
 );
 }
 ?>
-<?php include('header.php'); ?>
+<?php include('header.php');
+
+if(isset($_SERVER["HTTPS"]))
+{
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    exit();
+}
+?>
+
 
 <?php
 

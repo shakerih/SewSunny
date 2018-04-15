@@ -17,10 +17,13 @@
     );
   }
 ?>
-<?php include('header.php'); ?>
+<?php include('header.php');
 
-
-<?php
+if(isset($_SERVER["HTTPS"]))
+{
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    exit();
+}
     echo "<div class='header_space'></div>";
     echo "<div class='content_container'>";
     echo "<h2>Projects</h2>";

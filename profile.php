@@ -2,6 +2,12 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 <?php
     include('header.php');
+
+    if(isset($_SERVER["HTTPS"]))
+    {
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+        exit();
+    }
     if(!is_logged_in()){
       header("Location: index.php");
     }

@@ -1,6 +1,11 @@
 <!-- MANY OF THE FUNCTIONS USED IN THIS PROJECT HAVE BEEN MODIFIED OR USED FROM THE WEEK 8 TUTORIAL AND LECTURE -->
 <?php
     require_once('initialize.php');
+    if($_SERVER["HTTPS"] != "on")
+    {
+        header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+        exit();
+    }
 
     if(is_logged_in()){
         session_destroy();

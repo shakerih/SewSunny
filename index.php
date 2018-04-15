@@ -1,6 +1,11 @@
 <!-- MANY OF THE FUNCTIONS USED IN THIS PROJECT HAVE BEEN MODIFIED OR USED FROM THE WEEK 8 TUTORIAL AND LECTURE -->
 <?php
     require_once('initialize.php');
+    if(isset($_SERVER["HTTPS"]))
+    {
+        header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+        exit();
+    }
     // Create a database connection
     $dbhost = "localhost";
     $dbuser = "root";
