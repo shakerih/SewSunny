@@ -216,7 +216,7 @@ if(is_post_request()) {
                     ?>">
                     <hr>
 
-                    <h3 id="mainstep"> Instructions *</h3>
+                    <h3 id="mainstep"> Instructions </h3>
                     <input type="button" id="stepAdd" value="Add Step" onclick="addstep" class="bt" />
                     <?php
 
@@ -303,7 +303,7 @@ if(is_post_request()) {
                         ?>>Difficult</option>
                     </select>
 
-                    <h3 id="main">Tools and Materials *</h3>
+                    <h3 id="main">Tools and Materials</h3>
                     <input type="button" id="btAdd" name="materials" value="Add Item" class="bt" />
                     <?php
 

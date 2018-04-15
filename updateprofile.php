@@ -7,9 +7,9 @@ $connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
 
 if(!isset($_SESSION)) { session_start(); }
 //if(isset($_POST['update'])) {
-  $updateProfile = "UPDATE members SET username='".$_POST['username']."', name='".$_POST['name']."',password='".password_hash($_POST['password'], PASSWORD_BCRYPT)."' WHERE username='".$_SESSION['username']."'";
+  $updateProfile = "UPDATE members SET username='".htmlspecialchars($_POST['username'])."', name='".htmlspecialchars($_POST['name'])."',password='".password_hash(htmlspecialchars($_POST['password']), PASSWORD_BCRYPT)."' WHERE username='".$_SESSION['username']."'";
   mysqli_query($connection, $updateProfile);
-  $_SESSION['username'] = $_POST['username'];
+  $_SESSION['username'] = htmlspecialchars($_POST['username']);
   echo "";
 //}
 

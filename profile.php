@@ -35,7 +35,7 @@
 
 <?php
     if(isset($_SESSION['userID'])){
-        $currentProfile = $_GET['profileCode']
+        $currentProfile = htmlspecialchars($_GET['profileCode']);
 ?>
         <div class="header_space"></div>
         <div class="content_container">
