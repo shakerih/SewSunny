@@ -1,6 +1,11 @@
 <!-- MANY OF THE FUNCTIONS USED IN THIS PROJECT HAVE BEEN MODIFIED OR USED FROM THE WEEK 8 TUTORIAL AND LECTURE -->
 <?php
     require_once('initialize.php');
+    if($_SERVER["HTTPS"] != "on")
+    {
+        header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+        exit();
+    }
 
     if(is_logged_in()){
         session_destroy();
@@ -11,8 +16,8 @@
 
     if(is_post_request()) {
 
-        $username = $_POST['username'] ?? '';
-        $password = $_POST['password'] ?? '';
+        $username = htmlspecialchars($_POST['username']) ?? '';
+        $password = htmlspecialchars($_POST['password']) ?? '';
 
         // Validations
         if(is_blank($username)) {
@@ -67,9 +72,9 @@
 
         <?php echo display_errors($errors); ?>
 
-        <form action="login.php" method="post">
+        <form action="<?php echo htmlspecialchars("login.php");?>" method="post">
             <p>Username:</p>
-            <input type="text" name="username" value="<?php echo h($username); ?>" placeholder="Username" autofocus/><br />
+            <input type="text" name="username" value="<?php echo htmlspecialchars($username); ?>" placeholder="Username" autofocus/><br />
             <p>Password:</p>
             <input type="password" name="password" value="" placeholder="Password"/><br />
             <input type="submit" name="submit" value="LOGIN"  /><br/>

@@ -17,10 +17,13 @@
     );
   }
 ?>
-<?php include('header.php'); ?>
+<?php include('header.php');
 
-
-<?php
+if(isset($_SERVER["HTTPS"]))
+{
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    exit();
+}
     echo "<div class='header_space'></div>";
     echo "<div class='content_container'>";
     echo "<h2>Projects</h2>";
@@ -39,7 +42,7 @@
 <?php
     if(is_post_request()) {
         if(isset($_POST["searchTxt"])) {
-            $searchTxt = $_POST['searchTxt'];
+            $searchTxt = htmlspecialchars($_POST['searchTxt']);
             $searchTxt = str_replace(" ", "%", $searchTxt);
             // echo "search result: ".$searchTxt;
             // $condition = "";
@@ -306,7 +309,7 @@
 
 
         <div class="post_left">
-            <input type="text" name="searchTxt" id="searchInput" value="<?php echo str_replace("%", " ", $searchTxt); ?>">
+            <input type="text" name="searchTxt" id="searchInput" value="<?php echo str_replace("%", " ", htmlspecialchars($searchTxt)); ?>">
 
             <table class="filterTable">
                 <tr>

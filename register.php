@@ -1,6 +1,10 @@
 <?php
     require_once('initialize.php');
-
+    if($_SERVER["HTTPS"] != "on")
+    {
+        header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+        exit();
+    }
     $dbhost = "localhost";
     $dbuser = "root";
     $dbpass = "";
@@ -13,12 +17,12 @@
     $password = '';
 
     if(is_post_request()) {
-        $name = $_POST['name'] ?? '';
+        $name = htmlspecialchars($_POST['name']) ?? '';
 
-        $username = $_POST['username'] ?? '';
-        $email = $_POST['email'] ?? '';
-        $password = $_POST['password'] ?? '';
-        $confirmpassword = $_POST['confirmPassword'] ?? '';
+        $username = htmlspecialchars($_POST['username']) ?? '';
+        $email = htmlspecialchars($_POST['email'] )?? '';
+        $password = htmlspecialchars($_POST['password']) ?? '';
+        $confirmpassword = htmlspecialchars($_POST['confirmPassword']) ?? '';
 
         // Validations
         if(is_blank($username)) {
@@ -85,7 +89,7 @@
             <input type="text" name="email" value="" placeholder="Email" /><br />
             <p>Password:</p>
             <input type="password" name="password" value="" placeholder="Password" /><br />
-            <p>Confirm assword:</p>
+            <p>Confirm Password:</p>
             <input type="password" name="confirmPassword" value="" placeholder="Confirm Password" /><br />
             <input type="submit" name="submit" value="SIGN UP"  />
         </form>

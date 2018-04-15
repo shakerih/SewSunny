@@ -1,10 +1,14 @@
-
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 
-<?php //require './header.php';?>
 <?php
 include('header.php');
+if(isset($_SERVER["HTTPS"]))
+{
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    exit();
+}
+
 if(!is_logged_in()){
     header("Location: index.php");
 }
@@ -30,11 +34,11 @@ $tags = '';
 $imageURL = '';
 
 if(isset($_GET['update'])){
-    $projectCode = $_GET['update'];
-    $projectID = $_GET['update'];
-    $result = mysqli_query($connection, "SELECT * FROM projects WHERE projectID='".$_GET["update"]."'");
+    $projectCode = htmlspecialchars($_GET['update']);
+    $projectID = $projectCode;
+    $result = mysqli_query($connection, "SELECT * FROM projects WHERE projectID='".$projectID."'");
     $project = mysqli_fetch_row($result);
-    if($project[3] != $_SESSION['userID']) die("You cannot edit this page.");
+    if($project[3] != htmlspecialchars($_SESSION['userID'])) die("You cannot edit this page.");
 
 }else{
   $projectID = mysqli_insert_id($connection);
@@ -42,12 +46,12 @@ if(isset($_GET['update'])){
 
 if(is_post_request()) {
 
-    $title = $_POST['title'] ?? '';
-    $shortdes = $_POST['shortdes'] ?? '';
-    $category = $_POST['category'] ?? '';
-    $difficulty = $_POST['difficulty'] ?? '';
-    $tags = $_POST['tags'] ?? '';
-    $imageURL = $_POST['fileToUpload'] ?? '';
+    $title = htmlspecialchars($_POST['title']) ?? '';
+    $shortdes = htmlspecialchars($_POST['shortdes']) ?? '';
+    $category = htmlspecialchars($_POST['category']) ?? '';
+    $difficulty = htmlspecialchars($_POST['difficulty']) ?? '';
+    $tags = htmlspecialchars($_POST['tags']) ?? '';
+    $imageURL = htmlspecialchars($_POST['fileToUpload']) ?? '';
 
 
     // Validations
@@ -72,7 +76,7 @@ if(is_post_request()) {
         // set time to Canada Pacific time
         date_default_timezone_set("Canada/Pacific");
 
-        if(isset($_GET['update'])){
+        if(isset($projectCode)){
           $query = "DELETE FROM steps WHERE projectID=".$projectID;
           $result = mysqli_query($connection, $query);
         }
@@ -142,7 +146,7 @@ if(is_post_request()) {
                     while(isset($_POST[$s.'inst'])){
                         //  array_push($steps, [ $_POST[$s.'inst'], $_POST[$s.'url'] ?? '']);
 
-                        $query = "INSERT INTO steps (projectID, stepnumber, instructions) VALUES (".$projectID.", ".$s.", '".$_POST[$s.'inst']."')";
+                        $query = "INSERT INTO steps (projectID, stepnumber, instructions) VALUES (".$projectID.", ".$s.", '".htmlspecialchars($_POST[$s.'inst'])."')";
                         $result = mysqli_query($connection, $query);
 
                         $s++  ;
@@ -157,7 +161,7 @@ if(is_post_request()) {
                     while(isset($_POST[$m.'quant'])){
                         //  array_push($steps, [ $_POST[$s.'inst'], $_POST[$s.'url'] ?? '']);
 
-                        $query = "INSERT INTO materials ( materialName, quantity, unit, projectID) VALUES ('".$_POST[$m.'name']."', '".$_POST[$m.'quant']."', '".$_POST[$m.'units']."', ".$projectID.")";
+                        $query = "INSERT INTO materials ( materialName, quantity, unit, projectID) VALUES ('".htmlspecialchars($_POST[$m.'name'])."', '".$_POST[$m.'quant']."', '".$_POST[$m.'units']."', ".$projectID.")";
                         $result = mysqli_query($connection, $query);
                         echo $m;
                         $m++  ;
@@ -182,15 +186,15 @@ if(is_post_request()) {
             <!-- display error -->
             <?php if (isset($_GET['error'])) { //read error from URL?>
                 <span style="color:red">
-                    <?php echo str_replace(",","<br>",$_GET['error'])."<br>"; ?>
+                    <?php echo str_replace(",","<br>",htmlspecialchars($_GET['error']))."<br>"; ?>
                 </span>
 
-                <?php echo $_GET['error']; } ?>
+                <?php echo htmlspecialchars($_GET['error']); } ?>
 
                 <div class="post_left">
                     <h3>Project Title *</h3>
                     <input type="text" name="title" autofocus value="<?php
-                    if(isset($_GET['update'])){
+                    if(isset($projectCode)){
                       echo $project[1];
                     }
                     else
@@ -200,23 +204,23 @@ if(is_post_request()) {
 
                     <h3>Short Description *</h3>
                     <textarea name="shortdes" rows="5" id="shortdes" form="all" placeholder="Enter description here..." ><?php
-                    if(isset($_GET['update'])){
+                    if(isset($projectCode)){
                       echo $project[4];
                     }
                     ?></textarea>
                     <h3>Tags</h3>
                     <input type="text" name="tags" value="<?php
-                    if(isset($_GET['update'])){
+                    if(isset($projectCode)){
                       echo $project[8];
                     }
                     ?>">
                     <hr>
 
-                    <h3 id="mainstep"> Instructions *</h3>
+                    <h3 id="mainstep"> Instructions </h3>
                     <input type="button" id="stepAdd" value="Add Step" onclick="addstep" class="bt" />
                     <?php
 
-                    if(isset($_GET['update'])){
+                    if(isset($projectCode)){
                     $result = mysqli_query($connection, "SELECT instructions, instruct_photo FROM steps WHERE projectID='".$projectCode."' ORDER BY stepnumber");
 
                   ?>
@@ -229,7 +233,7 @@ if(is_post_request()) {
                     sCnt++;
 
                     // ADD TEXTBOX.
-                    $(scontainer).append('Step '+sCnt+' <br><textarea name="'+sCnt+'inst"  rows="8" placeholder="Enter instructions here..." ><?php echo $row[0]; ?></textarea>Image URL<input type="text" name="'+sCnt+'url" ><br>');
+                    $(scontainer).append('Step '+sCnt+' <br><textarea name="'+sCnt+'inst"  rows="8" placeholder="Enter instructions here..." ><?php echo htmlspecialchars($row[0]); ?></textarea>Image URL<input type="text" name="'+sCnt+'url" ><br>');
 
                     // ADD BOTH THE DIV ELEMENTS TO THE "main" CONTAINER.
                     $('#mainstep').after(scontainer);
@@ -242,7 +246,7 @@ if(is_post_request()) {
                     <h3>Project Image</h3>
                     <!-- <input type="text" name="purl" > -->
                     <input type="file" name="fileToUpload" id="fileToUpload" value="<?php
-                    if(isset($_GET['update'])){
+                    if(isset($projectCode)){
                       echo $project[5];
                     }
                     ?>">
@@ -250,27 +254,27 @@ if(is_post_request()) {
                     <h3>Category *</h3>
                     <select name="category" size="0" >
                         <option value=""  <?php
-                        if(!isset($_GET['update'])){
+                        if(!isset($projectCode)){
                           echo "selected";
                         }
                         ?>>-- Select One --</option>
                         <option value="CAT_0" <?php
-                        if(isset($_GET['update']) && $project[7] == 'CAT_0'){
+                        if(isset($projectCode) && $project[7] == 'CAT_0'){
                           echo "selected";
                         }
                         ?>>Crochet</option>
                         <option value="CAT_1"  <?php
-                        if(isset($_GET['update']) && $project[7] == 'CAT_1'){
+                        if(isset($projectCode) && $project[7] == 'CAT_1'){
                           echo "selected";
                         }
                         ?>>Cross Stich</option>
                         <option value="CAT_2"  <?php
-                        if(isset($_GET['update']) && $project[7] == 'CAT_2'){
+                        if(isset($projectCode) && $project[7] == 'CAT_2'){
                           echo "selected";
                         }
                         ?>>Sewing</option>
                         <option value="CAT_3"  <?php
-                        if(isset($_GET['update']) && $project[7] == 'CAT_3'){
+                        if(isset($projectCode) && $project[7] == 'CAT_3'){
                           echo "selected";
                         }
                         ?>>Knitting</option>
@@ -278,28 +282,28 @@ if(is_post_request()) {
                     <h3>Difficulty *</h3>
                     <select name="difficulty" size="0" >
                         <option value=""  <?php
-                        if(!isset($_GET['update'])){
+                        if(!isset($projectCode)){
                           echo "selected";
                         }
                         ?>>-- Select One --</option>
                         <option value="1"  <?php
-                        if(isset($_GET['update']) && $project[2] == '1'){
+                        if(isset($projectCode) && $project[2] == '1'){
                           echo "selected";
                         }
                         ?>>Easy</option>
                         <option value="2"  <?php
-                        if(isset($_GET['update']) && $project[2] == '2'){
+                        if(isset($projectCode) && $project[2] == '2'){
                           echo "selected";
                         }
                         ?>>Intermediate</option>
                         <option value="3"  <?php
-                        if(isset($_GET['update']) && $project[2] == '3'){
+                        if(isset($projectCode) && $project[2] == '3'){
                           echo "selected";
                         }
                         ?>>Difficult</option>
                     </select>
 
-                    <h3 id="main">Tools and Materials *</h3>
+                    <h3 id="main">Tools and Materials</h3>
                     <input type="button" id="btAdd" name="materials" value="Add Item" class="bt" />
                     <?php
 
@@ -318,7 +322,7 @@ if(is_post_request()) {
                                 iCnt++;
 
                                 // ADD TEXTBOX.
-                                $(container).append('Material '+iCnt+' <br><input type="number" name="'+iCnt+'quant" value="<?php echo $row[0];?>"><select name="'+iCnt+'units" size="0" ><option value="" <?php if(!isset($_GET['update'])){ echo "selected";}?>>-- Select One --</option><option value="pounds" <?php if(isset($_GET['update']) && $row[1] == "pounds"){ echo "selected";}?>>lbs</option><option value="cm" <?php if(isset($_GET['update']) && $row[1] == "cm"){ echo "selected";}?>>cm</option><option value="meter" <?php if(isset($_GET['update']) && $row[1] == "meter"){ echo "selected";}?>>meters</option><option value="pcs" <?php if(isset($_GET['update']) && $row[1] == "pcs"){ echo "selected";}?>>pcs</option> <option value="rolls" <?php if(isset($_GET['update']) && $row[1] == "rolls"){ echo "selected";}?>>rolls</option><option value="kg" <?php if(isset($_GET['update']) && $row[1] == "kg"){ echo "selected";}?>>kg</option><option value="items" <?php if(isset($_GET['update']) && $row[1] == "items"){ echo "selected";}?>>items</option><option value="mm"   <?php if(isset($_GET['update']) && $row[1] == "mm"){ echo "selected";}?>>mm</option></select><input type="text" name="'+iCnt+'name" value="<?php echo $row[2];?>"><br>');
+                                $(container).append('Material '+iCnt+' <br><input type="number" name="'+iCnt+'quant" value="<?php echo $row[0];?>"><select name="'+iCnt+'units" size="0" ><option value="" <?php if(!isset($projectCode)){ echo "selected";}?>>-- Select One --</option><option value="pounds" <?php if(isset($projectCode) && $row[1] == "pounds"){ echo "selected";}?>>lbs</option><option value="cm" <?php if(isset($projectCode) && $row[1] == "cm"){ echo "selected";}?>>cm</option><option value="meter" <?php if(isset($projectCode) && $row[1] == "meter"){ echo "selected";}?>>meters</option><option value="pcs" <?php if(isset($projectCode) && $row[1] == "pcs"){ echo "selected";}?>>pcs</option> <option value="rolls" <?php if(isset($projectCode) && $row[1] == "rolls"){ echo "selected";}?>>rolls</option><option value="kg" <?php if(isset($projectCode) && $row[1] == "kg"){ echo "selected";}?>>kg</option><option value="items" <?php if(isset($projectCode) && $row[1] == "items"){ echo "selected";}?>>items</option><option value="mm"   <?php if(isset($projectCode) && $row[1] == "mm"){ echo "selected";}?>>mm</option></select><input type="text" name="'+iCnt+'name" value="<?php echo $row[2];?>"><br>');
 
 
                                 // ADD BOTH THE DIV ELEMENTS TO THE "main" CONTAINER.

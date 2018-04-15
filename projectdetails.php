@@ -90,7 +90,15 @@ if(mysqli_connect_errno()) {
 );
 }
 ?>
-<?php include('header.php'); ?>
+<?php include('header.php');
+
+if(isset($_SERVER["HTTPS"]))
+{
+    header("Location: http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    exit();
+}
+?>
+
 
 <?php
 
@@ -113,7 +121,7 @@ if(mysqli_connect_errno()) {
 // }
 if(is_logged_in()){
     // check if current project exist in the favourite_project table with same userID and projectID
-    $checkPin = mysqli_query($connection, "SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".$_GET['projectCode']);
+    $checkPin = mysqli_query($connection, "SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".htmlspecialchars($_GET['projectCode']));
     // printf(mysqli_num_rows($checkPin));
     // if project exist
     if (mysqli_num_rows($checkPin)){
@@ -127,7 +135,7 @@ if(is_logged_in()){
     }
 
     if(isset($_POST['pin']) & !mysqli_num_rows($checkPin)){
-        $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) VALUES(". $_SESSION['userID']. "," . $_GET['projectCode'].")");
+        $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) VALUES(". $_SESSION['userID']. "," . htmlspecialchars($_GET['projectCode']).")");
         // $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) SELECT ".$_SESSION['userID'].",".$_GET['projectCode'] . " WHERE NOT EXISTS (SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".$_GET['projectCode'] .")");
         $pinText = "ALREADY PINNED";
     }
@@ -136,8 +144,8 @@ if(is_logged_in()){
 
 if(isset($_GET["projectCode"])){
     //send query and catch error
-    $_SESSION['currproject'] = $_GET["projectCode"];
-    $result = mysqli_query($connection, "SELECT * FROM projects WHERE projectID='".$_GET["projectCode"]."'");
+    $_SESSION['currproject'] = htmlspecialchars($_GET["projectCode"]);
+    $result = mysqli_query($connection, "SELECT * FROM projects WHERE projectID='".htmlspecialchars($_GET["projectCode"])."'");
     if (!$result) {
         die("Database query failed 3.");
     }
@@ -218,7 +226,7 @@ if(isset($_GET["projectCode"])){
         //Material details
         echo "<div class='detail_left'>";
             echo "<h3>Materials:</h3>";
-            $result = mysqli_query($connection, "SELECT quantity, unit, materialName FROM materials WHERE projectID='".$_GET["projectCode"]."'");
+            $result = mysqli_query($connection, "SELECT quantity, unit, materialName FROM materials WHERE projectID='".htmlspecialchars($_GET["projectCode"])."'");
             echo "<ul class='material_list'>";
             while($row = mysqli_fetch_row($result)){ // add rows to the table
                 echo "<li>";
@@ -233,7 +241,7 @@ if(isset($_GET["projectCode"])){
         //Process details
         echo "<div class='detail_left'>";
             echo "<h3>Steps:</h3>";
-            $result = mysqli_query($connection, "SELECT instructions, instruct_photo FROM steps WHERE projectID='".$_GET["projectCode"]."' ORDER BY stepnumber");
+            $result = mysqli_query($connection, "SELECT instructions, instruct_photo FROM steps WHERE projectID='".htmlspecialchars($_GET["projectCode"])."' ORDER BY stepnumber");
             echo "<ol class='process_list'>";
             while($row = mysqli_fetch_row($result)){ // add rows to the table
                 echo "<li>";
@@ -254,7 +262,7 @@ if(isset($_GET["projectCode"])){
             echo "<div class='detail_left'>";
             echo "<hr>";
             echo "<h3>Comments:</h3>";
-                $result = mysqli_query($connection, "SELECT members.username, comment.time, comment.comment FROM comment INNER JOIN members ON comment.userID = members.userID WHERE projectID='".$_GET["projectCode"]."' ");
+                $result = mysqli_query($connection, "SELECT members.username, comment.time, comment.comment FROM comment INNER JOIN members ON comment.userID = members.userID WHERE projectID='".htmlspecialchars($_GET["projectCode"])."' ");
                 while($row = mysqli_fetch_row($result)){ // add rows to the table
                     echo "<div class='comment_block'>";
                         echo "<p class='comment_name'>" . $row[0] . "</p>";
