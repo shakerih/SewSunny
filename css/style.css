@@ -424,6 +424,18 @@ textarea#shortdes {
     height: 155px;
 }
 
+.pagination {
+    text-align: center;
+    margin: -4em 0 4em;
+}
+.pagination button {
+    background: #FFAFA1;
+    color: white;
+    border: none;
+    width: 50px;
+    margin: 10px;
+    line-height: 20px;
+}
 
 /* --------------------------------------------------------------------------- */
 /* project details page*/
