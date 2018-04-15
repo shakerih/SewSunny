@@ -425,6 +425,7 @@
     else {
 
         echo "<div class='project_container'>";
+        $numprojects = mysqli_num_rows($result);
         while($row = mysqli_fetch_row($result)){ // add rows to the table
             echo "<div class='project_item'>";
             echo "<div class='project'>";
@@ -442,8 +443,19 @@
 
     echo "</div>";
     echo "</div>";
-?>
 
+    $numpages = ceil($numprojects /10);
+    if( strpos( $url, "#" ) === false ) echo "NO HASH !";
+   else echo "HASH IS: #".explode( "#", $url )[1];
+
+?>
+<div class="pagination">
+  <a href="#">&laquo;</a>
+  <?php for($i=1; $i<=$numpages; $i++){
+  echo '<a href="#'.$i.'">'.$i .'</a>';
+} ?>
+  <a href="#">&raquo;</a>
+</div>
 
 
 <script>
