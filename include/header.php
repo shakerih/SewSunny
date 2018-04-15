@@ -1,7 +1,7 @@
 <?php require_once('initialize.php');?>
 <head>
 	<link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
 </head>
 <div class="header">
 	<div class="nav_container nav_logo">
@@ -23,7 +23,7 @@
 	<div class="nav_container nav_right">
 		<?php if(is_logged_in()){
 // if signed in, link to profile page and log out
-			echo "<a href='profile.php?profileCode=".$_SESSION['username']."'> <img src='image/user.png'> &nbsp;".$_SESSION['username']."&nbsp; PROFILE</a>";
+			echo "<a href='profile.php?profileCode=".$_SESSION['username']."'> <img src='../image/user.png'> &nbsp;".$_SESSION['username']."&nbsp; PROFILE</a>";
 			echo "<a href='login.php'>LOG OUT</a>";
 		} else
 		echo "<a href='login.php'>LOGIN / SIGN UP</a>"; //otherwise, link to login

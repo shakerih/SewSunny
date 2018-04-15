@@ -76,10 +76,10 @@ if(is_post_request()) {
         }
 
         if(isset($_POST["submit"])) {
-            $target_dir = "uploads/";
+            $target_dir = "../uploads/";
             // if no image is uploaded, show image not available
             if(basename($_FILES["fileToUpload"]["name"]) == ""){
-                $target_file = "image/no_image_available.jpeg";
+                $target_file = "../image/no_image_available.jpeg";
             }else {
                 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
             }
