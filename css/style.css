@@ -232,13 +232,29 @@ input[type=submit].pin_button {
 input[type=button] {
     background: lightGray;
 }
-h3 input[type=button] {
+h3 input[type=button], input#update, input#updatePost {
     width: 10%;
     text-align: center;
     float: right;
     line-height: 17px;
     padding: 2px 0;
     margin: 0;
+}
+#updateForm input[type=text]{
+    margin: 0;
+}
+form#update {
+    margin: 1.75em 0 1em;
+}
+input#updatePost {
+    width: 35%;
+    text-align: center;
+    float: right;
+    background: lightGray;
+    color: #333847;
+    padding: 2px;
+    margin: 0.5em 0;
+    font-weight: 400;
 }
 
 select {

@@ -141,12 +141,16 @@
                     echo "<p>".$currentProfile. " does not have any project.</p>";
                 // echo "</div>";
             }
+            echo "</div>";
+            ?>
 
+            <h3>Review:</h3>
+            <div class='project_container'>
+                <?php
                 $memComment = mysqli_query($connection, "SELECT members.username, comment.time, comment.comment, projects.projectTitle, projects.projectID FROM comment INNER JOIN projects ON comment.projectID = projects.projectID INNER JOIN members ON comment.userID = members.userID WHERE members.username='".$currentProfile."'");
                 if(mysqli_num_rows($memComment)){
                     echo "<div class='detail_left'>";
                     echo "<hr>";
-                    echo "<h3>Review:</h3>";
                     while($row = mysqli_fetch_row($memComment)){ // add rows to the table
                         echo "<div class='comment_block'>";
                             echo "<p><span class='comment_name'>" . $row[0] ."</span> commented on <a href='projectdetails.php?projectCode=". $row[4]."'>".$row[3] . "</a><span class='comment_time'> on ".$row[1]."</span></p>";
@@ -158,11 +162,10 @@
                 } else {
                     echo "<p>".$currentProfile. " did not make any comment.</p>";
                 }
-            echo "</div>";
-            ?>
-
+                ?>
             </div>
         </div>
+    </div>
 
 
 <?php } ?>
@@ -179,7 +182,8 @@
                   'display' : 'none'
                 })
                 $('#update').css({
-                  'display' : 'block'
+                  'display' : 'block',
+                  'width' : '25%'
                 })
 
                 $('#password').css({

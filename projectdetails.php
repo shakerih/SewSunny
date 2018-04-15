@@ -146,7 +146,20 @@ if(isset($_GET["projectCode"])){
 
     echo "<div class='header_space'></div>";
     echo "<div class='content_container'>";
-        echo "<h2>".$row[1]."</h2>";
+
+        echo "<div class='project_detail_wrapper'>";
+            echo "<div class='detail_left'>";
+                echo "<h2>".$row[1]."</h2>";
+            echo "</div>";
+
+            echo "<div class='detail_right'>";
+                $author = mysqli_query($connection, "SELECT username FROM members WHERE userID='".$row[3]."'");
+                $authorID= mysqli_fetch_row($author);
+                if(is_logged_in() && $authorID[0]==$_SESSION['username'])
+                echo "<form id='update' method='post'><input type='submit' id='updatePost' name='updatePost' value='EDIT POST'></form>";
+            echo "</div>";
+        echo "</div>";
+
         echo "<div class='project_detail_wrapper'>";
 
         echo "<div class='detail_left'>";
@@ -156,10 +169,6 @@ if(isset($_GET["projectCode"])){
         echo "</div>";
 
         echo "<div class='detail_right'>";
-        $author = mysqli_query($connection, "SELECT username FROM members WHERE userID='".$row[3]."'");
-        $authorID= mysqli_fetch_row($author);
-        if(is_logged_in() && $authorID[0]==$_SESSION['username'])
-        echo "<form id='update' method='post'><input type='submit' id='updatePost' name='updatePost' value='EDIT POST'></form>";
 
             echo "<p><strong>Owner: </strong><a href='profile.php?profileCode=".$authorID[0]."'>".$authorID[0]."</a></p>";
             echo "<p><strong>Posted: </strong>".$row[6]."</p> <hr>";
