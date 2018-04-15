@@ -150,17 +150,16 @@ if(is_post_request()) {
                     }
 
                     $m = 1;
-
+                    if(isset($projectCode)){
+                      $query = "DELETE FROM materials WHERE projectID=".$projectCode;
+                      $result = mysqli_query($connection, $query);
+                    }
                     while(isset($_POST[$m.'quant'])){
                         //  array_push($steps, [ $_POST[$s.'inst'], $_POST[$s.'url'] ?? '']);
 
-                        if(isset($projectCode)){
-                          $query = "DELETE FROM materials WHERE projectID=".$projectCode;
-                          $result = mysqli_query($connection, $query);
-                        }
                         $query = "INSERT INTO materials ( materialName, quantity, unit, projectID) VALUES ('".$_POST[$m.'name']."', '".$_POST[$m.'quant']."', '".$_POST[$m.'units']."', ".$projectID.")";
                         $result = mysqli_query($connection, $query);
-
+                        echo $m;
                         $m++  ;
 
                     }
@@ -355,27 +354,32 @@ if(is_post_request()) {
       $('#mainstep').after(scontainer);
 
     }
+
+    <?php if(!isset($projectCode)){?>
+             iCnt = 0;
+            <?php } ?>
+            // CREATE A "DIV" ELEMENT AND DESIGN IT USING jQuery ".css()" CLASS.
+    var container = $(document.createElement('div'));
+
+    function addmat(){
+
+                console.log(container);
+
+                iCnt = iCnt + 1;
+
+                // ADD TEXTBOX.
+                $(container).append('Material '+iCnt+' <br><input type="number" name="'+iCnt+'quant" value="enter quantity"><select name="'+iCnt+'units" size="0" ><option value="" selected>-- Select One --</option><option value="pounds">lbs</option><option value="cm">cm</option><option value="meter">meters</option><option value="pcs">pcs</option> <option value="rolls">rolls</option><option value="kg">kg</option><option value="items">items</option><option value="mm">mm</option></select><input type="text" name="'+iCnt+'name" value="material name"><br>');
+
+
+                // ADD BOTH THE DIV ELEMENTS TO THE "main" CONTAINER.
+                $('#main').after(container);
+
+            }
+
     $(document).ready(function() {
-<?php if(!isset($projectCode)){?>
-         iCnt = 0;
-        <?php } ?>
-        // CREATE A "DIV" ELEMENT AND DESIGN IT USING jQuery ".css()" CLASS.
-        var container = $(document.createElement('div'));
 
-        $('#btAdd').click(function() {
+        $('#btAdd').click(addmat);
 
-            console.log(container);
-
-            iCnt = iCnt + 1;
-
-            // ADD TEXTBOX.
-            $(container).append('Material '+iCnt+' <br><input type="number" name="'+iCnt+'quant" value="enter quantity"><select name="'+iCnt+'units" size="0" ><option value="" selected>-- Select One --</option><option value="pounds">lbs</option><option value="cm">cm</option><option value="meter">meters</option><option value="pcs">pcs</option> <option value="rolls">rolls</option><option value="kg">kg</option><option value="items">items</option><option value="mm">mm</option></select><input type="text" name="'+iCnt+'name" value="material name"><br>');
-
-
-            // ADD BOTH THE DIV ELEMENTS TO THE "main" CONTAINER.
-            $('#main').after(container);
-
-        });
         $("#stepAdd").click(addstep);
 
 
