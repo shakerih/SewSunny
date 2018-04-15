@@ -1,15 +1,16 @@
-<!-- MANY OF THE FUNCTIONS USED IN THIS PROJECT HAVE BEEN MODIFIED OR USED FROM THE WEEK 8 TUTORIAL AND LECTURE -->
 <?php
     require_once('initialize.php');
+    //ensure that login uses HTTPS
     if($_SERVER["HTTPS"] != "on")
     {
         header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
         exit();
     }
 
-    if(is_logged_in()){
+    if(is_logged_in()){ //this logs the user out
         session_destroy();
     }
+
     $errors = [];
     $username = '';
     $password = '';
@@ -57,7 +58,7 @@
 
 <?php $page_title = 'LOG IN'; ?>
 <?php include('header.php'); ?>
-<!-- Check if visitors is loggin or not -->
+<!-- Check if visitors is logged in or not -->
 <!-- if yes, redirect page to landing page after login -->
 <?php
     if(is_logged_in()){
@@ -68,7 +69,7 @@
 
 <div id="content" class="center_screen">
     <div class="form_container">
-        <h2>WELCOME BACK</h2>
+        <h2>WELCOME</h2>
 
         <?php echo display_errors($errors); ?>
 
@@ -79,6 +80,6 @@
             <input type="password" name="password" value="" placeholder="Password"/><br />
             <input type="submit" name="submit" value="LOGIN"  /><br/>
         </form>
-        <a href="register.php">Don't have an account yet? <strong>Sign up here.</strong></a>
+        <a href="register.php">Don't have an account yet? <strong>Sign up here.</strong></a> 
     </div>
 </div>

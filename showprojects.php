@@ -37,15 +37,14 @@ if(isset($_SERVER["HTTPS"]))
     $catCroRlt = $catCSRlt = $catSewRlt = $catKnitRlt = "";
     $difEasyRlt = $difInterRlt = $difDifRlt = "";
     $rltTxt = $catTxt = $diffTxt = "";
-?>
 
-<?php
+
     if(is_post_request()) {
-        if(isset($_POST["searchTxt"])) {
+        if(isset($_POST["searchTxt"])) { //formulate search query
             $searchTxt = htmlspecialchars($_POST['searchTxt']);
             $searchTxt = str_replace(" ", "%", $searchTxt);
-            // echo "search result: ".$searchTxt;
-            // $condition = "";
+
+            //check filters
             if(isset($_POST["allRlt"])) {
                 $allRlt = $_POST["allRlt"];
                 $conditionA = "WHERE projects.projectTitle LIKE '%".$searchTxt."%' OR members.username LIKE '%".$searchTxt."%' OR category.categoryName LIKE '%".$searchTxt."%' ";
@@ -286,27 +285,23 @@ if(isset($_SERVER["HTTPS"]))
             }
 
 
+            //sql search query to DB
             $searchQuery = "SELECT projects.projectID, projects.projectTitle, projects.description, projects.tag, projects.imgURL, category.categoryName, members.username, projects.userID, projects.levelDifficulty FROM projects INNER JOIN category ON projects.categoryID = category.categoryID INNER JOIN members ON projects.userID=members.userID ";
             $searchQuery.= $conditionA;
             $searchQuery.= "ORDER BY projects.projectID ";
             $result = mysqli_query($connection, $searchQuery);
-            // echo $searchQuery;
         }
 
-        // if($filter)
     }
     else if (!isset($_POST["search"]) || $searchTxt == "") {
         $searchQuery = "SELECT projects.projectID, projects.projectTitle, projects.description, projects.tag, projects.imgURL, category.categoryName, members.username, projects.userID, projects.levelDifficulty FROM projects INNER JOIN category ON projects.categoryID = category.categoryID INNER JOIN members ON projects.userID=members.userID ORDER BY projects.projectID";
-        // $result = mysqli_query($connection, $query);
+
     }
-    // echo "Search: ".$searchTxt;
-    // echo $searchQuery;
+
 ?>
-
-
+<!-- display search form -->
 <form action="" method="post" id="searchForm">
     <div id="searchFilter" class="search_wrapper">
-
 
         <div class="post_left">
             <input type="text" name="searchTxt" id="searchInput" value="<?php echo str_replace("%", " ", htmlspecialchars($searchTxt)); ?>">
@@ -317,7 +312,6 @@ if(isset($_SERVER["HTTPS"]))
                         Refine by:
                     </th>
                     <th>
-                        <!-- <input type="checkbox" name="allRlt" id="allChk" onclick="checkA()"  <?php //echo isset($_POST["allRlt"]) ? "checked" : ""; ?>> All -->
                         <input type="checkbox" name="allRlt"  id="allChk" onclick="checkA()"  <?php echo isset($_POST["allRlt"]) ? "checked" : ""; ?>>
                         <label for="allChk"><span></span>All</label>
                     </th>
@@ -390,29 +384,21 @@ if(isset($_SERVER["HTTPS"]))
         if($allRlt || $userRlt || $titleRlt || $tagRlt) {
             echo "<p>result for <strong>".$rltTxt." </strong></p>";
         }
-        // echo $rltTxt;
         if(!$allRlt && !$userRlt && !$titleRlt && !$tagRlt) {
-            // echo "catTxt: " . $catTxt . " diffTxt: " . $diffTxt;
-            // echo "rltTxt: " . $rltTxt;
+
             if(!$diffTxt && $catTxt) {
                 echo "<p>result for <strong>".$rltTxt." </strong></p>";
             }
             if($diffTxt != "") {
                 echo "<p>result for <strong>".$rltTxt." </strong></p>";
-                // echo $diffTxt;
+
             }
         }
 
-        // if(($allRlt || $userRlt || $titleRlt || $tagRlt) ||
-        //     ($catCroRlt || $catCSRlt || $catSewRlt || $catKnitRlt)) {
-        //     echo "<p>result for 3 <strong>".$rltTxt." </strong></p>";
-        // }
     }
-
-    // if($allRlt || $userRlt || $titleRlt || $tagRlt)
     // if entry box is empty and category is checked
     if(($catCroRlt || $catCSRlt || $catSewRlt || $catKnitRlt) && $searchTxt==""){
-        // echo "<p>result for <strong>".$rltTxt." </strong></p>";
+
     }
     if((($catCroRlt || $catCSRlt || $catSewRlt || $catKnitRlt) && $searchTxt!="") && ($allRlt || $userRlt || $titleRlt || $tagRlt)) {
         if ($catCroRlt || $catCSRlt || $catSewRlt || $catKnitRlt){
@@ -430,12 +416,10 @@ if(isset($_SERVER["HTTPS"]))
         echo "<div class='project_container'>";
         $numprojects = mysqli_num_rows($result);
         $counter = 0;
-        while($row = mysqli_fetch_row($result)){ // add rows to the table
+        while($row = mysqli_fetch_row($result)){ //display search results
             echo "<div class='project_item' id='proj".$counter."'>";
             echo "<div class='project'>";
-            // echo "<div class='img_overlay'></div>";
             echo "<a href='projectdetails.php?projectCode=". $row[0]."'>" . "<div class='overlay'></div>" . "<img src='". $row[4] . "'>" . "</a>";
-            // echo "<img src='". $row[4] . "'><br>";
             echo "<a href='projectdetails.php?projectCode=". $row[0]."'>" . $row[1] ."</a> </br>";
             echo "<span class='project_category'> ".$row[5]. "</span> <span class='pinfo'> by </span>";
             echo "<a class='project_author' href='profile.php?profileCode=". $row[6]."'>".$row[6] . "</a></br>";
@@ -449,31 +433,30 @@ if(isset($_SERVER["HTTPS"]))
     echo "</div>";
     echo "</div>";
 
-    $numpages = ceil($numprojects /10);
+    $numpages = ceil($numprojects /9); //show 9 results per page
 
 
 ?>
 <div class="pagination">
   <?php for($i=1; $i<=$numpages; $i++){
-  echo '<button class="pagenum" id="'.$i.'">'.$i .'</button>';
+  echo '<button class="pagenum" id="'.$i.'">'.$i .'</button>'; //create buttons for pages
 } ?>
 </div>
 
 
 <script>
 
-function page(event){
-  console.log(event.target.id);
+function page(event){ //on page change, hide everything and then reveal the relevant posts
   $(".project_item").hide();
-  for(var i = (event.target.id*10)-10; i < event.target.id*10; i++){
+  for(var i = (event.target.id*9)-9; i < event.target.id*9; i++){
     $("#proj"+i).show();
   }
 };
-    $(document).ready(function() {
+    $(document).ready(function() { //upon initially loading, show first 9 projects
 
       $(".pagenum").click(page);
       $(".project_item").hide();
-      for(var i = 0; i < 10; i++){
+      for(var i = 0; i < 9; i++){
         $("#proj"+i).show();
       }
 
@@ -492,26 +475,8 @@ function page(event){
             });
         });
 
-        // $('input[type=checkbox]').click(function() {
-        //     $("#searchForm").submit();
-        // });
         $('#catCroChk').click(function() {
             $("#searchForm").submit();
-            // alert("hi");
-            // var crotch = {
-            //     "text" : $('#catCroChk').val(),
-            // };
-            // console.log(crotch);
-            // $.ajax({
-            //     type: "POST",
-            //     url: "search.php",
-            //     data: crotch,
-            //     dataType : "html"
-            // })
-            // .done(function(data) {
-            //     console.log(data);
-            //     location.reload();
-            // });
 
         });
 

@@ -9,15 +9,11 @@ $( document ).ready(function(){
         theme: 'fontawesome-stars'
     });
 
-    console.log($('select').barrating('set', $('[name = "rateform"]').attr("id")));
-    $('#example').on("change", function(event) {
+    $('#example').on("change", function(event) { //when rating changes, send the info to rateprocess.php to be processed
         $('select').barrating('readonly', true);
         event.preventDefault();
-        // get the form data
-        // there are many ways to get this data using jQuery (you can use the class or id also)
         var formData = {
             'num'              : $('#example').val(),
-
         };
 
         // process the form
@@ -28,30 +24,18 @@ $( document ).ready(function(){
             dataType    : 'html', // what type of data do we expect back from the server
             encode          : true
         })
-        // using the done promise callback
         .done(function(data) {
-
-            // log data to the console so we can see
-            console.log(data);
             location.reload();
 
-            // here we will handle errors and validation messages
         });
-
-        // stop the form from submitting the normal way and refreshing the page
 
     });
 
-    $('#comform').submit(function(event) {
-        // console.log('kkkkk');
+    $('#comform').submit(function(event) { //submit the comment through ajax with comment.php
         event.preventDefault();
-        // get the form data
-        // there are many ways to get this data using jQuery (you can use the class or id also)
         var formData = {
             'text'              : $('#comment').val(),
-
         };
-
         // process the form
         $.ajax({
             type        : 'POST', // define the type of HTTP verb we want to use (POST for our form)
@@ -60,13 +44,9 @@ $( document ).ready(function(){
             dataType    : 'html', // what type of data do we expect back from the server
             encode          : true
         })
-        // using the done promise callback
         .done(function(data) {
-            console.log(data);
             location.reload();
         });
-
-        // stop the form from submitting the normal way and refreshing the page
 
     });
 });
@@ -102,45 +82,25 @@ if(isset($_SERVER["HTTPS"]))
 
 <?php
 
-// INSERT INTO favourite_project (userID,projectID)
-// SELECT 7, 3
-//    WHERE NOT EXISTS (SELECT * FROM favourite_project
-//                      WHERE userID=7 AND projectID=3)
-
-// object(mysqli_result)#3 (5) {
-//   ["current_field"]=&gt;
-//   int(0)
-//   ["field_count"]=&gt;
-//   int(2)
-//   ["lengths"]=&gt;
-//   NULL
-//   ["num_rows"]=&gt;
-//   int(1)
-//   ["type"]=&gt;
-//   int(0)
-// }
 if(is_logged_in()){
     // check if current project exist in the favourite_project table with same userID and projectID
     $checkPin = mysqli_query($connection, "SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".htmlspecialchars($_GET['projectCode']));
-    // printf(mysqli_num_rows($checkPin));
     // if project exist
     if (mysqli_num_rows($checkPin)){
         $pinText = "ALREADY PINNED";
-    } else {
+    } else { //if not, allow user to pin project
         $pinText = "PIN TO PINBOARD";
     }
 
-    if(isset($_POST['updatePost'])){
-      header("Location: postproject.php?update=".$_GET['projectCode']);
+    if(isset($_POST['updatePost'])){ //allow post to be updated
+      header("Location: postproject.php?update=".htmlspecialchars($_GET['projectCode']));
     }
 
     if(isset($_POST['pin']) & !mysqli_num_rows($checkPin)){
         $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) VALUES(". $_SESSION['userID']. "," . htmlspecialchars($_GET['projectCode']).")");
-        // $result = mysqli_query($connection, "INSERT INTO favourite_project (userID,projectID) SELECT ".$_SESSION['userID'].",".$_GET['projectCode'] . " WHERE NOT EXISTS (SELECT * FROM favourite_project WHERE userID=".$_SESSION['userID']." AND projectID=".$_GET['projectCode'] .")");
         $pinText = "ALREADY PINNED";
     }
 }
-
 
 if(isset($_GET["projectCode"])){
     //send query and catch error
@@ -151,7 +111,7 @@ if(isset($_GET["projectCode"])){
     }
 
     $row = mysqli_fetch_row($result);
-
+    //display this project
     echo "<div class='header_space'></div>";
     echo "<div class='content_container'>";
 
@@ -188,10 +148,9 @@ if(isset($_GET["projectCode"])){
             $ldif = mysqli_fetch_row($dif);
             echo "<p><strong>Difficulty: </strong>".$ldif[1]."</p>";
             echo "<p><strong>Tags: </strong>".$row[8]."</p>";
-            if(is_logged_in()){
+            if(is_logged_in()){ //if user is signed in, allow them to rate the project
 
                 echo "<hr>";
-
                 $resultr = mysqli_query($connection, "SELECT rating FROM ratings WHERE projectID='".$_SESSION['currproject']."'");
                 $avgrating = $rateDisplay = 0;
                 $numrows = 0;
@@ -205,8 +164,6 @@ if(isset($_GET["projectCode"])){
                     $rateDisplay = bcdiv( $avgrating, $numrows, 2);
                     $avgrating = intdiv( $avgrating, $numrows);
                 }
-                // if($numrows > 0) $avgrating = intdiv( $avgrating ,$numrows);
-                //   echo $avgrating;
 
                 echo '<form name="rateform" id="'.$avgrating.'" method="post" action="projectdetails.php"><select id="example">
                 <option value=""></option>
@@ -263,7 +220,7 @@ if(isset($_GET["projectCode"])){
             echo "<hr>";
             echo "<h3>Comments:</h3>";
                 $result = mysqli_query($connection, "SELECT members.username, comment.time, comment.comment FROM comment INNER JOIN members ON comment.userID = members.userID WHERE projectID='".htmlspecialchars($_GET["projectCode"])."' ");
-                while($row = mysqli_fetch_row($result)){ // add rows to the table
+                while($row = mysqli_fetch_row($result)){ 
                     echo "<div class='comment_block'>";
                         echo "<p class='comment_name'>" . $row[0] . "</p>";
                         echo "<p class='comment_time'>" . $row[1] . "</p>";
