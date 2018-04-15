@@ -68,7 +68,6 @@ if(is_post_request()) {
     }
 
 
-
     if(empty($errors)){
         // set time to Canada Pacific time
         date_default_timezone_set("Canada/Pacific");
@@ -77,33 +76,7 @@ if(is_post_request()) {
           $query = "DELETE FROM steps WHERE projectID=".$projectID;
           $result = mysqli_query($connection, $query);
         }
-        $s = 1;
 
-        while(isset($_POST[$s.'inst'])){
-            //  array_push($steps, [ $_POST[$s.'inst'], $_POST[$s.'url'] ?? '']);
-
-            $query = "INSERT INTO steps (projectID, stepnumber, instructions) VALUES (".$projectID.", ".$s.", '".$_POST[$s.'inst']."')";
-            $result = mysqli_query($connection, $query);
-
-            $s++  ;
-
-        }
-
-        $m = 1;
-
-        while(isset($_POST[$m.'quant'])){
-            //  array_push($steps, [ $_POST[$s.'inst'], $_POST[$s.'url'] ?? '']);
-
-            if(isset($projectCode)){
-              $query = "DELETE FROM materials WHERE projectID=".$projectCode;
-              $result = mysqli_query($connection, $query);
-            }
-            $query = "INSERT INTO materials ( materialName, quantity, unit, projectID) VALUES ('".$_POST[$m.'name']."', '".$_POST[$m.'quant']."', '".$_POST[$m.'units']."', ".$projectID.")";
-            $result = mysqli_query($connection, $query);
-
-            $m++  ;
-
-        }
         if(isset($_POST["submit"])) {
             $target_dir = "uploads/";
             // if no image is uploaded, show image not available
@@ -163,6 +136,34 @@ if(is_post_request()) {
             $projectID = mysqli_insert_id($connection);
             }
 
+
+                    $s = 1;
+
+                    while(isset($_POST[$s.'inst'])){
+                        //  array_push($steps, [ $_POST[$s.'inst'], $_POST[$s.'url'] ?? '']);
+
+                        $query = "INSERT INTO steps (projectID, stepnumber, instructions) VALUES (".$projectID.", ".$s.", '".$_POST[$s.'inst']."')";
+                        $result = mysqli_query($connection, $query);
+
+                        $s++  ;
+
+                    }
+
+                    $m = 1;
+
+                    while(isset($_POST[$m.'quant'])){
+                        //  array_push($steps, [ $_POST[$s.'inst'], $_POST[$s.'url'] ?? '']);
+
+                        if(isset($projectCode)){
+                          $query = "DELETE FROM materials WHERE projectID=".$projectCode;
+                          $result = mysqli_query($connection, $query);
+                        }
+                        $query = "INSERT INTO materials ( materialName, quantity, unit, projectID) VALUES ('".$_POST[$m.'name']."', '".$_POST[$m.'quant']."', '".$_POST[$m.'units']."', ".$projectID.")";
+                        $result = mysqli_query($connection, $query);
+
+                        $m++  ;
+
+                    }
              echo $projectID;
             // redirect to new posted project if posted project successfully
            header("Location: projectdetails.php?projectCode=".$projectID);
